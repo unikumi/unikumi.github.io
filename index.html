@@ -116,14 +116,20 @@
     const LIST_URL = "https://pastebin.com/raw/TjwQdW0x";
 
     // Hálózati kérés CORS fallback funkcióval (Pastebin böngészős korlátozás feloldásához)
+    //async function fetchJson(url) {
+    //  try {
+    //    const res = await fetch(url);
+    //    if (res.ok) return await res.json();
+    //  } catch (e) {}
+    //  const proxyRes = await fetch("https://corsproxy.io/?" + encodeURIComponent(url));
+    //  return await proxyRes.json();
+    //}
     async function fetchJson(url) {
-      try {
-        const res = await fetch(url);
-        if (res.ok) return await res.json();
-      } catch (e) {}
-      const proxyRes = await fetch("https://corsproxy.io/?" + encodeURIComponent(url));
-      return await proxyRes.json();
-    }
+    // A Pastebin kérést átirányítjuk a CORS-t feloldó proxy-ra
+    const proxyUrl = "https://api.allorigins.win/raw?url=" + encodeURIComponent(url);
+    const res = await fetch(proxyUrl);
+    return await res.json();
+  }
 
     // Térkép inicializálása ingyenes, kulcsmentes vector stílussal (OpenFreeMap)
     const map = new maplibregl.Map({
