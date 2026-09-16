@@ -128,9 +128,9 @@
     async function fetchJson(url) {
       // A Pastebinhez legjobban működő CORS proxy-k sorrendben
       const proxyGenerators = [
+        (target) => `https://api.allorigins.win/raw?url=${encodeURIComponent(target)}`,
         (target) => `https://api.codetabs.com/v1/proxy?quest=${encodeURIComponent(target)}`,
-        (target) => `https://corsproxy.io/?${encodeURIComponent(target)}`,
-        (target) => `https://api.allorigins.win/raw?url=${encodeURIComponent(target)}`
+        (target) => `https://corsproxy.io/?${encodeURIComponent(target)}`
       ];
     
       for (const getProxyUrl of proxyGenerators) {
