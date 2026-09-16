@@ -1,203 +1,326 @@
-// A fő lista Gist nyers (raw) URL-je
-const LIST_URL = "https://gist.githubusercontent.com/unikumi/2b35bd479eb40c8bc6ff06e57f8658b0/raw/gistfile1.txt";
+<!DOCTYPE html>
+<html lang="hu">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+  <title>Interaktív Vektoros Térkép</title>
 
-// Egyszerű, natív adatletöltő (CORS proxy nélkül!)
-async function fetchJson(url) {
-  const res = await fetch(url);
-  if (!res.ok) throw new Error(`Hiba a letöltés során: ${res.status}`);
-  return await res.json();
-}
+  <!-- MapLibre GL JS (Vektoros térképmotor) -->
+  <script src="https://unpkg.com/maplibre-gl@^4.0.0/dist/maplibre-gl.js"></script>
+  <link href="https://unpkg.com/maplibre-gl@^4.0.0/dist/maplibre-gl.css" rel="stylesheet" />
 
-// Térkép inicializálása
-const map = new maplibregl.Map({
-  container: 'map',
-  style: 'https://tiles.openfreemap.org/styles/liberty',
-  center: [16.0, 49.0],
-  zoom: 8
-});
+  <style>
+    body, html { margin: 0; padding: 0; height: 100%; width: 100%; font-family: sans-serif; overflow: hidden; }
+    #map { width: 100%; height: 100%; position: absolute; top: 0; bottom: 0; }
 
-map.addControl(new maplibregl.NavigationControl({ showCompass: true }), 'bottom-right');
-
-let layerList = [];
-let currentMarkers = [];
-let userLocation = null;
-let userHeading = 0;
-let isFollowing = false;
-
-const userMarkerEl = document.createElement('div');
-userMarkerEl.className = 'user-marker';
-let userMarker = null;
-
-function fixGeojson(data) {
-  if (!data || typeof data !== 'object') return { type: "FeatureCollection", features: [] };
-  if (data.type === "FeatureCollection") {
-    (data.features || []).forEach(f => { if (!f.properties) f.properties = {}; });
-  }
-  return data;
-}
-
-function fitDataBounds(geojson, markers) {
-  const bounds = new maplibregl.LngLatBounds();
-  let count = 0;
-
-  if (geojson && geojson.features) {
-    geojson.features.forEach(f => {
-      if (f.geometry && f.geometry.type === "LineString") {
-        f.geometry.coordinates.forEach(coord => { bounds.extend(coord); count++; });
-      }
-    });
-  }
-
-  markers.forEach(m => {
-    if (m.lat !== undefined && m.lng !== undefined) { bounds.extend([m.lng, m.lat]); count++; }
-  });
-
-  if (count > 0 && !isFollowing) {
-    map.fitBounds(bounds, { padding: 40 });
-  }
-}
-
-// Réteg betöltése Gist URL-ekről
-async function loadLayer(index) {
-  const item = layerList[index];
-  if (!item) return;
-
-  try {
-    const [rawGeojson, markersData] = await Promise.all([
-      fetchJson(item.geojson),
-      fetchJson(item.markers)
-    ]);
-
-    const geojsonData = fixGeojson(rawGeojson);
-
-    if (map.getSource('route-source')) {
-      map.getSource('route-source').setData(geojsonData);
-    } else {
-      map.addSource('route-source', { type: 'geojson', data: geojsonData });
-      map.addLayer({
-        id: 'route-layer',
-        type: 'line',
-        source: 'route-source',
-        paint: {
-          'line-color': '#0b3d91',
-          'line-width': 2
-        }
-      });
+    /* Vezérlőelemek a jobb felső sarokban */
+    .top-controls {
+      position: absolute;
+      top: 10px;
+      right: 10px;
+      z-index: 10;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      align-items: flex-end;
     }
 
-    currentMarkers.forEach(m => m.remove());
-    currentMarkers = [];
+    select.layer-dropdown {
+      padding: 10px 14px;
+      border-radius: 8px;
+      border: 1px solid #ccc;
+      background: white;
+      font-weight: bold;
+      font-size: 14px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.25);
+      max-width: 280px;
+      outline: none;
+    }
 
-    (markersData || []).forEach(pt => {
-      if (pt.lat === undefined || pt.lng === undefined) return;
+    .btn-follow {
+      padding: 10px 14px;
+      border-radius: 20px;
+      border: none;
+      background: white;
+      color: #333;
+      font-weight: bold;
+      font-size: 13px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.25);
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
 
-      const el = document.createElement('div');
-      el.className = 'marker-container';
-      el.innerHTML = `
-        <div class="marker-dot"></div>
-        <div class="label-text">${pt.name || ''}</div>
-      `;
+    .btn-follow.active {
+      background: #007bff;
+      color: white;
+    }
 
-      const marker = new maplibregl.Marker({ element: el, anchor: 'left' })
-        .setLngLat([pt.lng, pt.lat])
-        .addTo(map);
+    /* Pont és felirat glória stílusa (Python HTML/CSS mintájára) */
+    .marker-container {
+      display: flex;
+      align-items: center;
+      pointer-events: none;
+      transform: translate(-6px, -6px);
+    }
 
-      currentMarkers.push(marker);
+    .marker-dot {
+      width: 10px;
+      height: 10px;
+      background-color: white;
+      border: 2px solid #0b3d91;
+      border-radius: 50%;
+      box-shadow: 0 0 2px rgba(0,0,0,0.4);
+      flex-shrink: 0;
+    }
+
+    .label-text {
+      color: #0b3d91;
+      font-size: 12px;
+      font-weight: bold;
+      white-space: nowrap;
+      margin-left: 6px;
+      text-shadow:
+        -1px -1px 0 white,
+         1px -1px 0 white,
+        -1px  1px 0 white,
+         1px  1px 0 white;
+    }
+
+    /* Saját pozíció nyilacska (Bearing mutató) */
+    .user-marker {
+      width: 26px;
+      height: 26px;
+      background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="%23007bff" stroke="white" stroke-width="1.5"><polygon points="12,2 19,21 12,17 5,21"/></svg>');
+      background-size: cover;
+      transition: transform 0.1s linear;
+    }
+  </style>
+</head>
+<body>
+
+  <div id="map"></div>
+
+  <div class="top-controls">
+    <select id="layerSelect" class="layer-dropdown">
+      <option>Rétegek betöltése...</option>
+    </select>
+
+    <button id="btnFollow" class="btn-follow">
+      🧭 Tájolás &amp; Követés
+    </button>
+  </div>
+
+  <script>
+    // A fő lista Gist nyers (raw) URL-je
+    const LIST_URL = "https://gist.githubusercontent.com/unikumi/2b35bd479eb40c8bc6ff06e57f8658b0/raw/gistfile1.txt";
+    
+    
+    // Egyszerű, natív adatletöltő (CORS proxy nélkül!)
+    async function fetchJson(url) {
+      const res = await fetch(url);
+      if (!res.ok) throw new Error(`Hiba a letöltés során: ${res.status}`);
+      return await res.json();
+    }
+
+    // Térkép inicializálása ingyenes, kulcsmentes vector stílussal (OpenFreeMap)
+    const map = new maplibregl.Map({
+      container: 'map',
+      style: 'https://tiles.openfreemap.org/styles/liberty',
+      center: [16.0, 49.0],
+      zoom: 8
     });
 
-    fitDataBounds(geojsonData, markersData || []);
-  } catch (err) {
-    console.error("Hiba a réteg betöltésekor:", err);
-  }
-}
+    map.addControl(new maplibregl.NavigationControl({ showCompass: true }), 'bottom-right');
 
-function updatePositionAndBearing() {
-  if (!userLocation) return;
+    let layerList = [];
+    let currentMarkers = [];
+    let userLocation = null;
+    let userHeading = 0;
+    let isFollowing = false;
 
-  if (!userMarker) {
-    userMarker = new maplibregl.Marker({ element: userMarkerEl })
-      .setLngLat(userLocation)
-      .addTo(map);
-  } else {
-    userMarker.setLngLat(userLocation);
-  }
+    // Felhasználó marker eleme
+    const userMarkerEl = document.createElement('div');
+    userMarkerEl.className = 'user-marker';
+    let userMarker = null;
 
-  userMarkerEl.style.transform = `rotate(${userHeading}deg)`;
-
-  if (isFollowing) {
-    map.jumpTo({
-      center: userLocation,
-      bearing: userHeading
-    });
-  }
-}
-
-// Geolocation
-if ('geolocation' in navigator) {
-  navigator.geolocation.watchPosition(
-    (pos) => {
-      userLocation = [pos.coords.longitude, pos.coords.latitude];
-      if (pos.coords.heading !== null && !isNaN(pos.coords.heading)) {
-        userHeading = pos.coords.heading;
+    // GeoJSON érvényesítés (Python fix_geojson megfelelője)
+    function fixGeojson(data) {
+      if (!data || typeof data !== 'object') return { type: "FeatureCollection", features: [] };
+      if (data.type === "FeatureCollection") {
+        (data.features || []).forEach(f => { if (!f.properties) f.properties = {}; });
       }
-      updatePositionAndBearing();
-    },
-    (err) => console.warn("GPS hiba:", err),
-    { enableHighAccuracy: true }
-  );
-}
+      return data;
+    }
 
-// Gyroskóp / Kompassz
-function handleOrientation(e) {
-  let heading = null;
-  if (e.webkitCompassHeading !== undefined) {
-    heading = e.webkitCompassHeading;
-  } else if (e.alpha !== null) {
-    heading = 360 - e.alpha;
-  }
-  if (heading !== null) {
-    userHeading = heading;
-    updatePositionAndBearing();
-  }
-}
+    // Keret számítása (Python get_bounds megfelelője)
+    function fitDataBounds(geojson, markers) {
+      const bounds = new maplibregl.LngLatBounds();
+      let count = 0;
 
-const btnFollow = document.getElementById('btnFollow');
-btnFollow.addEventListener('click', async () => {
-  isFollowing = !isFollowing;
-  btnFollow.classList.toggle('active', isFollowing);
+      if (geojson && geojson.features) {
+        geojson.features.forEach(f => {
+          if (f.geometry && f.geometry.type === "LineString") {
+            f.geometry.coordinates.forEach(coord => { bounds.extend(coord); count++; });
+          }
+        });
+      }
 
-  if (isFollowing) {
-    if (typeof DeviceOrientationEvent !== 'undefined' && typeof DeviceOrientationEvent.requestPermission === 'function') {
-      try {
-        const resp = await DeviceOrientationEvent.requestPermission();
-        if (resp === 'granted') {
+      markers.forEach(m => {
+        if (m.lat && m.lng) { bounds.extend([m.lng, m.lat]); count++; }
+      });
+
+      if (count > 0 && !isFollowing) {
+        map.fitBounds(bounds, { padding: 40 });
+      }
+    }
+
+    // Réteg betöltése index alapján
+    async function loadLayer(index) {
+      const item = layerList[index];
+      if (!item) return;
+
+      const [rawGeojson, markersData] = await Promise.all([
+        fetchJson(item.geojson),
+        fetchJson(item.markers)
+      ]);
+
+      const geojsonData = fixGeojson(rawGeojson);
+
+      // Vonallánc frissítése / hozzáadása
+      if (map.getSource('route-source')) {
+        map.getSource('route-source').setData(geojsonData);
+      } else {
+        map.addSource('route-source', { type: 'geojson', data: geojsonData });
+        map.addLayer({
+          id: 'route-layer',
+          type: 'line',
+          source: 'route-source',
+          paint: {
+            'line-color': '#0b3d91',
+            'line-width': 2
+          }
+        });
+      }
+
+      // Korábbi jelölők törlése
+      currentMarkers.forEach(m => m.remove());
+      currentMarkers = [];
+
+      // Új Circle + Label jelölők felrakása
+      (markersData || []).forEach(pt => {
+        if (pt.lat === undefined || pt.lng === undefined) return;
+
+        const el = document.createElement('div');
+        el.className = 'marker-container';
+        el.innerHTML = `
+          <div class="marker-dot"></div>
+          <div class="label-text">${pt.name || ''}</div>
+        `;
+
+        const marker = new maplibregl.Marker({ element: el, anchor: 'left' })
+          .setLngLat([pt.lng, pt.lat])
+          .addTo(map);
+
+        currentMarkers.push(marker);
+      });
+
+      fitDataBounds(geojsonData, markersData || []);
+    }
+
+    // GPS & Tájolás (Bearing) frissítése
+    function updatePositionAndBearing() {
+      if (!userLocation) return;
+
+      if (!userMarker) {
+        userMarker = new maplibregl.Marker({ element: userMarkerEl })
+          .setLngLat(userLocation)
+          .addTo(map);
+      } else {
+        userMarker.setLngLat(userLocation);
+      }
+
+      // Saját nyíl elforgatása
+      userMarkerEl.style.transform = `rotate(${userHeading}deg)`;
+
+      // Ha be van kapcsolva a követés: középre helyezés és a térkép elforgatása (bearing)
+      if (isFollowing) {
+        map.jumpTo({
+          center: userLocation,
+          bearing: userHeading
+        });
+      }
+    }
+
+    // 1. Geolocation API (GPS nyomkövetés)
+    if ('geolocation' in navigator) {
+      navigator.geolocation.watchPosition(
+        (pos) => {
+          userLocation = [pos.coords.longitude, pos.coords.latitude];
+          if (pos.coords.heading !== null && !isNaN(pos.coords.heading)) {
+            userHeading = pos.coords.heading;
+          }
+          updatePositionAndBearing();
+        },
+        (err) => console.warn("GPS hiba:", err),
+        { enableHighAccuracy: true }
+      );
+    }
+
+    // 2. Gyroskóp / Kompassz eseménykezelő (Álló helyzeti tájolás)
+    function handleOrientation(e) {
+      let heading = null;
+      if (e.webkitCompassHeading !== undefined) {
+        heading = e.webkitCompassHeading; // iOS
+      } else if (e.alpha !== null) {
+        heading = 360 - e.alpha; // Android
+      }
+      if (heading !== null) {
+        userHeading = heading;
+        updatePositionAndBearing();
+      }
+    }
+
+    // Gomb eseménykezelő: Követés és tájolási engedélyek
+    const btnFollow = document.getElementById('btnFollow');
+    btnFollow.addEventListener('click', async () => {
+      isFollowing = !isFollowing;
+      btnFollow.classList.toggle('active', isFollowing);
+
+      if (isFollowing) {
+        // iOS 13+ szenzor engedélykérés
+        if (typeof DeviceOrientationEvent !== 'undefined' && typeof DeviceOrientationEvent.requestPermission === 'function') {
+          try {
+            const resp = await DeviceOrientationEvent.requestPermission();
+            if (resp === 'granted') {
+              window.addEventListener('deviceorientation', handleOrientation, true);
+            }
+          } catch (e) { console.error(e); }
+        } else {
+          window.addEventListener('deviceorientationabsolute', handleOrientation, true) ||
           window.addEventListener('deviceorientation', handleOrientation, true);
         }
-      } catch (e) { console.error(e); }
-    } else {
-      window.addEventListener('deviceorientationabsolute', handleOrientation, true) ||
-      window.addEventListener('deviceorientation', handleOrientation, true);
-    }
-    updatePositionAndBearing();
-  } else {
-    map.setBearing(0);
-  }
-});
+        updatePositionAndBearing();
+      } else {
+        map.setBearing(0); // Követés kikapcsolásakor visszaáll ésszaki irányba
+      }
+    });
 
-// Indítás
-map.on('load', async () => {
-  try {
-    layerList = await fetchJson(LIST_URL);
+    // Alkalmazás indítása
+    map.on('load', async () => {
+      layerList = await fetchJson(LIST_URL);
 
-    const dropdown = document.getElementById('layerSelect');
-    dropdown.innerHTML = layerList.map((item, i) => `<option value="${i}">${item.name}</option>`).join('');
+      const dropdown = document.getElementById('layerSelect');
+      dropdown.innerHTML = layerList.map((item, i) => `<option value="${i}">${item.name}</option>`).join('');
 
-    dropdown.addEventListener('change', (e) => loadLayer(e.target.value));
+      dropdown.addEventListener('change', (e) => loadLayer(e.target.value));
 
-    if (layerList.length > 0) {
-      loadLayer(0);
-    }
-  } catch (e) {
-    console.error("Nem sikerült betölteni a fő listát:", e);
-  }
-});
+      // Első réteg betöltése
+      if (layerList.length > 0) {
+        loadLayer(0);
+      }
+    });
+  </script>
+</body>
+</html>
