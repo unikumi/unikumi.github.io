@@ -124,12 +124,32 @@
     //  const proxyRes = await fetch("https://corsproxy.io/?" + encodeURIComponent(url));
     //  return await proxyRes.json();
     //}
+    // Pastebin-kompatibilis okos adatletöltő (Proxy lánccal)
     async function fetchJson(url) {
-    // A Pastebin kérést átirányítjuk a CORS-t feloldó proxy-ra
-    const proxyUrl = "https://api.allorigins.win/raw?url=" + encodeURIComponent(url);
-    const res = await fetch(proxyUrl);
-    return await res.json();
-  }
+      // A Pastebinhez legjobban működő CORS proxy-k sorrendben
+      const proxyGenerators = [
+        (target) => `https://api.codetabs.com/v1/proxy?quest=${encodeURIComponent(target)}`,
+        (target) => `https://corsproxy.io/?${encodeURIComponent(target)}`,
+        (target) => `https://api.allorigins.win/raw?url=${encodeURIComponent(target)}`
+      ];
+    
+      for (const getProxyUrl of proxyGenerators) {
+        try {
+          const proxyUrl = getProxyUrl(url);
+          const res = await fetch(proxyUrl);
+          
+          if (res.ok) {
+            // Néhány proxy szövegként adja vissza a JSON-t, ezért kézzel parse-oljuk
+            const text = await res.text();
+            return JSON.parse(text);
+          }
+        } catch (e) {
+          console.warn(`Sikertelen próbálkozás ezzel a proxy-val: ${getProxyUrl(url)}`);
+        }
+      }
+    
+      throw new Error("Sajnos egyik CORS proxy sem tudta betölteni a Pastebin hivatkozást.");
+    }
 
     // Térkép inicializálása ingyenes, kulcsmentes vector stílussal (OpenFreeMap)
     const map = new maplibregl.Map({
