@@ -139,36 +139,55 @@
       styleLayers.forEach(layer => {
         const id = layer.id.toLowerCase();
     
-        // A) Kerékpár-, gyalog- és túrautak elrejtése
+        // 1. Háttér és terep besötétítése a kontraszt növeléséhez
+        if (layer.type === 'background') {
+          map.setPaintProperty(layer.id, 'background-color', '#050508'); // Majdnem éjfekete
+        }
+        if (id.includes('water')) {
+          if (layer.type === 'fill') map.setPaintProperty(layer.id, 'fill-color', '#0f2038');
+        }
+        if (id.includes('landcover') || id.includes('landuse') || id.includes('park')) {
+          if (layer.type === 'fill') map.setPaintProperty(layer.id, 'fill-opacity', 0.1); // Épületek/parkok elhalványítása
+        }
+    
+        // 2. Gyalog- és kerékpárutak elrejtése
         if (id.includes('foot') || id.includes('cycle') || id.includes('path') || id.includes('pedestrian')) {
           map.setLayoutProperty(layer.id, 'visibility', 'none');
         }
     
-        // B) Vasútvonalak kiemelése (pl. világos/színes kiemeléssel sötét alapon)
+        // 3. Vasútvonalak: Neon narancs / sárga
         if (id.includes('rail') || id.includes('railway')) {
           map.setLayoutProperty(layer.id, 'visibility', 'visible');
           if (layer.type === 'line') {
-            map.setPaintProperty(layer.id, 'line-color', '#ff9900'); // Kiemelt narancs/sárga szín
-            map.setPaintProperty(layer.id, 'line-width', 2);
+            map.setPaintProperty(layer.id, 'line-color', '#ff9f0a');
+            map.setPaintProperty(layer.id, 'line-width', 2.5);
           }
         }
-      // C) Közúthálózat világosítása
-          if (id.includes('highway') || id.includes('road') || id.includes('street') || id.includes('bridge') || id.includes('tunnel')) {
-            if (layer.type === 'line') {
-              // Autópályák és főutak: tiszta hófehér
-              if (id.includes('motorway') || id.includes('trunk') || id.includes('primary') || id.includes('secondary')) {
-                map.setPaintProperty(layer.id, 'line-color', '#ffffff');
-                map.setPaintProperty(layer.id, 'line-opacity', 1.0);
-              } 
-              // Mellékutcák és lakóövezeti utak: világosszürke (#d1d5db)
-              else {
-                map.setPaintProperty(layer.id, 'line-color', '#d1d5db');
-                map.setPaintProperty(layer.id, 'line-opacity', 0.85);
-              }
+    
+        // 4. Úthálózat nagy kontrasztú neonszínei
+        if (id.includes('highway') || id.includes('road') || id.includes('street') || id.includes('bridge') || id.includes('tunnel')) {
+          if (layer.type === 'line') {
+            // Autópályák és főutak: Elektromos sárga / Élnév
+            if (id.includes('motorway') || id.includes('trunk')) {
+              map.setPaintProperty(layer.id, 'line-color', '#ffd60a');
+              map.setPaintProperty(layer.id, 'line-width', 3);
+              map.setPaintProperty(layer.id, 'line-opacity', 1.0);
+            } 
+            // Elsődleges és másodlagos utak: Tiszta vakító fehér
+            else if (id.includes('primary') || id.includes('secondary')) {
+              map.setPaintProperty(layer.id, 'line-color', '#ffffff');
+              map.setPaintProperty(layer.id, 'line-width', 2);
+              map.setPaintProperty(layer.id, 'line-opacity', 1.0);
+            } 
+            // Mellékutcák és lakóövezetek: Éles világosszürke
+            else {
+              map.setPaintProperty(layer.id, 'line-color', '#a2b4c7');
+              map.setPaintProperty(layer.id, 'line-opacity', 0.85);
             }
           }
-        });
+        }
       });
+    });
 
     map.addControl(new maplibregl.NavigationControl({ showCompass: true }), 'bottom-right');
 
