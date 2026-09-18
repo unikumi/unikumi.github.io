@@ -408,25 +408,31 @@
     map.on('zoomstart', handleUserInteraction);
     map.on('pitchstart', handleUserInteraction);
     
-    // GPS & Tájolás frissítése
     function updatePositionAndBearing() {
-      if (!userLocation) return;
+      if (!userLocation || isNaN(userLocation[0]) || isNaN(userLocation[1])) return;
+    
+      // Biztonságos forgatási érték (ha a telefon null-t ad vissza, megtartjuk a 0-t)
+      const safeHeading = (typeof userHeading === 'number' && !isNaN(userHeading)) ? userHeading : 0;
     
       if (!userMarker) {
-        userMarker = new maplibregl.Marker({ element: userMarkerEl })
+        userMarker = new maplibregl.Marker({ 
+          element: userMarkerEl,
+          rotationAlignment: 'map' // A nyíl a térkép elforgatásával együtt forogjon
+        })
           .setLngLat(userLocation)
+          .setRotation(safeHeading)
           .addTo(map);
       } else {
         userMarker.setLngLat(userLocation);
+        userMarker.setRotation(safeHeading); // A MapLibre kezeli a forgatást a translate megtartásával!
       }
     
-      userMarkerEl.style.transform = `rotate(${userHeading}deg)`;
+      // userMarkerEl.style.transform = ... <-- EZT A SORT TELJESEN TÖRÖLD KI!
     
-      // Csak akkor mozgatjuk a térképet, ha a követés aktív ÉS a felhasználó épp nem vezérli kézzel
       if (isFollowing && !userInteracting) {
         map.jumpTo({
           center: userLocation,
-          bearing: userHeading
+          bearing: safeHeading
         });
       }
     }
