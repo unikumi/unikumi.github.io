@@ -124,12 +124,42 @@
       return await res.json();
     }
 
-    // Térkép inicializálása ingyenes, kulcsmentes vector stílussal (OpenFreeMap)
+    // 1. Térkép inicializálása az OpenFreeMap sötét stílusával
     const map = new maplibregl.Map({
       container: 'map',
-      style: 'https://tiles.openfreemap.org/styles/liberty',
+      style: 'https://tiles.openfreemap.org/styles/dark',
       center: [16.0, 49.0],
-      zoom: 8
+      zoom: 10
+    });
+    
+    // 2. Rétegek testreszabása a stílus betöltése után
+    map.on('style.load', () => {
+      const styleLayers = map.getStyle().layers;
+    
+      styleLayers.forEach(layer => {
+        const id = layer.id.toLowerCase();
+    
+        // A) Kerékpár-, gyalog- és túrautak elrejtése
+        if (id.includes('foot') || id.includes('cycle') || id.includes('path') || id.includes('pedestrian')) {
+          map.setLayoutProperty(layer.id, 'visibility', 'none');
+        }
+    
+        // B) Vasútvonalak kiemelése (pl. világos/színes kiemeléssel sötét alapon)
+        if (id.includes('rail') || id.includes('railway')) {
+          map.setLayoutProperty(layer.id, 'visibility', 'visible');
+          if (layer.type === 'line') {
+            map.setPaintProperty(layer.id, 'line-color', '#ff9900'); // Kiemelt narancs/sárga szín
+            map.setPaintProperty(layer.id, 'line-width', 2);
+          }
+        }
+    
+        // C) Fő- és közutak láthatóságának/vastagságának megerősítése
+        if (id.includes('highway') || id.includes('road') || id.includes('street')) {
+          if (layer.type === 'line') {
+            map.setPaintProperty(layer.id, 'line-opacity', 0.9);
+          }
+        }
+      });
     });
 
     map.addControl(new maplibregl.NavigationControl({ showCompass: true }), 'bottom-right');
