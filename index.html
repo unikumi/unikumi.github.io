@@ -287,7 +287,37 @@
     let isFollowing = false;
     let userInteracting = false;
     let interactionTimeout = null;
+    let wakeLock = null;
 
+    // Képernyőzár bekapcsolása
+    async function requestWakeLock() {
+      try {
+        if ('wakeLock' in navigator) {
+          wakeLock = await navigator.wakeLock.request('screen');
+        }
+      } catch (err) {
+        console.warn(`Wake Lock nem indítható el: ${err.message}`);
+      }
+    }
+    
+    // Képernyőzár feloldása
+    function releaseWakeLock() {
+      if (wakeLock !== null) {
+        wakeLock.release().then(() => {
+          wakeLock = null;
+        });
+      }
+    }
+    
+    // Ha a felhasználó átvált más appra majd visszatér, a böngésző alapból elengedi a zárat.
+    // Ezzel automatikusan újraigényeljük, ha a követés még aktív:
+    document.addEventListener('visibilitychange', async () => {
+      if (wakeLock !== null && document.visibilityState === 'visible' && isFollowing) {
+        await requestWakeLock();
+      }
+    });
+
+    
     // Felhasználó marker eleme
     const userMarkerEl = document.createElement('div');
     userMarkerEl.className = 'user-marker';
@@ -473,6 +503,7 @@
       btnFollow.classList.toggle('active', isFollowing);
     
       if (isFollowing) {
+        await requestWakeLock(); // <-- Képernyő ébren tartásának bekapcsolása
         userInteracting = false; // Bekapcsoláskor azonnal átvesszük a vezérlést
         
         if (typeof DeviceOrientationEvent !== 'undefined' && typeof DeviceOrientationEvent.requestPermission === 'function') {
@@ -492,6 +523,7 @@
         }
         updatePositionAndBearing();
       } else {
+        releaseWakeLock();
         if (interactionTimeout) clearTimeout(interactionTimeout);
         userInteracting = false;
         map.setBearing(0); // Kikapcsoláskor vissza északra
