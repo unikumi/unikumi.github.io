@@ -37,25 +37,27 @@
       outline: none;
     }
 
-    .btn-follow {
-      padding: 10px 14px;
-      border-radius: 20px;
-      border: none;
-      background: white;
-      color: #333;
-      font-weight: bold;
-      font-size: 13px;
-      box-shadow: 0 2px 8px rgba(0,0,0,0.25);
-      cursor: pointer;
-      display: flex;
-      align-items: center;
-      gap: 6px;
-    }
-
-    .btn-follow.active {
-      background: #007bff;
-      color: white;
-    }
+      /* CSS módosítás */
+      .btn-follow {
+        width: 44px;
+        height: 44px;
+        border-radius: 50%;
+        border: none;
+        background: white;
+        font-size: 20px;
+        box-shadow: 0 2px 8px rgba(0,0,0,0.25);
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 0;
+        transition: background-color 0.2s, transform 0.1s;
+      }
+      
+      .btn-follow.active {
+        background: #007bff;
+        /* Szükség esetén az emoji színét filterrel lehet igazítani, de alapesetben jól látható */
+      }
 
     /* Pont és felirat glória stílusa (Python HTML/CSS mintájára) */
     .marker-container {
@@ -107,9 +109,8 @@
       <option>Rétegek betöltése...</option>
     </select>
 
-    <button id="btnFollow" class="btn-follow">
-      🧭 Tájolás &amp; Követés
-    </button>
+    <!-- HTML gomb (szöveg nélkül, tisztán emoji) -->
+    <button id="btnFollow" class="btn-follow" title="Tájolás &amp; Követés">🧭</button>
   </div>
 
   <script>
@@ -284,6 +285,8 @@
     let userLocation = null;
     let userHeading = 0;
     let isFollowing = false;
+    let userInteracting = false;
+    let interactionTimeout = null;
 
     // Felhasználó marker eleme
     const userMarkerEl = document.createElement('div');
@@ -374,10 +377,41 @@
       fitDataBounds(geojsonData, markersData || []);
     }
 
-    // GPS & Tájolás (Bearing) frissítése
+    // Felhasználói beavatkozás érzékelése és 5 mp-es időzítő indítása
+    function handleUserInteraction() {
+      if (!isFollowing) return;
+    
+      userInteracting = true;
+    
+      if (interactionTimeout) {
+        clearTimeout(interactionTimeout);
+      }
+    
+      // 5 másodperc (5000 ms) tétlenség után újra centralizálunk
+      interactionTimeout = setTimeout(() => {
+        userInteracting = false;
+        
+        // Sima animációval visszatérünk a felhasználó pozíciójához és tájolásához
+        if (isFollowing && userLocation) {
+          map.easeTo({
+            center: userLocation,
+            bearing: userHeading,
+            duration: 1000 // 1 másodperces lágy animáció
+          });
+        }
+      }, 5000);
+    }
+    
+    // Gesztusok / interakciók figyelése a térképen
+    map.on('dragstart', handleUserInteraction);
+    map.on('rotatestart', handleUserInteraction);
+    map.on('zoomstart', handleUserInteraction);
+    map.on('pitchstart', handleUserInteraction);
+    
+    // GPS & Tájolás frissítése
     function updatePositionAndBearing() {
       if (!userLocation) return;
-
+    
       if (!userMarker) {
         userMarker = new maplibregl.Marker({ element: userMarkerEl })
           .setLngLat(userLocation)
@@ -385,12 +419,11 @@
       } else {
         userMarker.setLngLat(userLocation);
       }
-
-      // Saját nyíl elforgatása
+    
       userMarkerEl.style.transform = `rotate(${userHeading}deg)`;
-
-      // Ha be van kapcsolva a követés: középre helyezés és a térkép elforgatása (bearing)
-      if (isFollowing) {
+    
+      // Csak akkor mozgatjuk a térképet, ha a követés aktív ÉS a felhasználó épp nem vezérli kézzel
+      if (isFollowing && !userInteracting) {
         map.jumpTo({
           center: userLocation,
           bearing: userHeading
@@ -427,14 +460,15 @@
       }
     }
 
-    // Gomb eseménykezelő: Követés és tájolási engedélyek
+    // Gomb eseménykezelője
     const btnFollow = document.getElementById('btnFollow');
     btnFollow.addEventListener('click', async () => {
       isFollowing = !isFollowing;
       btnFollow.classList.toggle('active', isFollowing);
-
+    
       if (isFollowing) {
-        // iOS 13+ szenzor engedélykérés
+        userInteracting = false; // Bekapcsoláskor azonnal átvesszük a vezérlést
+        
         if (typeof DeviceOrientationEvent !== 'undefined' && typeof DeviceOrientationEvent.requestPermission === 'function') {
           try {
             const resp = await DeviceOrientationEvent.requestPermission();
@@ -446,9 +480,15 @@
           window.addEventListener('deviceorientationabsolute', handleOrientation, true) ||
           window.addEventListener('deviceorientation', handleOrientation, true);
         }
+        
+        if (userLocation) {
+          map.flyTo({ center: userLocation, bearing: userHeading, zoom: 16 });
+        }
         updatePositionAndBearing();
       } else {
-        map.setBearing(0); // Követés kikapcsolásakor visszaáll ésszaki irányba
+        if (interactionTimeout) clearTimeout(interactionTimeout);
+        userInteracting = false;
+        map.setBearing(0); // Kikapcsoláskor vissza északra
       }
     });
 
