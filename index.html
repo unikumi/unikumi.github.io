@@ -195,6 +195,54 @@
           }
         }
       });
+      // --- 6. EGYIRÁNYÚ UTCÁK NYILAINAK HOZZÁADÁSA ---
+      
+        // A) Nyíl ikon generálása Canvas-ból (külső képfájl nélkül)
+        const canvas = document.createElement('canvas');
+        canvas.width = 24;
+        canvas.height = 24;
+        const ctx = canvas.getContext('2d');
+        
+        // Világossárga nyíl fekete kontúrral (hogy minden útszínen jól látszódjon)
+        ctx.fillStyle = '#fff380';
+        ctx.strokeStyle = '#000000';
+        ctx.lineWidth = 1.5;
+        
+        ctx.beginPath();
+        ctx.moveTo(4, 6);
+        ctx.lineTo(18, 12);
+        ctx.lineTo(4, 18);
+        ctx.lineTo(8, 12); // Nyíl belső bevágása
+        ctx.closePath();
+        ctx.fill();
+        ctx.stroke();
+      
+        const imageData = ctx.getImageData(0, 0, 24, 24);
+        map.addImage('oneway-arrow', imageData);
+      
+        // B) Nyíl réteg felvitele az OpenFreeMap 'transportation' vektorrétegére
+        map.addLayer({
+          id: 'oneway-arrows',
+          type: 'symbol',
+          source: 'openfreemap',        // Az alaptérkép forrásának azonosítója
+          'source-layer': 'transportation', // OpenMapTiles úthálózati rétege
+          filter: [
+            'all',
+            ['==', '$type', 'LineString'],
+            ['in', 'oneway', 1, -1]       // Szűrés az egyirányú utcákra
+          ],
+          layout: {
+            'symbol-placement': 'line', // Nyilak illesztése az utca vonalára
+            'symbol-spacing': 60,       // Nyilak közötti távolság pixelben
+            'icon-image': 'oneway-arrow',
+            'icon-size': 0.7,
+            'icon-allow-overlap': true,
+            'icon-rotation-alignment': 'map', // Nyíl forgatása a térkép elforgatásakor
+            // Ha az OSM adatokban -1 az egyirányúság (visszafele), 180 fokkal megfordítjuk a nyilat
+            'icon-rotate': ['match', ['get', 'oneway'], -1, 180, 0]
+          }
+        });
+      
     });
     map.addControl(new maplibregl.NavigationControl({ showCompass: true }), 'bottom-right');
 
