@@ -150,7 +150,7 @@
           map.setPaintProperty(layer.id, 'fill-opacity', 0.1);
         }
     
-        // 2. Gyalog- és kerékpárutak VONALAINAK elrejtése (kizárólag a line típusúakat!)
+        // 2. Gyalog- és kerékpárutak vonalainak elrejtése
         if ((id.includes('foot') || id.includes('cycle') || id.includes('path') || id.includes('pedestrian')) && layer.type === 'line') {
           map.setLayoutProperty(layer.id, 'visibility', 'none');
         }
@@ -182,22 +182,20 @@
           }
         }
     
-        // 5. Utcanevek és helynevek (Symbol rétegek) kiemelése fekete glóriával
+        // 5. Utcanevek és helynevek: Világossárga szöveg + vastag fekete glória
         if (layer.type === 'symbol') {
           map.setLayoutProperty(layer.id, 'visibility', 'visible');
     
-          // Ha a réteg tartalmaz szöveges elemet, kap egy kontrasztos kontúrt
           try {
-            map.setPaintProperty(layer.id, 'text-color', '#ffffff');
-            map.setPaintProperty(layer.id, 'text-halo-color', '#000000');
-            map.setPaintProperty(layer.id, 'text-halo-width', 2.0);
+            map.setPaintProperty(layer.id, 'text-color', '#fff380');      // Világossárga felirat
+            map.setPaintProperty(layer.id, 'text-halo-color', '#000000'); // Éles fekete kontúr
+            map.setPaintProperty(layer.id, 'text-halo-width', 2.2);       // Megnövelt glória a maximális kontraszthoz
           } catch (e) {
-            // Néhány symbol réteg csak ikont tartalmaz, szöveges tulajdonság nélkül
+            // Csupán ikont tartalmazó rétegek kihagyása
           }
         }
       });
     });
-
     map.addControl(new maplibregl.NavigationControl({ showCompass: true }), 'bottom-right');
 
     let layerList = [];
