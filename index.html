@@ -152,15 +152,23 @@
             map.setPaintProperty(layer.id, 'line-width', 2);
           }
         }
-    
-        // C) Fő- és közutak láthatóságának/vastagságának megerősítése
-        if (id.includes('highway') || id.includes('road') || id.includes('street')) {
-          if (layer.type === 'line') {
-            map.setPaintProperty(layer.id, 'line-opacity', 0.9);
+      // C) Közúthálózat világosítása
+          if (id.includes('highway') || id.includes('road') || id.includes('street') || id.includes('bridge') || id.includes('tunnel')) {
+            if (layer.type === 'line') {
+              // Autópályák és főutak: tiszta hófehér
+              if (id.includes('motorway') || id.includes('trunk') || id.includes('primary') || id.includes('secondary')) {
+                map.setPaintProperty(layer.id, 'line-color', '#ffffff');
+                map.setPaintProperty(layer.id, 'line-opacity', 1.0);
+              } 
+              // Mellékutcák és lakóövezeti utak: világosszürke (#d1d5db)
+              else {
+                map.setPaintProperty(layer.id, 'line-color', '#d1d5db');
+                map.setPaintProperty(layer.id, 'line-opacity', 0.85);
+              }
+            }
           }
-        }
+        });
       });
-    });
 
     map.addControl(new maplibregl.NavigationControl({ showCompass: true }), 'bottom-right');
 
