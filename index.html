@@ -305,6 +305,7 @@
     let userInteracting = false;
     let interactionTimeout = null;
     let wakeLock = null;
+    let userSpeedKmH = 0; // Globális változó a sebességnek
 
     // Képernyőzár bekapcsolása
     async function requestWakeLock() {
@@ -324,6 +325,30 @@
           wakeLock = null;
         });
       }
+    }
+
+    if ('geolocation' in navigator) {
+      navigator.geolocation.watchPosition(
+        (pos) => {
+          userLocation = [pos.coords.longitude, pos.coords.latitude];
+    
+          // Sebesség kiszámítása km/h-ban (pos.coords.speed m/s-ban van)
+          if (pos.coords.speed !== null && !isNaN(pos.coords.speed) && pos.coords.speed >= 0) {
+            userSpeedKmH = pos.coords.speed * 3.6;
+          } else {
+            userSpeedKmH = 0;
+          }
+    
+          // Ha a GPS ad pontos irányt (pos.coords.heading), haladás közben az is használható
+          if (pos.coords.heading !== null && !isNaN(pos.coords.heading)) {
+            userHeading = pos.coords.heading;
+          }
+    
+          updatePositionAndBearing();
+        },
+        (err) => console.warn("GPS hiba:", err),
+        { enableHighAccuracy: true }
+      );
     }
     
     // Ha a felhasználó átvált más appra majd visszatér, a böngésző alapból elengedi a zárat.
@@ -440,6 +465,8 @@
         
         // Sima animációval visszatérünk a felhasználó pozíciójához és tájolásához
         if (isFollowing && userLocation) {
+          // Itt is vizsgáljuk, hogy 5 km/h felett vagyunk-e
+          const targetBearing = (userSpeedKmH > 5) ? userHeading : map.getBearing();  
           map.easeTo({
             center: userLocation,
             bearing: userHeading,
@@ -458,28 +485,30 @@
     function updatePositionAndBearing() {
       if (!userLocation || isNaN(userLocation[0]) || isNaN(userLocation[1])) return;
     
-      // Biztonságos forgatási érték (ha a telefon null-t ad vissza, megtartjuk a 0-t)
       const safeHeading = (typeof userHeading === 'number' && !isNaN(userHeading)) ? userHeading : 0;
     
+      // A marker ikon maga továbbra is mutathatja a telefon fizikai irányát (vagy a menetirányt)
       if (!userMarker) {
         userMarker = new maplibregl.Marker({ 
           element: userMarkerEl,
-          rotationAlignment: 'map' // A nyíl a térkép elforgatásával együtt forogjon
+          rotationAlignment: 'map'
         })
           .setLngLat(userLocation)
           .setRotation(safeHeading)
           .addTo(map);
       } else {
         userMarker.setLngLat(userLocation);
-        userMarker.setRotation(safeHeading); // A MapLibre kezeli a forgatást a translate megtartásával!
+        userMarker.setRotation(safeHeading);
       }
     
-      // userMarkerEl.style.transform = ... <-- EZT A SORT TELJESEN TÖRÖLD KI!
-    
+      // Térkép elforgatása és követése
       if (isFollowing && !userInteracting) {
+        // 5 km/h felett elforgatjuk a térképet, alatta megtartjuk a jelenlegi elforgatási szöget (map.getBearing())
+        const targetBearing = (userSpeedKmH > 5) ? safeHeading : map.getBearing();
+    
         map.jumpTo({
           center: userLocation,
-          bearing: safeHeading
+          bearing: targetBearing
         });
       }
     }
