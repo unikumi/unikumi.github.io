@@ -1,0 +1,522 @@
+[
+    {
+        "name": "331/201 - Ostrava - Mošnov,,Airport nádraží",
+        "geojson": "2026-09-19/G-331-201.dat",
+        "markers": "2026-09-19/M-331-201.dat"
+    },
+    {
+        "name": "331/202 - Mošnov - Ostrava,Mor.Ostrava,Muglinovská",
+        "geojson": "2026-09-19/G-331-202.dat",
+        "markers": "2026-09-19/M-331-202.dat"
+    },
+    {
+        "name": "331/203 - Ostrava - Mošnov,,Airport nádraží",
+        "geojson": "2026-09-19/G-331-203.dat",
+        "markers": "2026-09-19/M-331-203.dat"
+    },
+    {
+        "name": "331/207 - Ostrava - Mošnov,,Airport nádraží",
+        "geojson": "2026-09-19/G-331-207.dat",
+        "markers": "2026-09-19/M-331-207.dat"
+    },
+    {
+        "name": "371/201 - Ostrava - Kozlovice,,střed",
+        "geojson": "2026-09-19/G-371-201.dat",
+        "markers": "2026-09-19/M-371-201.dat"
+    },
+    {
+        "name": "371/202 - Hukvaldy - Ostrava,Mor.Ostrava,Náměstí Republiky",
+        "geojson": "2026-09-19/G-371-202.dat",
+        "markers": "2026-09-19/M-371-202.dat"
+    },
+    {
+        "name": "371/203 - Ostrava - Kozlovice,,střed",
+        "geojson": "2026-09-19/G-371-203.dat",
+        "markers": "2026-09-19/M-371-203.dat"
+    },
+    {
+        "name": "371/204 - Hukvaldy - Ostrava,Mor.Ostrava,Náměstí Republiky",
+        "geojson": "2026-09-19/G-371-204.dat",
+        "markers": "2026-09-19/M-371-204.dat"
+    },
+    {
+        "name": "371/205 - Ostrava - Kozlovice,,střed",
+        "geojson": "2026-09-19/G-371-205.dat",
+        "markers": "2026-09-19/M-371-205.dat"
+    },
+    {
+        "name": "371/206 - Kozlovice - Ostrava,Mor.Ostrava,Náměstí Republiky",
+        "geojson": "2026-09-19/G-371-206.dat",
+        "markers": "2026-09-19/M-371-206.dat"
+    },
+    {
+        "name": "371/207 - Ostrava - Kozlovice,,střed",
+        "geojson": "2026-09-19/G-371-207.dat",
+        "markers": "2026-09-19/M-371-207.dat"
+    },
+    {
+        "name": "371/208 - Kozlovice - Ostrava,Mor.Ostrava,Náměstí Republiky",
+        "geojson": "2026-09-19/G-371-208.dat",
+        "markers": "2026-09-19/M-371-208.dat"
+    },
+    {
+        "name": "371/209 - Ostrava - Kozlovice,,střed",
+        "geojson": "2026-09-19/G-371-209.dat",
+        "markers": "2026-09-19/M-371-209.dat"
+    },
+    {
+        "name": "371/210 - Kozlovice - Ostrava,Mor.Ostrava,Náměstí Republiky",
+        "geojson": "2026-09-19/G-371-210.dat",
+        "markers": "2026-09-19/M-371-210.dat"
+    },
+    {
+        "name": "371/211 - Ostrava - Kozlovice,,střed",
+        "geojson": "2026-09-19/G-371-211.dat",
+        "markers": "2026-09-19/M-371-211.dat"
+    },
+    {
+        "name": "371/212 - Kozlovice - Ostrava,Mor.Ostrava,Náměstí Republiky",
+        "geojson": "2026-09-19/G-371-212.dat",
+        "markers": "2026-09-19/M-371-212.dat"
+    },
+    {
+        "name": "371/213 - Ostrava - Hukvaldy,,hotel",
+        "geojson": "2026-09-19/G-371-213.dat",
+        "markers": "2026-09-19/M-371-213.dat"
+    },
+    {
+        "name": "371/214 - Kozlovice - Ostrava,Mor.Ostrava,Náměstí Republiky",
+        "geojson": "2026-09-19/G-371-214.dat",
+        "markers": "2026-09-19/M-371-214.dat"
+    },
+    {
+        "name": "371/215 - Ostrava - Hukvaldy,Dolní Sklenov,rozc.",
+        "geojson": "2026-09-19/G-371-215.dat",
+        "markers": "2026-09-19/M-371-215.dat"
+    },
+    {
+        "name": "371/216 - Kozlovice - Ostrava,Mor.Ostrava,Náměstí Republiky",
+        "geojson": "2026-09-19/G-371-216.dat",
+        "markers": "2026-09-19/M-371-216.dat"
+    },
+    {
+        "name": "371/218 - Hukvaldy - Ostrava,Mor.Ostrava,Náměstí Republiky",
+        "geojson": "2026-09-19/G-371-218.dat",
+        "markers": "2026-09-19/M-371-218.dat"
+    },
+    {
+        "name": "371/227 - Brušperk - Hukvaldy,,hotel",
+        "geojson": "2026-09-19/G-371-227.dat",
+        "markers": "2026-09-19/M-371-227.dat"
+    },
+    {
+        "name": "371/231 - Brušperk - Hukvaldy,,hotel",
+        "geojson": "2026-09-19/G-371-231.dat",
+        "markers": "2026-09-19/M-371-231.dat"
+    },
+    {
+        "name": "371/232 - Hukvaldy - Hukvaldy,Rychaltice,pod mostem",
+        "geojson": "2026-09-19/G-371-232.dat",
+        "markers": "2026-09-19/M-371-232.dat"
+    },
+    {
+        "name": "371/236 - Hukvaldy - Hukvaldy,Rychaltice,pod mostem",
+        "geojson": "2026-09-19/G-371-236.dat",
+        "markers": "2026-09-19/M-371-236.dat"
+    },
+    {
+        "name": "371/237 - Brušperk - Hukvaldy,,hotel",
+        "geojson": "2026-09-19/G-371-237.dat",
+        "markers": "2026-09-19/M-371-237.dat"
+    },
+    {
+        "name": "373/204 - Kopřivnice - Ostrava,Dubina",
+        "geojson": "2026-09-19/G-373-204.dat",
+        "markers": "2026-09-19/M-373-204.dat"
+    },
+    {
+        "name": "373/206 - Kopřivnice - Ostrava,Dubina",
+        "geojson": "2026-09-19/G-373-206.dat",
+        "markers": "2026-09-19/M-373-206.dat"
+    },
+    {
+        "name": "373/208 - Kopřivnice - Ostrava,Dubina",
+        "geojson": "2026-09-19/G-373-208.dat",
+        "markers": "2026-09-19/M-373-208.dat"
+    },
+    {
+        "name": "373/210 - Kopřivnice - Ostrava,Dubina",
+        "geojson": "2026-09-19/G-373-210.dat",
+        "markers": "2026-09-19/M-373-210.dat"
+    },
+    {
+        "name": "373/212 - Kopřivnice - Petřvald,,nám.",
+        "geojson": "2026-09-19/G-373-212.dat",
+        "markers": "2026-09-19/M-373-212.dat"
+    },
+    {
+        "name": "376/201 - Ostrava - Hukvaldy,Rychaltice,pod mostem",
+        "geojson": "2026-09-19/G-376-201.dat",
+        "markers": "2026-09-19/M-376-201.dat"
+    },
+    {
+        "name": "376/202 - Hukvaldy - Ostrava,Mor.Ostrava,Náměstí Republiky",
+        "geojson": "2026-09-19/G-376-202.dat",
+        "markers": "2026-09-19/M-376-202.dat"
+    },
+    {
+        "name": "376/203 - Ostrava - Hukvaldy,Rychaltice,pod mostem",
+        "geojson": "2026-09-19/G-376-203.dat",
+        "markers": "2026-09-19/M-376-203.dat"
+    },
+    {
+        "name": "376/204 - Hukvaldy - Ostrava,Mor.Ostrava,Náměstí Republiky",
+        "geojson": "2026-09-19/G-376-204.dat",
+        "markers": "2026-09-19/M-376-204.dat"
+    },
+    {
+        "name": "376/205 - Ostrava - Hukvaldy,Rychaltice,pod mostem",
+        "geojson": "2026-09-19/G-376-205.dat",
+        "markers": "2026-09-19/M-376-205.dat"
+    },
+    {
+        "name": "376/206 - Hukvaldy - Ostrava,Mor.Ostrava,Náměstí Republiky",
+        "geojson": "2026-09-19/G-376-206.dat",
+        "markers": "2026-09-19/M-376-206.dat"
+    },
+    {
+        "name": "376/208 - Hukvaldy - Ostrava,Mor.Ostrava,Náměstí Republiky",
+        "geojson": "2026-09-19/G-376-208.dat",
+        "markers": "2026-09-19/M-376-208.dat"
+    },
+    {
+        "name": "376/209 - Ostrava - Hukvaldy,Rychaltice,pod mostem",
+        "geojson": "2026-09-19/G-376-209.dat",
+        "markers": "2026-09-19/M-376-209.dat"
+    },
+    {
+        "name": "376/210 - Hukvaldy - Ostrava,Mor.Ostrava,Náměstí Republiky",
+        "geojson": "2026-09-19/G-376-210.dat",
+        "markers": "2026-09-19/M-376-210.dat"
+    },
+    {
+        "name": "376/211 - Ostrava - Brušperk,,střed",
+        "geojson": "2026-09-19/G-376-211.dat",
+        "markers": "2026-09-19/M-376-211.dat"
+    },
+    {
+        "name": "376/212 - Hukvaldy - Ostrava,Mor.Ostrava,Náměstí Republiky",
+        "geojson": "2026-09-19/G-376-212.dat",
+        "markers": "2026-09-19/M-376-212.dat"
+    },
+    {
+        "name": "376/213 - Ostrava - Hukvaldy,Rychaltice,pod mostem",
+        "geojson": "2026-09-19/G-376-213.dat",
+        "markers": "2026-09-19/M-376-213.dat"
+    },
+    {
+        "name": "376/214 - Hukvaldy - Ostrava,Mor.Ostrava,Náměstí Republiky",
+        "geojson": "2026-09-19/G-376-214.dat",
+        "markers": "2026-09-19/M-376-214.dat"
+    },
+    {
+        "name": "376/215 - Ostrava - Hukvaldy,Rychaltice,pod mostem",
+        "geojson": "2026-09-19/G-376-215.dat",
+        "markers": "2026-09-19/M-376-215.dat"
+    },
+    {
+        "name": "376/216 - Hukvaldy - Ostrava,Mor.Ostrava,Náměstí Republiky",
+        "geojson": "2026-09-19/G-376-216.dat",
+        "markers": "2026-09-19/M-376-216.dat"
+    },
+    {
+        "name": "376/218 - Hukvaldy - Ostrava,Mor.Ostrava,Náměstí Republiky",
+        "geojson": "2026-09-19/G-376-218.dat",
+        "markers": "2026-09-19/M-376-218.dat"
+    },
+    {
+        "name": "376/220 - Hukvaldy - Ostrava,Mor.Ostrava,Náměstí Republiky",
+        "geojson": "2026-09-19/G-376-220.dat",
+        "markers": "2026-09-19/M-376-220.dat"
+    },
+    {
+        "name": "632/203 - Kopřivnice - Mošnov,,Airport nádraží",
+        "geojson": "2026-09-19/G-632-203.dat",
+        "markers": "2026-09-19/M-632-203.dat"
+    },
+    {
+        "name": "632/204 - Mošnov - Kopřivnice,,aut.nádr.",
+        "geojson": "2026-09-19/G-632-204.dat",
+        "markers": "2026-09-19/M-632-204.dat"
+    },
+    {
+        "name": "632/205 - Kopřivnice - Mošnov,,Airport nádraží",
+        "geojson": "2026-09-19/G-632-205.dat",
+        "markers": "2026-09-19/M-632-205.dat"
+    },
+    {
+        "name": "632/255 - Kopřivnice - Mošnov,,Airport nádraží",
+        "geojson": "2026-09-19/G-632-255.dat",
+        "markers": "2026-09-19/M-632-255.dat"
+    },
+    {
+        "name": "633/201 - Kopřivnice - Frenštát p.Radh.,,žel.st.",
+        "geojson": "2026-09-19/G-633-201.dat",
+        "markers": "2026-09-19/M-633-201.dat"
+    },
+    {
+        "name": "633/202 - Frenštát p.Radh. - Kopřivnice,,aut.nádr.",
+        "geojson": "2026-09-19/G-633-202.dat",
+        "markers": "2026-09-19/M-633-202.dat"
+    },
+    {
+        "name": "633/203 - Kopřivnice - Frenštát p.Radh.,,u škol",
+        "geojson": "2026-09-19/G-633-203.dat",
+        "markers": "2026-09-19/M-633-203.dat"
+    },
+    {
+        "name": "633/204 - Frenštát p.Radh. - Kopřivnice,,aut.nádr.",
+        "geojson": "2026-09-19/G-633-204.dat",
+        "markers": "2026-09-19/M-633-204.dat"
+    },
+    {
+        "name": "633/205 - Kopřivnice - Veřovice,,nákup.stř.",
+        "geojson": "2026-09-19/G-633-205.dat",
+        "markers": "2026-09-19/M-633-205.dat"
+    },
+    {
+        "name": "633/206 - Veřovice - Kopřivnice,,aut.nádr.",
+        "geojson": "2026-09-19/G-633-206.dat",
+        "markers": "2026-09-19/M-633-206.dat"
+    },
+    {
+        "name": "634/201 - Kopřivnice - Frenštát p.Radh.,,žel.st.",
+        "geojson": "2026-09-19/G-634-201.dat",
+        "markers": "2026-09-19/M-634-201.dat"
+    },
+    {
+        "name": "634/203 - Kopřivnice - Frenštát p.Radh.,,u škol",
+        "geojson": "2026-09-19/G-634-203.dat",
+        "markers": "2026-09-19/M-634-203.dat"
+    },
+    {
+        "name": "634/205 - Kopřivnice - Frenštát p.Radh.,,u škol",
+        "geojson": "2026-09-19/G-634-205.dat",
+        "markers": "2026-09-19/M-634-205.dat"
+    },
+    {
+        "name": "634/207 - Kopřivnice - Frenštát p.Radh.,,u škol",
+        "geojson": "2026-09-19/G-634-207.dat",
+        "markers": "2026-09-19/M-634-207.dat"
+    },
+    {
+        "name": "634/209 - Kopřivnice - Frenštát p.Radh.,,u škol",
+        "geojson": "2026-09-19/G-634-209.dat",
+        "markers": "2026-09-19/M-634-209.dat"
+    },
+    {
+        "name": "634/211 - Kopřivnice - Frenštát p.Radh.,,u škol",
+        "geojson": "2026-09-19/G-634-211.dat",
+        "markers": "2026-09-19/M-634-211.dat"
+    },
+    {
+        "name": "634/213 - Kopřivnice - Frenštát p.Radh.,,u škol",
+        "geojson": "2026-09-19/G-634-213.dat",
+        "markers": "2026-09-19/M-634-213.dat"
+    },
+    {
+        "name": "634/214 - Frenštát p.Radh. - Kopřivnice,,aut.nádr.",
+        "geojson": "2026-09-19/G-634-214.dat",
+        "markers": "2026-09-19/M-634-214.dat"
+    },
+    {
+        "name": "634/215 - Kopřivnice - Frenštát p.Radh.,,žel.st.",
+        "geojson": "2026-09-19/G-634-215.dat",
+        "markers": "2026-09-19/M-634-215.dat"
+    },
+    {
+        "name": "634/217 - Kopřivnice - Frenštát p.Radh.,,u škol",
+        "geojson": "2026-09-19/G-634-217.dat",
+        "markers": "2026-09-19/M-634-217.dat"
+    },
+    {
+        "name": "641/207 - Kopřivnice - Ostrava,Mor.Ostrava,Náměstí Republiky",
+        "geojson": "2026-09-19/G-641-207.dat",
+        "markers": "2026-09-19/M-641-207.dat"
+    },
+    {
+        "name": "641/209 - Kopřivnice - Mošnov,,kulturní dům",
+        "geojson": "2026-09-19/G-641-209.dat",
+        "markers": "2026-09-19/M-641-209.dat"
+    },
+    {
+        "name": "641/211 - Kopřivnice - Ostrava,Mor.Ostrava,Náměstí Republiky",
+        "geojson": "2026-09-19/G-641-211.dat",
+        "markers": "2026-09-19/M-641-211.dat"
+    },
+    {
+        "name": "641/213 - Kopřivnice - Ostrava,Mor.Ostrava,Náměstí Republiky",
+        "geojson": "2026-09-19/G-641-213.dat",
+        "markers": "2026-09-19/M-641-213.dat"
+    },
+    {
+        "name": "641/215 - Kopřivnice - Ostrava,Mor.Ostrava,Náměstí Republiky",
+        "geojson": "2026-09-19/G-641-215.dat",
+        "markers": "2026-09-19/M-641-215.dat"
+    },
+    {
+        "name": "641/226 - Ostrava - Kopřivnice,,Tatra vrát.2",
+        "geojson": "2026-09-19/G-641-226.dat",
+        "markers": "2026-09-19/M-641-226.dat"
+    },
+    {
+        "name": "643/201 - Kopřivnice - Bartošovice,,rozc.k pískovně",
+        "geojson": "2026-09-19/G-643-201.dat",
+        "markers": "2026-09-19/M-643-201.dat"
+    },
+    {
+        "name": "643/203 - Kopřivnice - Bartošovice,,rozc.k pískovně",
+        "geojson": "2026-09-19/G-643-203.dat",
+        "markers": "2026-09-19/M-643-203.dat"
+    },
+    {
+        "name": "643/205 - Kopřivnice - Bartošovice,,obecní úřad",
+        "geojson": "2026-09-19/G-643-205.dat",
+        "markers": "2026-09-19/M-643-205.dat"
+    },
+    {
+        "name": "644/201 - Kopřivnice - Štramberk,Libotín,koupaliště",
+        "geojson": "2026-09-19/G-644-201.dat",
+        "markers": "2026-09-19/M-644-201.dat"
+    },
+    {
+        "name": "644/203 - Kopřivnice - Štramberk,Libotín,koupaliště",
+        "geojson": "2026-09-19/G-644-203.dat",
+        "markers": "2026-09-19/M-644-203.dat"
+    },
+    {
+        "name": "644/204 - Štramberk - Kopřivnice,,aut.nádr.",
+        "geojson": "2026-09-19/G-644-204.dat",
+        "markers": "2026-09-19/M-644-204.dat"
+    },
+    {
+        "name": "644/205 - Kopřivnice - Štramberk,Libotín,koupaliště",
+        "geojson": "2026-09-19/G-644-205.dat",
+        "markers": "2026-09-19/M-644-205.dat"
+    },
+    {
+        "name": "644/206 - Štramberk - Kopřivnice,,aut.nádr.",
+        "geojson": "2026-09-19/G-644-206.dat",
+        "markers": "2026-09-19/M-644-206.dat"
+    },
+    {
+        "name": "644/207 - Kopřivnice - Štramberk,Libotín,koupaliště",
+        "geojson": "2026-09-19/G-644-207.dat",
+        "markers": "2026-09-19/M-644-207.dat"
+    },
+    {
+        "name": "644/208 - Štramberk - Kopřivnice,,aut.nádr.",
+        "geojson": "2026-09-19/G-644-208.dat",
+        "markers": "2026-09-19/M-644-208.dat"
+    },
+    {
+        "name": "644/209 - Kopřivnice - Štramberk,Libotín,koupaliště",
+        "geojson": "2026-09-19/G-644-209.dat",
+        "markers": "2026-09-19/M-644-209.dat"
+    },
+    {
+        "name": "644/210 - Štramberk - Kopřivnice,,aut.nádr.",
+        "geojson": "2026-09-19/G-644-210.dat",
+        "markers": "2026-09-19/M-644-210.dat"
+    },
+    {
+        "name": "644/212 - Štramberk - Kopřivnice,,aut.nádr.",
+        "geojson": "2026-09-19/G-644-212.dat",
+        "markers": "2026-09-19/M-644-212.dat"
+    },
+    {
+        "name": "662/202 - Kopřivnice - Frýdek-Místek,Frýdek,aut.nádr.",
+        "geojson": "2026-09-19/G-662-202.dat",
+        "markers": "2026-09-19/M-662-202.dat"
+    },
+    {
+        "name": "690/202 - Kopřivnice - Nový Jičín,,aut.nádr.",
+        "geojson": "2026-09-19/G-690-202.dat",
+        "markers": "2026-09-19/M-690-202.dat"
+    },
+    {
+        "name": "690/204 - Kopřivnice - Nový Jičín,,aut.nádr.",
+        "geojson": "2026-09-19/G-690-204.dat",
+        "markers": "2026-09-19/M-690-204.dat"
+    },
+    {
+        "name": "690/206 - Kopřivnice - Nový Jičín,,aut.nádr.",
+        "geojson": "2026-09-19/G-690-206.dat",
+        "markers": "2026-09-19/M-690-206.dat"
+    },
+    {
+        "name": "690/208 - Kopřivnice - Nový Jičín,,aut.nádr.",
+        "geojson": "2026-09-19/G-690-208.dat",
+        "markers": "2026-09-19/M-690-208.dat"
+    },
+    {
+        "name": "690/210 - Kopřivnice - Nový Jičín,,aut.nádr.",
+        "geojson": "2026-09-19/G-690-210.dat",
+        "markers": "2026-09-19/M-690-210.dat"
+    },
+    {
+        "name": "690/212 - Kopřivnice - Nový Jičín,,aut.nádr.",
+        "geojson": "2026-09-19/G-690-212.dat",
+        "markers": "2026-09-19/M-690-212.dat"
+    },
+    {
+        "name": "690/214 - Kopřivnice - Nový Jičín,,aut.nádr.",
+        "geojson": "2026-09-19/G-690-214.dat",
+        "markers": "2026-09-19/M-690-214.dat"
+    },
+    {
+        "name": "690/216 - Kopřivnice - Nový Jičín,,aut.nádr.",
+        "geojson": "2026-09-19/G-690-216.dat",
+        "markers": "2026-09-19/M-690-216.dat"
+    },
+    {
+        "name": "690/218 - Kopřivnice - Nový Jičín,,aut.nádr.",
+        "geojson": "2026-09-19/G-690-218.dat",
+        "markers": "2026-09-19/M-690-218.dat"
+    },
+    {
+        "name": "690/220 - Kopřivnice - Nový Jičín,,aut.nádr.",
+        "geojson": "2026-09-19/G-690-220.dat",
+        "markers": "2026-09-19/M-690-220.dat"
+    },
+    {
+        "name": "690/221 - Nový Jičín - Kopřivnice,,Tymphany",
+        "geojson": "2026-09-19/G-690-221.dat",
+        "markers": "2026-09-19/M-690-221.dat"
+    },
+    {
+        "name": "697/206 - Kopřivnice - Nový Jičín,,aut.nádr.",
+        "geojson": "2026-09-19/G-697-206.dat",
+        "markers": "2026-09-19/M-697-206.dat"
+    },
+    {
+        "name": "697/210 - Kopřivnice - Nový Jičín,,aut.nádr.",
+        "geojson": "2026-09-19/G-697-210.dat",
+        "markers": "2026-09-19/M-697-210.dat"
+    },
+    {
+        "name": "697/214 - Kopřivnice - Nový Jičín,,aut.nádr.",
+        "geojson": "2026-09-19/G-697-214.dat",
+        "markers": "2026-09-19/M-697-214.dat"
+    },
+    {
+        "name": "697/218 - Kopřivnice - Nový Jičín,,aut.nádr.",
+        "geojson": "2026-09-19/G-697-218.dat",
+        "markers": "2026-09-19/M-697-218.dat"
+    },
+    {
+        "name": "697/219 - Nový Jičín - Kopřivnice,,Tymphany",
+        "geojson": "2026-09-19/G-697-219.dat",
+        "markers": "2026-09-19/M-697-219.dat"
+    }
+]
