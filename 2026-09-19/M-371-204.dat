@@ -1,0 +1,137 @@
+[
+    {
+        "name": "Hukvaldy,,hotel",
+        "lng": 18.2206394103287,
+        "lat": 49.6245094042334
+    },
+    {
+        "name": "Hukvaldy,Doln\u00ed Sklenov,rozc.",
+        "lng": 18.223897810343,
+        "lat": 49.6291044040033
+    },
+    {
+        "name": "Hukvaldy,Doln\u00ed Sklenov,\u0161kola",
+        "lng": 18.2203567102995,
+        "lat": 49.6312197037654
+    },
+    {
+        "name": "Hukvaldy,Doln\u00ed Sklenov,restaurace",
+        "lng": 18.2168925104477,
+        "lat": 49.6341142036027
+    },
+    {
+        "name": "Hukvaldy,Rychaltice,u dvora",
+        "lng": 18.218285609672,
+        "lat": 49.6429203042392
+    },
+    {
+        "name": "Hukvaldy,Rychaltice,pod mostem",
+        "lng": 18.2171503107811,
+        "lat": 49.650007804483
+    },
+    {
+        "name": "Fry\u010dovice,,Uheln\u00fd pr\u016fzkum",
+        "lng": 18.2227839100803,
+        "lat": 49.656458104355
+    },
+    {
+        "name": "Fry\u010dovice,,Chamr\u00e1d",
+        "lng": 18.2264589100606,
+        "lat": 49.6634844044867
+    },
+    {
+        "name": "Fry\u010dovice,,u Kone\u010dn\u00fdch",
+        "lng": 18.230509710479,
+        "lat": 49.6689742044301
+    },
+    {
+        "name": "Fry\u010dovice,,u brambor\u00e1rny",
+        "lng": 18.2327819105028,
+        "lat": 49.6786206041584
+    },
+    {
+        "name": "Fry\u010dovice,,koupali\u0161t\u011b",
+        "lng": 18.2276494105632,
+        "lat": 49.6857994043575
+    },
+    {
+        "name": "Bru\u0161perk,,u Chamr\u00e1d\u016f",
+        "lng": 18.2253492099051,
+        "lat": 49.6945636039942
+    },
+    {
+        "name": "Bru\u0161perk,,st\u0159ed",
+        "lng": 18.2239044106876,
+        "lat": 49.6984567039802
+    },
+    {
+        "name": "Bru\u0161perk,,Krmel\u00ednsk\u00e1",
+        "lng": 18.2222456100833,
+        "lat": 49.7030442043139
+    },
+    {
+        "name": "Bru\u0161perk,,Pet\u0159\u00edn",
+        "lng": 18.2332406103468,
+        "lat": 49.7100675038305
+    },
+    {
+        "name": "Krmel\u00edn,,Ben\u00e1tky",
+        "lng": 18.2358153101251,
+        "lat": 49.7292994038603
+    },
+    {
+        "name": "Krmel\u00edn,,u lesa",
+        "lng": 18.2385714103513,
+        "lat": 49.7392931042929
+    },
+    {
+        "name": "Ostrava,Nov\u00e1 B\u011bl\u00e1,Plze\u0148sk\u00e1 rozc.",
+        "lng": 18.2471842811593,
+        "lat": 49.7573537074753
+    },
+    {
+        "name": "Ostrava,Dubina",
+        "lng": 18.246435158288314,
+        "lat": 49.77055591523086
+    },
+    {
+        "name": "Ostrava,Hrab\u016fvka,Poliklinika",
+        "lng": 18.2595233742792,
+        "lat": 49.7846232489418
+    },
+    {
+        "name": "Ostrava,Hrab\u016fvka,D\u0159evoprodej",
+        "lng": 18.2719710096149,
+        "lat": 49.7921330041619
+    },
+    {
+        "name": "Ostrava,V\u00edtkovice,D\u016fl Jeremenko",
+        "lng": 18.2755970101323,
+        "lat": 49.8068850038661
+    },
+    {
+        "name": "Ostrava,V\u00edtkovice,\u010cesk\u00fd d\u016fm-M\u00edsteck\u00e1",
+        "lng": 18.275645309667,
+        "lat": 49.8133261043594
+    },
+    {
+        "name": "Ostrava,V\u00edtkovice,Doln\u00ed V\u00edtkovice",
+        "lng": 18.2759793892618,
+        "lat": 49.8184827107652
+    },
+    {
+        "name": "Ostrava,,\u017eel.st.st\u0159ed",
+        "lng": 18.28174275476044,
+        "lat": 49.8290991940184
+    },
+    {
+        "name": "Ostrava,Mor.Ostrava,Senov\u00e1\u017en\u00e1",
+        "lng": 18.2796090097137,
+        "lat": 49.8325590037379
+    },
+    {
+        "name": "Ostrava,Mor.Ostrava,N\u00e1m\u011bst\u00ed Republiky",
+        "lng": 18.280222110328822,
+        "lat": 49.830215167715444
+    }
+]

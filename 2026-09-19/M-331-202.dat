@@ -1,0 +1,97 @@
+[
+    {
+        "name": "Mo\u0161nov,,Airport n\u00e1dra\u017e\u00ed",
+        "lng": 18.1196024935753,
+        "lat": 49.6936849670003
+    },
+    {
+        "name": "Sedlnice,,PZ Mo\u0161nov Contera Park",
+        "lng": 18.0988250100518,
+        "lat": 49.6786570041896
+    },
+    {
+        "name": "Sedlnice,,PZ Mo\u0161nov OAMP 2",
+        "lng": 18.106048733988278,
+        "lat": 49.67381771960901
+    },
+    {
+        "name": "Mo\u0161nov,,PZ Mobis",
+        "lng": 18.1166812095618,
+        "lat": 49.6802674871207
+    },
+    {
+        "name": "Mo\u0161nov,,OAMP",
+        "lng": 18.1071794848776,
+        "lat": 49.6818398517447
+    },
+    {
+        "name": "Mo\u0161nov,,PZ Cromodora",
+        "lng": 18.1105415408748,
+        "lat": 49.6845658194429
+    },
+    {
+        "name": "Mo\u0161nov,,PZ BEHR",
+        "lng": 18.1163689562879,
+        "lat": 49.6883189053115
+    },
+    {
+        "name": "Mo\u0161nov,,Airport n\u00e1dra\u017e\u00ed",
+        "lng": 18.1203772183352,
+        "lat": 49.6940743371264
+    },
+    {
+        "name": "Star\u00e1 Ves n.Ond\u0159.,,k\u0159i\u017e.",
+        "lng": 18.1955628103696,
+        "lat": 49.7269622042605
+    },
+    {
+        "name": "Krmel\u00edn,,Sv\u011btlov",
+        "lng": 18.225506709977,
+        "lat": 49.7331983037857
+    },
+    {
+        "name": "Krmel\u00edn,,u lesa",
+        "lng": 18.2385714103513,
+        "lat": 49.7392931042929
+    },
+    {
+        "name": "Ostrava,Nov\u00e1 B\u011bl\u00e1,Plze\u0148sk\u00e1 rozc.",
+        "lng": 18.2471842811593,
+        "lat": 49.7573537074753
+    },
+    {
+        "name": "Ostrava,Dubina",
+        "lng": 18.246435158288314,
+        "lat": 49.77055591523086
+    },
+    {
+        "name": "Ostrava,Star\u00e1 B\u011bl\u00e1,B\u011blsk\u00fd les",
+        "lng": 18.2459628097508,
+        "lat": 49.7822956041213
+    },
+    {
+        "name": "Ostrava,Z\u00e1b\u0159eh,Hotel B\u011blsk\u00fd les",
+        "lng": 18.2487033095278,
+        "lat": 49.7925614043809
+    },
+    {
+        "name": "Ostrava,Nov\u00e1 Ves,vod\u00e1rna",
+        "lng": 18.2342314599935,
+        "lat": 49.8255383859893
+    },
+    {
+        "name": "Ostrava,Mor.Ostrava,N\u00e1kladn\u00ed",
+        "lng": 18.2594781101886,
+        "lat": 49.8406333042425
+    },
+    {
+        "name": "Ostrava,P\u0159\u00edvoz,sad B.N\u011bmcov\u00e9",
+        "lng": 18.2796486516608,
+        "lat": 49.8503566236108
+    },
+    {
+        "name": "Ostrava,Mor.Ostrava,Muglinovsk\u00e1",
+        "lng": 18.2787356106189,
+        "lat": 49.8484717039456
+    }
+]
