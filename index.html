@@ -137,6 +137,7 @@
     
       styleLayers.forEach(layer => {
         const id = layer.id.toLowerCase();
+        const sourceLayer = layer['source-layer'];
     
         // 1. Háttér és víz besötétítése
         if (layer.type === 'background') {
@@ -179,7 +180,26 @@
             }
           }
         }
-    
+
+        if (layer.type === 'symbol' && sourceLayer === 'transportation_name') {
+        
+              // A) Engedékenyebb kanyarodási szög (alapból 30°, 60°-nál a kanyargós falusi utcákon is kiírja)
+              map.setLayoutProperty(layer.id, 'text-max-angle', 60);
+        
+              // B) Kisebb szövegkörnyéki margó (így sűrűbb kereszteződésekben is elfér a név)
+              map.setLayoutProperty(layer.id, 'text-padding', 2);
+        
+              // C) Címkék közötti távolság csökkentése a vonal mentén
+              map.setLayoutProperty(layer.id, 'symbol-spacing', 150);
+        
+              // D) Megjelenítés alacsonyabb zoom szinttől (már 13-14-es zoomnál is látszódjanak a mellékutcák)
+              map.setLayerZoomRange(layer.id, 12, 24);
+        
+              // E) (Opcionális) Ha nagyon hiányosnak érzed, engedélyezheted az átfedést is:
+              // map.setLayoutProperty(layer.id, 'text-allow-overlap', true);
+            }
+
+        
         // 5. Utcanevek és helynevek: Világossárga szöveg + fekete glória
         if (layer.type === 'symbol') {
           map.setLayoutProperty(layer.id, 'visibility', 'visible');
