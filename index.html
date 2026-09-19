@@ -135,7 +135,7 @@
     
     // 2. Rétegek testreszabása a stílus betöltése után
     map.on('style.load', () => {
-      const styleLayers = map.getStyle().layers;
+    const styleLayers = map.getStyle().layers;
     
       styleLayers.forEach(layer => {
         const id = layer.id.toLowerCase();
@@ -156,43 +156,42 @@
           map.setLayoutProperty(layer.id, 'visibility', 'none');
         }
     
-        // 3. Vasútvonalak: Neon narancs
+        // 3. Vasútvonalak: Muted narancs
         if (id.includes('rail') || id.includes('railway')) {
           map.setLayoutProperty(layer.id, 'visibility', 'visible');
           if (layer.type === 'line') {
-            map.setPaintProperty(layer.id, 'line-color', '#ff9f0a');
-            map.setPaintProperty(layer.id, 'line-width', 2.5);
+            map.setPaintProperty(layer.id, 'line-color', '#d97706');
+            map.setPaintProperty(layer.id, 'line-width', 2);
           }
         }
     
-        // 4. Úthálózat vonalai
+        // 4. Úthálózat vonalai (Sötétítve #38414E árnyalatra a #90EE90 kiemeléséhez)
         if (id.includes('highway') || id.includes('road') || id.includes('street') || id.includes('bridge') || id.includes('tunnel')) {
           if (layer.type === 'line') {
-            if (id.includes('motorway') || id.includes('trunk')) {
-              map.setPaintProperty(layer.id, 'line-color', '#ffd60a');
-              map.setPaintProperty(layer.id, 'line-width', 3);
+            // Főutak és autópályák
+            if (id.includes('motorway') || id.includes('trunk') || id.includes('primary') || id.includes('secondary')) {
+              map.setPaintProperty(layer.id, 'line-color', '#38414E');
+              map.setPaintProperty(layer.id, 'line-width', 2.5);
               map.setPaintProperty(layer.id, 'line-opacity', 1.0);
-            } else if (id.includes('primary') || id.includes('secondary')) {
-              map.setPaintProperty(layer.id, 'line-color', '#ffffff');
-              map.setPaintProperty(layer.id, 'line-width', 2);
-              map.setPaintProperty(layer.id, 'line-opacity', 1.0);
-            } else {
-              map.setPaintProperty(layer.id, 'line-color', '#7a8b9e');
+            } 
+            // Mellékutcák és helyi utak (kissé visszafogottabb árnyalat)
+            else {
+              map.setPaintProperty(layer.id, 'line-color', '#2a323d');
               map.setPaintProperty(layer.id, 'line-opacity', 0.85);
             }
           }
         }
     
-        // 5. Utcanevek és helynevek: Világossárga szöveg + vastag fekete glória
+        // 5. Utcanevek és helynevek: Világossárga szöveg + fekete glória
         if (layer.type === 'symbol') {
           map.setLayoutProperty(layer.id, 'visibility', 'visible');
     
           try {
-            map.setPaintProperty(layer.id, 'text-color', '#fff380');      // Világossárga felirat
-            map.setPaintProperty(layer.id, 'text-halo-color', '#000000'); // Éles fekete kontúr
-            map.setPaintProperty(layer.id, 'text-halo-width', 2.2);       // Megnövelt glória a maximális kontraszthoz
+            map.setPaintProperty(layer.id, 'text-color', '#fff380');
+            map.setPaintProperty(layer.id, 'text-halo-color', '#000000');
+            map.setPaintProperty(layer.id, 'text-halo-width', 2.0);
           } catch (e) {
-            // Csupán ikont tartalmazó rétegek kihagyása
+            // Csupán ikont tartalmazó rétegek
           }
         }
       });
