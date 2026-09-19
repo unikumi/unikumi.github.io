@@ -310,6 +310,8 @@
     let smoothedHeading = 0;
     let isHeadingInitialized = false;
     let lastOrientationTime = 0;
+    let anchorLocation = null; // A legutóbbi stabil horgonypont
+    let isAnchored = true;     // Alapértelmezetten horgonyozva vagyunk
     
     // 1. Továbbfejlesztett szűrő füstgátlóval és tüske-kiszűréssel
     function filterHeading(rawHeading) {
@@ -321,7 +323,23 @@
         isHeadingInitialized = true;
         return smoothedHeading;
       }
-    
+
+      // Távolság kiszámítása két koordináta [lng, lat] között méterben
+      function getDistanceInMeters(coord1, coord2) {
+        if (!coord1 || !coord2) return 0;
+        const [lng1, lat1] = coord1;
+        const [lng2, lat2] = coord2;
+        const R = 6371000; // Föld sugara méterben
+        const dLat = (lat2 - lat1) * Math.PI / 180;
+        const dLng = (lng2 - lng1) * Math.PI / 180;
+        const a = Math.sin(dLat / 2) * Math.sin(dLat / 2) +
+                  Math.cos(lat1 * Math.PI / 180) * Math.cos(lat2 * Math.PI / 180) *
+                  Math.sin(dLng / 2) * Math.sin(dLng / 2);
+        const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+        return R * c;
+      }
+
+      
       // Legrövidebb elfordulási ív kiszámítása (-180° és +180° között)
       let diff = rawHeading - smoothedHeading;
       while (diff < -180) diff += 360;
@@ -374,20 +392,41 @@
       }
     }
 
+
     if ('geolocation' in navigator) {
       navigator.geolocation.watchPosition(
         (pos) => {
-          userLocation = [pos.coords.longitude, pos.coords.latitude];
+          const newLocation = [pos.coords.longitude, pos.coords.latitude];
     
-          // Sebesség kiszámítása km/h-ban (pos.coords.speed m/s-ban van)
-          if (pos.coords.speed !== null && !isNaN(pos.coords.speed) && pos.coords.speed >= 0) {
-            userSpeedKmH = pos.coords.speed * 3.6;
-          } else {
-            userSpeedKmH = 0;
+          // Első méréskor rögzítjük a horgonyt
+          if (!anchorLocation) {
+            anchorLocation = newLocation;
           }
     
-          // Ha a GPS ad pontos irányt (pos.coords.heading), haladás közben az is használható
-          if (pos.coords.heading !== null && !isNaN(pos.coords.heading)) {
+          // Kiszámoljuk a távolságot a horgonyponttól méterben
+          const distFromAnchor = getDistanceInMeters(newLocation, anchorLocation);
+    
+          // --- 10 MÉTERES HOLTTÉR / HORGONYZÁS VIZSGÁLATA ---
+          if (distFromAnchor < 10) {
+            // 10 méteren belül vagyunk -> HORGONYON VAGYUNK
+            // A pozíciót (pontot) finoman frissíthetjük, de a forgatást letiltjuk
+            isAnchored = true;
+            userSpeedKmH = 0; // Álló helyzetnek tekintjük
+          } else {
+            // Eltávolodtunk legalább 10 métert -> TÉNYLEGES MOZGÁS TÖRTÉNT
+            anchorLocation = newLocation; // Új horgonypont kitűzése
+            isAnchored = false;
+    
+            // Sebesség számítása km/h-ban
+            if (pos.coords.speed !== null && !isNaN(pos.coords.speed) && pos.coords.speed >= 0) {
+              userSpeedKmH = pos.coords.speed * 3.6;
+            }
+          }
+    
+          userLocation = newLocation;
+    
+          // Ha van pontos GPS irány ÉS nem vagyunk horgonyon, frissítjük az irányt
+          if (!isAnchored && pos.coords.heading !== null && !isNaN(pos.coords.heading)) {
             userHeading = filterHeading(pos.coords.heading);
           }
     
@@ -577,6 +616,8 @@
 
     // 2. Gyroskóp / Kompassz eseménykezelő (Álló helyzeti tájolás)
     function handleOrientation(e) {
+      // HA 10 MÉTEREN BELÜL VAGYUNK: Teljesen elutasítunk minden iránytű/giroszkóp jelet!
+      if (isAnchored) return;
       const now = Date.now();
       // Ha még nem telt el 100 ms az utolsó frissítés óta, figyelmen kívül hagyjuk az eseményt
       if (now - lastOrientationTime < 100) return;
