@@ -306,6 +306,40 @@
     let interactionTimeout = null;
     let wakeLock = null;
     let userSpeedKmH = 0; // Globális változó a sebességnek
+    let smoothedHeading = 0;
+    let isHeadingInitialized = false;
+    
+    // Iránytű/GPS szög simítása és a rezgés kiszűrése (Low-pass filter + Deadband)
+    function filterHeading(rawHeading) {
+      if (rawHeading === null || isNaN(rawHeading)) return smoothedHeading;
+    
+      // Első méréskor azonnal felvesszük a kezdőértéket
+      if (!isHeadingInitialized) {
+        smoothedHeading = rawHeading;
+        isHeadingInitialized = true;
+        return smoothedHeading;
+      }
+    
+      // Legrövidebb elfordulási szög kiszámítása (-180° és +180° között)
+      let diff = rawHeading - smoothedHeading;
+      while (diff < -180) diff += 360;
+      while (diff > 180) diff -= 360;
+    
+      // 1. HOLTSÁV (Deadband): 
+      // Álló helyzetben (<= 5 km/h) a 4 foknál kisebb rezgéseket teljesen figyelmen kívül hagyjuk.
+      // Haladás közben érzékenyebbre (1.5 fokra) állítjuk.
+      const threshold = (userSpeedKmH <= 5) ? 4.0 : 1.5;
+    
+      if (Math.abs(diff) > threshold) {
+        // 2. EXPONENCIÁLIS SIMÍTÁS (EMA):
+        // Álló helyzetben finomabb, lassabb átmenet (0.1), mozgásban gyorsabb (0.25)
+        const alpha = (userSpeedKmH <= 5) ? 0.1 : 0.25;
+        
+        smoothedHeading = (smoothedHeading + diff * alpha + 360) % 360;
+      }
+    
+      return smoothedHeading;
+    }
 
     // Képernyőzár bekapcsolása
     async function requestWakeLock() {
@@ -341,7 +375,7 @@
     
           // Ha a GPS ad pontos irányt (pos.coords.heading), haladás közben az is használható
           if (pos.coords.heading !== null && !isNaN(pos.coords.heading)) {
-            userHeading = pos.coords.heading;
+            userHeading = filterHeading(pos.coords.heading);
           }
     
           updatePositionAndBearing();
@@ -530,14 +564,16 @@
 
     // 2. Gyroskóp / Kompassz eseménykezelő (Álló helyzeti tájolás)
     function handleOrientation(e) {
-      let heading = null;
+      let rawHeading = null;
       if (e.webkitCompassHeading !== undefined) {
-        heading = e.webkitCompassHeading; // iOS
+        rawHeading = e.webkitCompassHeading;
       } else if (e.alpha !== null) {
-        heading = 360 - e.alpha; // Android
+        rawHeading = 360 - e.alpha;
       }
-      if (heading !== null) {
-        userHeading = heading;
+    
+      if (rawHeading !== null) {
+        // A nyers értéket kiszűrve adjuk át a globális userHeading változónak
+        userHeading = filterHeading(rawHeading);
         updatePositionAndBearing();
       }
     }
