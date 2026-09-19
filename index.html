@@ -59,36 +59,34 @@
         /* Szükség esetén az emoji színét filterrel lehet igazítani, de alapesetben jól látható */
       }
 
-    /* Pont és felirat glória stílusa (Python HTML/CSS mintájára) */
-    .marker-container {
-      display: flex;
-      align-items: center;
-      pointer-events: none;
-      transform: translate(-6px, -6px);
-    }
-
-    .marker-dot {
-      width: 10px;
-      height: 10px;
-      background-color: white;
-      border: 2px solid #21e077;
-      border-radius: 50%;
-      box-shadow: 0 0 2px rgba(0,0,0,0.4);
-      flex-shrink: 0;
-    }
-
-    .label-text {
-      color: #21e077;
-      font-size: 12px;
-      font-weight: bold;
-      white-space: nowrap;
-      margin-left: 6px;
-      text-shadow:
-        -1px -1px 0 white,
-         1px -1px 0 white,
-        -1px  1px 0 white,
-         1px  1px 0 white;
-    }
+      /* Markerek finomított, grafit-szürke világba illő stílusa */
+      .marker-container {
+        display: flex;
+        align-items: center;
+        gap: 6px;
+      }
+      
+      /* A pont közepe éles fehér helyett matt szürkésfehér */
+      .marker-dot {
+        width: 10px;
+        height: 10px;
+        background-color: #cbd5e1;       /* Matt szürkésfehér mag */
+        border: 2px solid #38414E;       /* Az utak szürke színével megegyező keret */
+        border-radius: 50%;
+        box-shadow: 0 0 6px rgba(0, 0, 0, 0.6);
+      }
+      
+      /* A megállóhely/pont neve mögötti kártya */
+      .label-text {
+        color: #cbd5e1;                  /* Lágy szürke felirat */
+        font-size: 11px;
+        font-family: sans-serif;
+        background: rgba(24, 30, 42, 0.85); /* Féláttetsző sötét palaszürke háttér */
+        padding: 2px 6px;
+        border-radius: 4px;
+        border: 1px solid #38414E;       /* Vékony szürke keret */
+        white-space: nowrap;
+      }
 
     /* Saját pozíció nyilacska (Bearing mutató) */
     .user-marker {
