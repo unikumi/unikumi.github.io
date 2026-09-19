@@ -1,0 +1,107 @@
+[
+    {
+        "name": "Fren\u0161t\u00e1t p.Radh.,,u \u0161kol",
+        "lng": 18.213772250331,
+        "lat": 49.5460431930191
+    },
+    {
+        "name": "Fren\u0161t\u00e1t p.Radh.,,Doln\u00ed",
+        "lng": 18.203420810382,
+        "lat": 49.5502711036647
+    },
+    {
+        "name": "Lichnov,,u P\u0159ibyl\u016f",
+        "lng": 18.1911981100201,
+        "lat": 49.5540033036742
+    },
+    {
+        "name": "Lichnov,,Na B\u0159ezin\u00e1ch",
+        "lng": 18.1779439108193,
+        "lat": 49.55210330381
+    },
+    {
+        "name": "Bordovice,,rozc.",
+        "lng": 18.1604527160909,
+        "lat": 49.549153259367
+    },
+    {
+        "name": "Lichnov,,Zeman\u016fv most",
+        "lng": 18.1649058105507,
+        "lat": 49.558369704429
+    },
+    {
+        "name": "Lichnov,,obecn\u00ed \u00fa\u0159ad",
+        "lng": 18.1703747103013,
+        "lat": 49.5642467035764
+    },
+    {
+        "name": "Lichnov,,Doln\u00ed dr\u00e1hy",
+        "lng": 18.1794836106828,
+        "lat": 49.5702794039647
+    },
+    {
+        "name": "Lichnov,,rest.Na Okluku",
+        "lng": 18.1826453103933,
+        "lat": 49.5747656044336
+    },
+    {
+        "name": "Tich\u00e1,,rozc.Tich\u00e1",
+        "lng": 18.188018508102,
+        "lat": 49.5813161302615
+    },
+    {
+        "name": "Kop\u0159ivnice,Vl\u010dovice,u mostu",
+        "lng": 18.1907689103875,
+        "lat": 49.5871756037239
+    },
+    {
+        "name": "Kop\u0159ivnice,Vl\u010dovice,u kostela",
+        "lng": 18.1914925106998,
+        "lat": 49.5917664038587
+    },
+    {
+        "name": "Kop\u0159ivnice,Vl\u010dovice,rozc.",
+        "lng": 18.189297810635,
+        "lat": 49.5977672043475
+    },
+    {
+        "name": "Kop\u0159ivnice,Mni\u0161\u00ed,st\u0159ed",
+        "lng": 18.1967254557853,
+        "lat": 49.6002259182413
+    },
+    {
+        "name": "Kop\u0159ivnice,Vl\u010dovice,rozc.Mni\u0161\u00ed",
+        "lng": 18.1891153106627,
+        "lat": 49.598415604381
+    },
+    {
+        "name": "Kop\u0159ivnice,Vl\u010dovice,Z\u00e1b\u0159e\u017eky",
+        "lng": 18.1797800104196,
+        "lat": 49.6022061036217
+    },
+    {
+        "name": "Kop\u0159ivnice,Lubina,rozc.",
+        "lng": 18.1625713512245,
+        "lat": 49.6119973922814
+    },
+    {
+        "name": "Kop\u0159ivnice,,\u010cs.arm\u00e1dy",
+        "lng": 18.1438350095747,
+        "lat": 49.6010500041591
+    },
+    {
+        "name": "Kop\u0159ivnice,,\u017eel.st.",
+        "lng": 18.1452825105415,
+        "lat": 49.5958531039207
+    },
+    {
+        "name": "Kop\u0159ivnice,,Kaufland",
+        "lng": 18.1477031105878,
+        "lat": 49.6009019044949
+    },
+    {
+        "name": "Kop\u0159ivnice,,aut.n\u00e1dr.",
+        "lng": 18.1472200105444,
+        "lat": 49.6042431038499
+    }
+]
