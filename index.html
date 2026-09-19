@@ -308,34 +308,46 @@
     let userSpeedKmH = 0; // Globális változó a sebességnek
     let smoothedHeading = 0;
     let isHeadingInitialized = false;
+    let lastOrientationTime = 0;
     
-    // Iránytű/GPS szög simítása és a rezgés kiszűrése (Low-pass filter + Deadband)
+    // 1. Továbbfejlesztett szűrő füstgátlóval és tüske-kiszűréssel
     function filterHeading(rawHeading) {
       if (rawHeading === null || isNaN(rawHeading)) return smoothedHeading;
     
-      // Első méréskor azonnal felvesszük a kezdőértéket
+      // Kezdőérték rögzítése
       if (!isHeadingInitialized) {
         smoothedHeading = rawHeading;
         isHeadingInitialized = true;
         return smoothedHeading;
       }
     
-      // Legrövidebb elfordulási szög kiszámítása (-180° és +180° között)
+      // Legrövidebb elfordulási ív kiszámítása (-180° és +180° között)
       let diff = rawHeading - smoothedHeading;
       while (diff < -180) diff += 360;
       while (diff > 180) diff -= 360;
     
-      // 1. HOLTSÁV (Deadband): 
-      // Álló helyzetben (<= 5 km/h) a 4 foknál kisebb rezgéseket teljesen figyelmen kívül hagyjuk.
-      // Haladás közben érzékenyebbre (1.5 fokra) állítjuk.
-      const threshold = (userSpeedKmH <= 5) ? 4.0 : 1.5;
+      const absDiff = Math.abs(diff);
     
-      if (Math.abs(diff) > threshold) {
-        // 2. EXPONENCIÁLIS SIMÍTÁS (EMA):
-        // Álló helyzetben finomabb, lassabb átmenet (0.1), mozgásban gyorsabb (0.25)
-        const alpha = (userSpeedKmH <= 5) ? 0.1 : 0.25;
-        
-        smoothedHeading = (smoothedHeading + diff * alpha + 360) % 360;
+      // A) ÁLLÓ HELYZETBEN (<= 3 km/h)
+      if (userSpeedKmH <= 3) {
+        // Ha álló helyzetben a szög hirtelen akkorát ugrik (> 35°), az 99%, hogy szenzorzaj/dőlési hiba:
+        // Ezt TELJESEN ELDOBJUK, nem engedjük megpördülni a nyilat!
+        if (absDiff > 35) {
+          return smoothedHeading;
+        }
+    
+        // Csak akkor engedünk korrekciót, ha a változás legalább 5 fokos (valódi elfordulás),
+        // de az átmenetet nagyon lassúra/finomra tesszük (0.05)
+        if (absDiff > 5.0) {
+          smoothedHeading = (smoothedHeading + diff * 0.05 + 360) % 360;
+        }
+      } 
+      // B) MOZGÁS KÖZBEN (> 3 km/h)
+      else {
+        // Haladás közben érzékenyebbek vagyunk (1.5° küszöb) és gyorsabb a követés (0.2)
+        if (absDiff > 1.5) {
+          smoothedHeading = (smoothedHeading + diff * 0.2 + 360) % 360;
+        }
       }
     
       return smoothedHeading;
@@ -564,15 +576,22 @@
 
     // 2. Gyroskóp / Kompassz eseménykezelő (Álló helyzeti tájolás)
     function handleOrientation(e) {
+      const now = Date.now();
+      // Ha még nem telt el 100 ms az utolsó frissítés óta, figyelmen kívül hagyjuk az eseményt
+      if (now - lastOrientationTime < 100) return;
+      lastOrientationTime = now;
+    
       let rawHeading = null;
+    
       if (e.webkitCompassHeading !== undefined) {
+        // iOS Safari támogatás
         rawHeading = e.webkitCompassHeading;
       } else if (e.alpha !== null) {
+        // Android Chrome támogatás
         rawHeading = 360 - e.alpha;
       }
     
       if (rawHeading !== null) {
-        // A nyers értéket kiszűrve adjuk át a globális userHeading változónak
         userHeading = filterHeading(rawHeading);
         updatePositionAndBearing();
       }
