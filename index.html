@@ -535,48 +535,46 @@
       fitDataBounds(geojsonData, markersData || []);
     }
 
-    // Felhasználói beavatkozás érzékelése és 5 mp-es időzítő indítása
-    function handleUserInteraction() {
+    // 1. Felhasználói beavatkozás szigorú szűrése (Csak VALÓDI emberi gesztusra reagál!)
+    function handleUserInteraction(e) {
+      // Ha a mozgást a kód/animáció okozta (nincs originalEvent), figyelmen kívül hagyjuk
+      if (!e || !e.originalEvent) return;
       if (!isFollowing) return;
     
+      // Emberi touch/drag történt: AZONNAL átadjuk a teljes vezérlést a felhasználónak
       userInteracting = true;
-      //map.stop(); // Megállítjuk a folyamatban lévő easeTo animációt, hogy ne küzdjön a gesztussal!
+      map.stop(); // Azonnal leállítjuk az esetlegesen futó gépi kameramozgást
     
+      // Időzítő újraindítása az UTOLSÓ gesztustól számítva
       if (interactionTimeout) {
         clearTimeout(interactionTimeout);
       }
     
-      // 5 másodperc (5000 ms) tétlenség után újra centralizálunk
+      // 5 másodperc (5000 ms) teljes tétlenség után visszaállítjuk az automatikus nézetet
       interactionTimeout = setTimeout(() => {
         userInteracting = false;
         
-        // Sima animációval visszatérünk a felhasználó pozíciójához és tájolásához
         if (isFollowing && userLocation) {
-          // Itt is vizsgáljuk, hogy 5 km/h felett vagyunk-e
-          //const targetBearing = (userSpeedKmH > 5) ? userHeading : map.getBearing();  
-          //map.easeTo({
-          //  center: userLocation,
-          //  bearing: userHeading,
-          //  duration: 1000 // 1 másodperces lágy animáció
-          //});
+          // Visszatéréskor KÉNYSZERÍTJÜK a bearing és a pozíció helyreállítását (forceBearingUpdate = true)
           updatePositionAndBearing(true);
         }
       }, 5000);
     }
     
-    // Gesztusok / interakciók figyelése a térképen
+    // Kizárólag a valódi felhasználói gesztusok kezdetét figyeljük
     map.on('dragstart', handleUserInteraction);
-    map.on('rotatestart', handleUserInteraction);
     map.on('zoomstart', handleUserInteraction);
+    map.on('rotatestart', handleUserInteraction);
     map.on('pitchstart', handleUserInteraction);
+    map.on('touchstart', handleUserInteraction);
     
-    // 1. Pozíció és Tájolás frissítése (Finom animációval és feltételes bearing-gel)
+    // 2. Pozíció és Tájolás frissítése
     function updatePositionAndBearing(forceBearingUpdate = false) {
       if (!userLocation || isNaN(userLocation[0]) || isNaN(userLocation[1])) return;
     
       const safeHeading = (typeof userHeading === 'number' && !isNaN(userHeading)) ? userHeading : 0;
     
-      // A pozíciójelző marker frissítése
+      // A pozíciójelző nyíl mindentől függetlenül frissül a képernyőn (akkor is, ha a felhasználó elgördítette a térképet)
       if (!userMarker) {
         userMarker = new maplibregl.Marker({ 
           element: userMarkerEl,
@@ -590,28 +588,29 @@
         userMarker.setRotation(safeHeading);
       }
     
-      // Térkép követési animációja
-      if (isFollowing && !userInteracting) {
-        
-        // BEARING (Elforgatás) logikája:
-        // Csak akkor forgatjuk el a térképet, ha > 5 km/h a sebesség, VAGY ha indítás/visszatérés van (forceBearingUpdate)
-        let targetBearing = map.getBearing(); // Alapesetben megtartjuk a jelenlegi térképorientációt
-    
-        if (userSpeedKmH > 5 || forceBearingUpdate) {
-          targetBearing = safeHeading;
-        }
-    
-        // Finom, lágy siklás az új pozícióra
-        map.easeTo({
-          center: userLocation,
-          bearing: targetBearing,
-          duration: 800,         // 800 ms átmenet a GPS frissítések között (simává teszi a mozgást)
-          easing: (t) => t,      // Lineáris átmenet, így nem akadozik a folyamatos mozgás
-          essential: true
-        });
+      // HA A FELHASZNÁLÓ ÉPPEN VEZÉRLI A TÉRKÉPET: A kód TELJESEN BÉKÉN HAGYJA a kamerát!
+      if (!isFollowing || userInteracting) {
+        return;
       }
+    
+      // AUTOMATIKUS KÖVETÉSI MÓD (Amikor a gép vezérel):
+      let targetBearing = map.getBearing();
+    
+      // A bearing-et (elforgatást) csak 5 km/h felett, vagy visszatéréskor (forceBearingUpdate) frissítjük
+      if (userSpeedKmH > 5 || forceBearingUpdate) {
+        targetBearing = safeHeading;
+      }
+    
+      // Finom, lágy siklás az új koordinátára
+      map.easeTo({
+        center: userLocation,
+        bearing: targetBearing,
+        duration: 800,
+        easing: (t) => t, // Lineáris átmenet
+        essential: true
+      });
     }
-
+    
     // 1. Geolocation API (GPS nyomkövetés)
     if ('geolocation' in navigator) {
       navigator.geolocation.watchPosition(
@@ -678,7 +677,7 @@
           //map.flyTo({ center: userLocation, bearing: userHeading, zoom: 16 });
           updatePositionAndBearing(true);
         }
-        updatePositionAndBearing();
+        //updatePositionAndBearing();
       } else {
         releaseWakeLock();
         if (interactionTimeout) clearTimeout(interactionTimeout);
