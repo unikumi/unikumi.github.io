@@ -312,7 +312,9 @@
     let lastOrientationTime = 0;
     let anchorLocation = null; // A legutóbbi stabil horgonypont
     let isAnchored = true;     // Alapértelmezetten horgonyozva vagyunk
-
+    
+    const mapCanvas = map.getCanvas();
+    
     // --- 1. Felhasználói interakció kezdete (AZONNALI átadás) ---
     function onInteractionStart() {
       if (!isFollowing) return;
@@ -351,8 +353,8 @@
     // --- Eseményfigyelők ráültetése a térkép vásznára (Canvas) ---
     
     // Érintés / Kattintás kezdete (Még az elmozdulás ELŐTT elkapja!)
-    window.addEventListener('pointerdown', onInteractionStart);
-    window.addEventListener('touchstart', onInteractionStart, { passive: true });
+    mapCanvas.addEventListener('pointerdown', onInteractionStart);
+    mapCanvas.addEventListener('touchstart', onInteractionStart, { passive: true });
     
     // Érintés / Kattintás vége (Az egész ablakon figyeljük, ha a kijelző szélén engedné el)
     window.addEventListener('pointerup', onInteractionEnd);
