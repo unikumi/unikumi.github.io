@@ -351,8 +351,8 @@
     // --- Eseményfigyelők ráültetése a térkép vásznára (Canvas) ---
     
     // Érintés / Kattintás kezdete (Még az elmozdulás ELŐTT elkapja!)
-    mapCanvas.addEventListener('pointerdown', onInteractionStart);
-    mapCanvas.addEventListener('touchstart', onInteractionStart, { passive: true });
+    window.addEventListener('pointerdown', onInteractionStart);
+    window.addEventListener('touchstart', onInteractionStart, { passive: true });
     
     // Érintés / Kattintás vége (Az egész ablakon figyeljük, ha a kijelző szélén engedné el)
     window.addEventListener('pointerup', onInteractionEnd);
@@ -360,7 +360,7 @@
     window.addEventListener('touchcancel', onInteractionEnd);
     
     // Görgőzés (egér / touchpad esetén)
-    mapCanvas.addEventListener('wheel', () => {
+    window.addEventListener('wheel', () => {
       onInteractionStart();
       onInteractionEnd();
     }, { passive: true });
