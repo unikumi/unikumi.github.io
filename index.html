@@ -312,6 +312,58 @@
     let lastOrientationTime = 0;
     let anchorLocation = null; // A legutóbbi stabil horgonypont
     let isAnchored = true;     // Alapértelmezetten horgonyozva vagyunk
+
+    // --- 1. Felhasználói interakció kezdete (AZONNALI átadás) ---
+    function onInteractionStart() {
+      if (!isFollowing) return;
+    
+      // Azonnal átadjuk a teljes vezérlést a felhasználónak
+      userInteracting = true;
+    
+      // Töröljük a korábbi visszatérési időzítőt
+      if (interactionTimeout) {
+        clearTimeout(interactionTimeout);
+      }
+    
+      // Leállítjuk a folyamatban lévő automata kamera-animációt, 
+      // hogy a térkép azonnal reagáljon az ujj mozgására
+      map.stop();
+    }
+    
+    // --- 2. Felhasználói interakció vége (Időzítő indítása az ujj felemelésekor) ---
+    function onInteractionEnd() {
+      if (!isFollowing || !userInteracting) return;
+    
+      if (interactionTimeout) {
+        clearTimeout(interactionTimeout);
+      }
+    
+      // Az 5 másodperces számláló CSAK EKKOR, az ujj felemelése után indul el
+      interactionTimeout = setTimeout(() => {
+        userInteracting = false;
+    
+        if (isFollowing && userLocation) {
+          // 5 mp tétlenség után finoman visszasiklunk a pozícióra és beforgatjuk a térképet
+          updatePositionAndBearing(true);
+        }
+      }, 5000);
+    }
+    // --- Eseményfigyelők ráültetése a térkép vásznára (Canvas) ---
+    
+    // Érintés / Kattintás kezdete (Még az elmozdulás ELŐTT elkapja!)
+    mapCanvas.addEventListener('pointerdown', onInteractionStart);
+    mapCanvas.addEventListener('touchstart', onInteractionStart, { passive: true });
+    
+    // Érintés / Kattintás vége (Az egész ablakon figyeljük, ha a kijelző szélén engedné el)
+    window.addEventListener('pointerup', onInteractionEnd);
+    window.addEventListener('touchend', onInteractionEnd);
+    window.addEventListener('touchcancel', onInteractionEnd);
+    
+    // Görgőzés (egér / touchpad esetén)
+    mapCanvas.addEventListener('wheel', () => {
+      onInteractionStart();
+      onInteractionEnd();
+    }, { passive: true });
     
     // 1. Továbbfejlesztett szűrő füstgátlóval és tüske-kiszűréssel
     function filterHeading(rawHeading) {
