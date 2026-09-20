@@ -540,6 +540,7 @@
       if (!isFollowing) return;
     
       userInteracting = true;
+      map.stop(); // Megállítjuk a folyamatban lévő easeTo animációt, hogy ne küzdjön a gesztussal!
     
       if (interactionTimeout) {
         clearTimeout(interactionTimeout);
@@ -552,12 +553,13 @@
         // Sima animációval visszatérünk a felhasználó pozíciójához és tájolásához
         if (isFollowing && userLocation) {
           // Itt is vizsgáljuk, hogy 5 km/h felett vagyunk-e
-          const targetBearing = (userSpeedKmH > 5) ? userHeading : map.getBearing();  
-          map.easeTo({
-            center: userLocation,
-            bearing: userHeading,
-            duration: 1000 // 1 másodperces lágy animáció
-          });
+          //const targetBearing = (userSpeedKmH > 5) ? userHeading : map.getBearing();  
+          //map.easeTo({
+          //  center: userLocation,
+          //  bearing: userHeading,
+          //  duration: 1000 // 1 másodperces lágy animáció
+          //});
+          updatePositionAndBearing(true);
         }
       }, 5000);
     }
@@ -568,12 +570,13 @@
     map.on('zoomstart', handleUserInteraction);
     map.on('pitchstart', handleUserInteraction);
     
-    function updatePositionAndBearing() {
+    // 1. Pozíció és Tájolás frissítése (Finom animációval és feltételes bearing-gel)
+    function updatePositionAndBearing(forceBearingUpdate = false) {
       if (!userLocation || isNaN(userLocation[0]) || isNaN(userLocation[1])) return;
     
       const safeHeading = (typeof userHeading === 'number' && !isNaN(userHeading)) ? userHeading : 0;
     
-      // A marker ikon maga továbbra is mutathatja a telefon fizikai irányát (vagy a menetirányt)
+      // A pozíciójelző marker frissítése
       if (!userMarker) {
         userMarker = new maplibregl.Marker({ 
           element: userMarkerEl,
@@ -587,14 +590,24 @@
         userMarker.setRotation(safeHeading);
       }
     
-      // Térkép elforgatása és követése
+      // Térkép követési animációja
       if (isFollowing && !userInteracting) {
-        // 5 km/h felett elforgatjuk a térképet, alatta megtartjuk a jelenlegi elforgatási szöget (map.getBearing())
-        const targetBearing = (userSpeedKmH > 5) ? safeHeading : map.getBearing();
+        
+        // BEARING (Elforgatás) logikája:
+        // Csak akkor forgatjuk el a térképet, ha > 5 km/h a sebesség, VAGY ha indítás/visszatérés van (forceBearingUpdate)
+        let targetBearing = map.getBearing(); // Alapesetben megtartjuk a jelenlegi térképorientációt
     
-        map.jumpTo({
+        if (userSpeedKmH > 5 || forceBearingUpdate) {
+          targetBearing = safeHeading;
+        }
+    
+        // Finom, lágy siklás az új pozícióra
+        map.easeTo({
           center: userLocation,
-          bearing: targetBearing
+          bearing: targetBearing,
+          duration: 800,         // 800 ms átmenet a GPS frissítések között (simává teszi a mozgást)
+          easing: (t) => t,      // Lineáris átmenet, így nem akadozik a folyamatos mozgás
+          essential: true
         });
       }
     }
@@ -662,14 +675,17 @@
         }
         
         if (userLocation) {
-          map.flyTo({ center: userLocation, bearing: userHeading, zoom: 16 });
+          //map.flyTo({ center: userLocation, bearing: userHeading, zoom: 16 });
+          updatePositionAndBearing(true);
         }
         updatePositionAndBearing();
       } else {
         releaseWakeLock();
         if (interactionTimeout) clearTimeout(interactionTimeout);
         userInteracting = false;
-        map.setBearing(0); // Kikapcsoláskor vissza északra
+        //map.setBearing(0); // Kikapcsoláskor vissza északra
+        map.stop();
+        map.easeTo({ bearing: 0, duration: 500 }); // Kikapcsoláskor északra állítjuk a térképet
       }
     });
 
