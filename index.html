@@ -744,7 +744,12 @@ function handleOrientation(e) {
   if (isAnchored) {
     return;
   }
-
+  // 5 km/h FELETT kizárólag a GPS heading az irányadó.
+  // Így menet közben a telefon fizikai elfordítása
+  // nem tudja felülírni a tényleges haladási irányt.
+  if (userSpeedKmH > 5) {
+    return;
+  }
 
   const now = Date.now();
 
@@ -1165,22 +1170,20 @@ if ('geolocation' in navigator) {
         newLocation;
 
 
-      // GPS heading csak valódi
-      // mozgás esetén.
-      if (
-        !isAnchored &&
-        pos.coords.heading !==
-          null &&
-        !isNaN(
+    // 5 km/h FELETT a GPS heading kizárólagos elsőbbséget kap.
+    // 5 km/h alatt az orientation / kompassz kezeli az irányt.
+    if (
+      !isAnchored &&
+      userSpeedKmH > 5 &&
+      pos.coords.heading !== null &&
+      !isNaN(pos.coords.heading)
+    ) {
+    
+      userHeading =
+        filterHeading(
           pos.coords.heading
-        )
-      ) {
-
-        userHeading =
-          filterHeading(
-            pos.coords.heading
-          );
-      }
+        );
+    }
 
 
       updatePositionAndBearing();
