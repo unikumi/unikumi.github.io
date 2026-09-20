@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
-  <title>Interaktív Vektoros Térkép</title>
+  <title>Spoj-ler v2</title>
 
   <!-- MapLibre GL JS (Vektoros térképmotor) -->
   <script src="https://unpkg.com/maplibre-gl@^4.0.0/dist/maplibre-gl.js"></script>
@@ -38,26 +38,43 @@
     }
 
       /* CSS módosítás */
-      .btn-follow {
-        width: 44px;
-        height: 44px;
-        border-radius: 50%;
-        border: none;
-        background: white;
-        font-size: 20px;
-        box-shadow: 0 2px 8px rgba(0,0,0,0.25);
-        cursor: pointer;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        padding: 0;
-        transition: background-color 0.2s, transform 0.1s;
-      }
-      
-      .btn-follow.active {
-        background: #007bff;
-        /* Szükség esetén az emoji színét filterrel lehet igazítani, de alapesetben jól látható */
-      }
+    .btn-follow {
+      position: absolute;
+      bottom: 30px;
+      right: 15px;
+      z-index: 10;
+      width: 48px;
+      height: 48px;
+      border-radius: 50%;
+      background: #181e2a;
+      border: 2px solid #38414E;
+      color: #cbd5e1;
+      font-size: 20px;
+      font-weight: bold;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.4);
+      transition: all 0.2s ease;
+    }
+    
+    /* Aktív állapot (Követés bekapcsolva) */
+    .btn-follow.active {
+      background: #22c55e;
+      border-color: #4ade80;
+      color: #000000;
+      box-shadow: 0 0 15px rgba(34, 197, 94, 0.5);
+    }
+    
+    /* Visszaszámlálás állapota */
+    .btn-follow.counting {
+      background: #d97706;
+      border-color: #fbbf24;
+      color: #ffffff;
+      font-family: monospace;
+      font-size: 22px;
+    }
 
       /* Markerek finomított, grafit-szürke világba illő stílusa */
       .marker-container {
@@ -109,653 +126,1594 @@
     </select>
 
     <!-- HTML gomb (szöveg nélkül, tisztán emoji) -->
-    <button id="btnFollow" class="btn-follow" title="Tájolás &amp; Követés">🧭</button>
+    <button id="btnFollow" class="btn-follow" aria-label="Követés be/ki">
+      <span id="btnFollowIcon">🧭</span>
+    </button>
   </div>
 
   <script>
-    // A fő lista Gist nyers (raw) URL-je
-    const LIST_URL = "https://raw.githubusercontent.com/unikumi/unikumi.github.io/refs/heads/main/2026-09-19/list-2026-09-19.dat";
-    
-    
-    // Egyszerű, natív adatletöltő (CORS proxy nélkül!)
-    async function fetchJson(url) {
-      const res = await fetch(url);
-      if (!res.ok) throw new Error(`Hiba a letöltés során: ${res.status}`);
-      return await res.json();
+// ============================================================================
+// 0. ADATFORRÁS
+// ============================================================================
+
+const LIST_URL =
+  "https://raw.githubusercontent.com/unikumi/unikumi.github.io/refs/heads/main/2026-09-19/list-2026-09-19.dat";
+
+async function fetchJson(url) {
+  const res = await fetch(url);
+
+  if (!res.ok) {
+    throw new Error(`Hiba a letöltés során: ${res.status}`);
+  }
+
+  return await res.json();
+}
+
+
+// ============================================================================
+// 1. TÉRKÉP INICIALIZÁLÁSA
+// ============================================================================
+
+const map = new maplibregl.Map({
+  container: 'map',
+  style: 'https://tiles.openfreemap.org/styles/dark',
+  center: [16.0, 49.0],
+  zoom: 10
+});
+
+map.addControl(
+  new maplibregl.NavigationControl({ showCompass: true }),
+  'bottom-right'
+);
+
+
+// ============================================================================
+// 2. TÉRKÉP STÍLUSÁNAK TESTRESZABÁSA
+// ============================================================================
+
+map.on('style.load', () => {
+  const styleLayers = map.getStyle().layers;
+
+  styleLayers.forEach(layer => {
+    const id = layer.id.toLowerCase();
+    const sourceLayer = layer['source-layer'];
+
+    // Háttér
+    if (layer.type === 'background') {
+      map.setPaintProperty(
+        layer.id,
+        'background-color',
+        '#050508'
+      );
     }
 
-    // 1. Térkép inicializálása az OpenFreeMap sötét stílusával
-    const map = new maplibregl.Map({
-      container: 'map',
-      style: 'https://tiles.openfreemap.org/styles/dark',
-      center: [16.0, 49.0],
-      zoom: 10
+    // Víz
+    if (
+      id.includes('water') &&
+      layer.type === 'fill'
+    ) {
+      map.setPaintProperty(
+        layer.id,
+        'fill-color',
+        '#0f2038'
+      );
+    }
+
+    // Landcover / park / landuse
+    if (
+      (
+        id.includes('landcover') ||
+        id.includes('landuse') ||
+        id.includes('park')
+      ) &&
+      layer.type === 'fill'
+    ) {
+      map.setPaintProperty(
+        layer.id,
+        'fill-opacity',
+        0.1
+      );
+    }
+
+    // Gyalog- és kerékpárutak elrejtése
+    if (
+      (
+        id.includes('foot') ||
+        id.includes('cycle') ||
+        id.includes('path') ||
+        id.includes('pedestrian')
+      ) &&
+      layer.type === 'line'
+    ) {
+      map.setLayoutProperty(
+        layer.id,
+        'visibility',
+        'none'
+      );
+    }
+
+    // Vasút
+    if (
+      id.includes('rail') ||
+      id.includes('railway')
+    ) {
+      map.setLayoutProperty(
+        layer.id,
+        'visibility',
+        'visible'
+      );
+
+      if (layer.type === 'line') {
+        map.setPaintProperty(
+          layer.id,
+          'line-color',
+          '#d97706'
+        );
+
+        map.setPaintProperty(
+          layer.id,
+          'line-width',
+          2
+        );
+      }
+    }
+
+    // Úthálózat
+    if (
+      id.includes('highway') ||
+      id.includes('road') ||
+      id.includes('street') ||
+      id.includes('bridge') ||
+      id.includes('tunnel')
+    ) {
+      if (layer.type === 'line') {
+
+        if (
+          id.includes('motorway') ||
+          id.includes('trunk') ||
+          id.includes('primary') ||
+          id.includes('secondary')
+        ) {
+          map.setPaintProperty(
+            layer.id,
+            'line-color',
+            '#38414E'
+          );
+
+          map.setPaintProperty(
+            layer.id,
+            'line-width',
+            2.5
+          );
+
+          map.setPaintProperty(
+            layer.id,
+            'line-opacity',
+            1.0
+          );
+        } else {
+          map.setPaintProperty(
+            layer.id,
+            'line-color',
+            '#2a323d'
+          );
+
+          map.setPaintProperty(
+            layer.id,
+            'line-opacity',
+            0.85
+          );
+        }
+      }
+    }
+
+    // Utcanevek sűrűbb megjelenítése
+    if (
+      layer.type === 'symbol' &&
+      sourceLayer === 'transportation_name'
+    ) {
+      try {
+        map.setLayoutProperty(
+          layer.id,
+          'text-max-angle',
+          60
+        );
+
+        map.setLayoutProperty(
+          layer.id,
+          'text-padding',
+          2
+        );
+
+        map.setLayoutProperty(
+          layer.id,
+          'symbol-spacing',
+          150
+        );
+
+        map.setLayerZoomRange(
+          layer.id,
+          12,
+          24
+        );
+      } catch (e) {
+        console.warn(
+          "Utcacímke testreszabási hiba:",
+          layer.id,
+          e
+        );
+      }
+    }
+
+    // Utcanevek / helynevek
+    if (layer.type === 'symbol') {
+      map.setLayoutProperty(
+        layer.id,
+        'visibility',
+        'visible'
+      );
+
+      try {
+        map.setPaintProperty(
+          layer.id,
+          'text-color',
+          '#fff380'
+        );
+
+        map.setPaintProperty(
+          layer.id,
+          'text-halo-color',
+          '#000000'
+        );
+
+        map.setPaintProperty(
+          layer.id,
+          'text-halo-width',
+          2.0
+        );
+      } catch (e) {
+        // Csupán ikont tartalmazó réteg
+      }
+    }
+  });
+
+
+  // ==========================================================================
+  // EGYIRÁNYÚ UTCÁK NYILAI
+  // ==========================================================================
+
+  if (!map.hasImage('oneway-arrow')) {
+    const canvas = document.createElement('canvas');
+
+    canvas.width = 32;
+    canvas.height = 32;
+
+    const ctx = canvas.getContext('2d');
+
+    ctx.fillStyle = '#ffd60a';
+    ctx.strokeStyle = '#000000';
+    ctx.lineWidth = 2.5;
+
+    ctx.beginPath();
+
+    ctx.moveTo(6, 8);
+    ctx.lineTo(26, 16);
+    ctx.lineTo(6, 24);
+    ctx.lineTo(12, 16);
+
+    ctx.closePath();
+    ctx.fill();
+    ctx.stroke();
+
+    const imageData =
+      ctx.getImageData(0, 0, 32, 32);
+
+    map.addImage(
+      'oneway-arrow',
+      imageData
+    );
+  }
+
+
+  // OpenFreeMap valódi source ID
+  const transLayer =
+    map
+      .getStyle()
+      .layers
+      .find(
+        l =>
+          l['source-layer'] ===
+          'transportation'
+      );
+
+  const realSourceId =
+    transLayer
+      ? transLayer.source
+      : 'openmaptiles';
+
+
+  if (
+    realSourceId &&
+    !map.getLayer('oneway-arrows')
+  ) {
+    map.addLayer({
+      id: 'oneway-arrows',
+
+      type: 'symbol',
+
+      source: realSourceId,
+
+      'source-layer':
+        'transportation',
+
+      minzoom: 14,
+
+      filter: [
+        'all',
+
+        [
+          '==',
+          '$type',
+          'LineString'
+        ],
+
+        [
+          'in',
+          'oneway',
+          1,
+          -1
+        ]
+      ],
+
+      layout: {
+        'symbol-placement': 'line',
+
+        'symbol-spacing': 80,
+
+        'icon-image':
+          'oneway-arrow',
+
+        'icon-size': 0.6,
+
+        'icon-allow-overlap':
+          true,
+
+        'icon-ignore-placement':
+          true,
+
+        'icon-rotation-alignment':
+          'map',
+
+        'icon-rotate': [
+          'match',
+          ['get', 'oneway'],
+          -1,
+          180,
+          0
+        ]
+      }
     });
-    
-    // 2. Rétegek testreszabása a stílus betöltése után
-    map.on('style.load', () => {
-    const styleLayers = map.getStyle().layers;
-    
-      styleLayers.forEach(layer => {
-        const id = layer.id.toLowerCase();
-        const sourceLayer = layer['source-layer'];
-    
-        // 1. Háttér és víz besötétítése
-        if (layer.type === 'background') {
-          map.setPaintProperty(layer.id, 'background-color', '#050508');
-        }
-        if (id.includes('water') && layer.type === 'fill') {
-          map.setPaintProperty(layer.id, 'fill-color', '#0f2038');
-        }
-        if ((id.includes('landcover') || id.includes('landuse') || id.includes('park')) && layer.type === 'fill') {
-          map.setPaintProperty(layer.id, 'fill-opacity', 0.1);
-        }
-    
-        // 2. Gyalog- és kerékpárutak vonalainak elrejtése
-        if ((id.includes('foot') || id.includes('cycle') || id.includes('path') || id.includes('pedestrian')) && layer.type === 'line') {
-          map.setLayoutProperty(layer.id, 'visibility', 'none');
-        }
-    
-        // 3. Vasútvonalak: Muted narancs
-        if (id.includes('rail') || id.includes('railway')) {
-          map.setLayoutProperty(layer.id, 'visibility', 'visible');
-          if (layer.type === 'line') {
-            map.setPaintProperty(layer.id, 'line-color', '#d97706');
-            map.setPaintProperty(layer.id, 'line-width', 2);
-          }
-        }
-    
-        // 4. Úthálózat vonalai (Sötétítve #38414E árnyalatra a #90EE90 kiemeléséhez)
-        if (id.includes('highway') || id.includes('road') || id.includes('street') || id.includes('bridge') || id.includes('tunnel')) {
-          if (layer.type === 'line') {
-            // Főutak és autópályák
-            if (id.includes('motorway') || id.includes('trunk') || id.includes('primary') || id.includes('secondary')) {
-              map.setPaintProperty(layer.id, 'line-color', '#38414E');
-              map.setPaintProperty(layer.id, 'line-width', 2.5);
-              map.setPaintProperty(layer.id, 'line-opacity', 1.0);
-            } 
-            // Mellékutcák és helyi utak (kissé visszafogottabb árnyalat)
-            else {
-              map.setPaintProperty(layer.id, 'line-color', '#2a323d');
-              map.setPaintProperty(layer.id, 'line-opacity', 0.85);
-            }
-          }
-        }
+  }
+});
 
-        if (layer.type === 'symbol' && sourceLayer === 'transportation_name') {
-        
-              // A) Engedékenyebb kanyarodási szög (alapból 30°, 60°-nál a kanyargós falusi utcákon is kiírja)
-              map.setLayoutProperty(layer.id, 'text-max-angle', 60);
-        
-              // B) Kisebb szövegkörnyéki margó (így sűrűbb kereszteződésekben is elfér a név)
-              map.setLayoutProperty(layer.id, 'text-padding', 2);
-        
-              // C) Címkék közötti távolság csökkentése a vonal mentén
-              map.setLayoutProperty(layer.id, 'symbol-spacing', 150);
-        
-              // D) Megjelenítés alacsonyabb zoom szinttől (már 13-14-es zoomnál is látszódjanak a mellékutcák)
-              map.setLayerZoomRange(layer.id, 12, 24);
-        
-              // E) (Opcionális) Ha nagyon hiányosnak érzed, engedélyezheted az átfedést is:
-              // map.setLayoutProperty(layer.id, 'text-allow-overlap', true);
-            }
 
-        
-        // 5. Utcanevek és helynevek: Világossárga szöveg + fekete glória
-        if (layer.type === 'symbol') {
-          map.setLayoutProperty(layer.id, 'visibility', 'visible');
-    
-          try {
-            map.setPaintProperty(layer.id, 'text-color', '#fff380');
-            map.setPaintProperty(layer.id, 'text-halo-color', '#000000');
-            map.setPaintProperty(layer.id, 'text-halo-width', 2.0);
-          } catch (e) {
-            // Csupán ikont tartalmazó rétegek
-          }
-        }
-      });
-      // --- 6. EGYIRÁNYÚ UTCÁK NYILAINAK HOZZÁADÁSA ---
-      
-        // A) Nyíl ikon generálása Canvas-ból (külső képfájl nélkül)
-        const canvas = document.createElement('canvas');
-        canvas.width = 24;
-        canvas.height = 24;
-        const ctx = canvas.getContext('2d');
-        
-        // Világossárga nyíl fekete kontúrral (hogy minden útszínen jól látszódjon)
-        ctx.fillStyle = '#fff380';
-        ctx.strokeStyle = '#000000';
-        ctx.lineWidth = 1.5;
-        
-        ctx.beginPath();
-        ctx.moveTo(4, 6);
-        ctx.lineTo(18, 12);
-        ctx.lineTo(4, 18);
-        ctx.lineTo(8, 12); // Nyíl belső bevágása
-        ctx.closePath();
-        ctx.fill();
-        ctx.stroke();
-      
-        const imageData = ctx.getImageData(0, 0, 24, 24);
-        map.addImage('oneway-arrow', imageData);
-      
-        // --- 6. EGYIRÁNYÚ UTCÁK NYILAINAK HOZZÁADÁSA ---
+// ============================================================================
+// 3. GLOBÁLIS ÁLLAPOTVÁLTOZÓK
+// ============================================================================
 
-      // A) Négyzetes nyíl ikon generálása (Élénk neonsárga + fekete kontúr)
-      if (!map.hasImage('oneway-arrow')) {
-        const canvas = document.createElement('canvas');
-        canvas.width = 32;
-        canvas.height = 32;
-        const ctx = canvas.getContext('2d');
-      
-        ctx.fillStyle = '#ffd60a';   // Élénk neonsárga
-        ctx.strokeStyle = '#000000'; // Fekete kontúr
-        ctx.lineWidth = 2.5;
-      
-        ctx.beginPath();
-        ctx.moveTo(6, 8);
-        ctx.lineTo(26, 16);
-        ctx.lineTo(6, 24);
-        ctx.lineTo(12, 16); // Belső bevágás
-        ctx.closePath();
-        ctx.fill();
-        ctx.stroke();
-      
-        const imageData = ctx.getImageData(0, 0, 32, 32);
-        map.addImage('oneway-arrow', imageData);
-      }
-      
-      // B) Forrás-azonosító automatikus lekérése az OpenFreeMap stílusból
-      const transLayer = map.getStyle().layers.find(l => l['source-layer'] === 'transportation');
-      const realSourceId = transLayer ? transLayer.source : 'openmaptiles';
-      
-      // C) Réteg hozzáadása
-      if (!map.getLayer('oneway-arrows')) {
-        map.addLayer({
-          id: 'oneway-arrows',
-          type: 'symbol',
-          source: realSourceId,
-          'source-layer': 'transportation',
-          minzoom: 14, // Fontos: Az 'oneway' adat csak 14-es zoom felett van jelen a csempékben!
-          filter: [
-            'all',
-            ['==', '$type', 'LineString'],
-            ['in', 'oneway', 1, -1]
-          ],
-          layout: {
-            'symbol-placement': 'line',
-            'symbol-spacing': 80,
-            'icon-image': 'oneway-arrow',
-            'icon-size': 0.6,
-            'icon-allow-overlap': true,
-            'icon-ignore-placement': true,
-            'icon-rotation-alignment': 'map',
-            'icon-rotate': ['match', ['get', 'oneway'], -1, 180, 0]
-          }
-        });
-      }
-      
-    });
-    map.addControl(new maplibregl.NavigationControl({ showCompass: true }), 'bottom-right');
+// Adatrétegek
+let layerList = [];
+let currentMarkers = [];
 
-    let layerList = [];
-    let currentMarkers = [];
-    let userLocation = null;
-    let userHeading = 0;
-    let isFollowing = false;
-    let userInteracting = false;
-    let interactionTimeout = null;
-    let wakeLock = null;
-    let userSpeedKmH = 0; // Globális változó a sebességnek
-    let smoothedHeading = 0;
-    let isHeadingInitialized = false;
-    let lastOrientationTime = 0;
-    let anchorLocation = null; // A legutóbbi stabil horgonypont
-    let isAnchored = true;     // Alapértelmezetten horgonyozva vagyunk
-    
-    const mapCanvas = map.getCanvas();
-    
-    // --- 1. Felhasználói interakció kezdete (AZONNALI átadás) ---
-    function onInteractionStart() {
-      if (!isFollowing) return;
-    
-      // Azonnal átadjuk a teljes vezérlést a felhasználónak
-      userInteracting = true;
-    
-      // Töröljük a korábbi visszatérési időzítőt
-      if (interactionTimeout) {
-        clearTimeout(interactionTimeout);
-      }
-    
-      // Leállítjuk a folyamatban lévő automata kamera-animációt, 
-      // hogy a térkép azonnal reagáljon az ujj mozgására
-      map.stop();
-    }
-    
-    // --- 2. Felhasználói interakció vége (Időzítő indítása az ujj felemelésekor) ---
-    function onInteractionEnd() {
-      if (!isFollowing || !userInteracting) return;
-    
-      if (interactionTimeout) {
-        clearTimeout(interactionTimeout);
-      }
-    
-      // Az 5 másodperces számláló CSAK EKKOR, az ujj felemelése után indul el
-      interactionTimeout = setTimeout(() => {
-        userInteracting = false;
-    
-        if (isFollowing && userLocation) {
-          // 5 mp tétlenség után finoman visszasiklunk a pozícióra és beforgatjuk a térképet
-          updatePositionAndBearing(true);
-        }
-      }, 5000);
-    }
-    // --- Eseményfigyelők ráültetése a térkép vásznára (Canvas) ---
-    
-    // Érintés / Kattintás kezdete (Még az elmozdulás ELŐTT elkapja!)
-    mapCanvas.addEventListener('pointerdown', onInteractionStart);
-    mapCanvas.addEventListener('touchstart', onInteractionStart, { passive: true });
-    
-    // Érintés / Kattintás vége (Az egész ablakon figyeljük, ha a kijelző szélén engedné el)
-    window.addEventListener('pointerup', onInteractionEnd);
-    window.addEventListener('touchend', onInteractionEnd);
-    window.addEventListener('touchcancel', onInteractionEnd);
-    
-    // Görgőzés (egér / touchpad esetén)
-    window.addEventListener('wheel', () => {
-      onInteractionStart();
-      onInteractionEnd();
-    }, { passive: true });
-    
-    // 1. Továbbfejlesztett szűrő füstgátlóval és tüske-kiszűréssel
-    function filterHeading(rawHeading) {
-      if (rawHeading === null || isNaN(rawHeading)) return smoothedHeading;
-    
-      // Kezdőérték rögzítése
-      if (!isHeadingInitialized) {
-        smoothedHeading = rawHeading;
-        isHeadingInitialized = true;
-        return smoothedHeading;
-      }
+// Felhasználó
+let userLocation = null;      // [lng, lat]
+let userHeading = 0;
+let userSpeedKmH = 0;
+let userMarker = null;
 
-      // Távolság kiszámítása két koordináta [lng, lat] között méterben
-      function getDistanceInMeters(coord1, coord2) {
-        if (!coord1 || !coord2) return 0;
-        const [lng1, lat1] = coord1;
-        const [lng2, lat2] = coord2;
-        const R = 6371000; // Föld sugara méterben
-        const dLat = (lat2 - lat1) * Math.PI / 180;
-        const dLng = (lng2 - lng1) * Math.PI / 180;
-        const a = Math.sin(dLat / 2) * Math.sin(dLat / 2) +
-                  Math.cos(lat1 * Math.PI / 180) * Math.cos(lat2 * Math.PI / 180) *
-                  Math.sin(dLng / 2) * Math.sin(dLng / 2);
-        const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
-        return R * c;
-      }
+// Stabilizáció
+let anchorLocation = null;
+let isAnchored = true;
 
-      
-      // Legrövidebb elfordulási ív kiszámítása (-180° és +180° között)
-      let diff = rawHeading - smoothedHeading;
-      while (diff < -180) diff += 360;
-      while (diff > 180) diff -= 360;
-    
-      const absDiff = Math.abs(diff);
-    
-      // A) ÁLLÓ HELYZETBEN (<= 3 km/h)
-      if (userSpeedKmH <= 3) {
-        // Ha álló helyzetben a szög hirtelen akkorát ugrik (> 35°), az 99%, hogy szenzorzaj/dőlési hiba:
-        // Ezt TELJESEN ELDOBJUK, nem engedjük megpördülni a nyilat!
-        if (absDiff > 35) {
-          return smoothedHeading;
-        }
-    
-        // Csak akkor engedünk korrekciót, ha a változás legalább 5 fokos (valódi elfordulás),
-        // de az átmenetet nagyon lassúra/finomra tesszük (0.05)
-        if (absDiff > 5.0) {
-          smoothedHeading = (smoothedHeading + diff * 0.05 + 360) % 360;
-        }
-      } 
-      // B) MOZGÁS KÖZBEN (> 3 km/h)
-      else {
-        // Haladás közben érzékenyebbek vagyunk (1.5° küszöb) és gyorsabb a követés (0.2)
-        if (absDiff > 1.5) {
-          smoothedHeading = (smoothedHeading + diff * 0.2 + 360) % 360;
-        }
-      }
-    
+let smoothedHeading = 0;
+let isHeadingInitialized = false;
+let lastOrientationTime = 0;
+
+// Követési állapotgép
+let isFollowing = false;
+let wasFollowingBeforeTouch = false;
+
+let countdownTimer = null;
+let countdownSeconds = 5;
+
+// Wake Lock
+let wakeLock = null;
+
+// Orientation listener állapota
+let orientationListenerAttached = false;
+
+
+// ============================================================================
+// 4. DOM ELEMEK
+// ============================================================================
+
+const btnFollow =
+  document.getElementById('btnFollow');
+
+const btnFollowIcon =
+  document.getElementById('btnFollowIcon');
+
+const mapCanvas =
+  map.getCanvas();
+
+
+// Felhasználó marker
+const userMarkerEl =
+  document.createElement('div');
+
+userMarkerEl.className =
+  'user-marker';
+
+
+// ============================================================================
+// 5. MATEMATIKAI / SZŰRŐ SEGÉDFÜGGVÉNYEK
+// ============================================================================
+
+function getDistanceInMeters(
+  coord1,
+  coord2
+) {
+  if (!coord1 || !coord2) {
+    return 0;
+  }
+
+  const [lng1, lat1] = coord1;
+  const [lng2, lat2] = coord2;
+
+  const R = 6371000;
+
+  const dLat =
+    (lat2 - lat1) *
+    Math.PI / 180;
+
+  const dLng =
+    (lng2 - lng1) *
+    Math.PI / 180;
+
+  const a =
+    Math.sin(dLat / 2) *
+    Math.sin(dLat / 2) +
+
+    Math.cos(
+      lat1 * Math.PI / 180
+    ) *
+
+    Math.cos(
+      lat2 * Math.PI / 180
+    ) *
+
+    Math.sin(dLng / 2) *
+    Math.sin(dLng / 2);
+
+  return (
+    R *
+    2 *
+    Math.atan2(
+      Math.sqrt(a),
+      Math.sqrt(1 - a)
+    )
+  );
+}
+
+
+// Iránytű szűrése
+function filterHeading(rawHeading) {
+  if (
+    rawHeading === null ||
+    isNaN(rawHeading)
+  ) {
+    return smoothedHeading;
+  }
+
+
+  if (!isHeadingInitialized) {
+    smoothedHeading =
+      rawHeading;
+
+    isHeadingInitialized =
+      true;
+
+    return smoothedHeading;
+  }
+
+
+  let diff =
+    rawHeading -
+    smoothedHeading;
+
+  while (diff < -180) {
+    diff += 360;
+  }
+
+  while (diff > 180) {
+    diff -= 360;
+  }
+
+
+  const absDiff =
+    Math.abs(diff);
+
+
+  // Álló helyzet
+  if (userSpeedKmH <= 3) {
+
+    // Nagy tüske eldobása
+    if (absDiff > 35) {
       return smoothedHeading;
     }
 
-    // Képernyőzár bekapcsolása
-    async function requestWakeLock() {
-      try {
-        if ('wakeLock' in navigator) {
-          wakeLock = await navigator.wakeLock.request('screen');
-        }
-      } catch (err) {
-        console.warn(`Wake Lock nem indítható el: ${err.message}`);
-      }
+    if (absDiff > 5.0) {
+      smoothedHeading =
+        (
+          smoothedHeading +
+          diff * 0.05 +
+          360
+        ) % 360;
     }
-    
-    // Képernyőzár feloldása
-    function releaseWakeLock() {
-      if (wakeLock !== null) {
-        wakeLock.release().then(() => {
-          wakeLock = null;
-        });
-      }
+  }
+
+  // Mozgás
+  else {
+    if (absDiff > 1.5) {
+      smoothedHeading =
+        (
+          smoothedHeading +
+          diff * 0.2 +
+          360
+        ) % 360;
     }
+  }
 
 
-    if ('geolocation' in navigator) {
-      navigator.geolocation.watchPosition(
-        (pos) => {
-          const newLocation = [pos.coords.longitude, pos.coords.latitude];
-    
-          // Első méréskor rögzítjük a horgonyt
-          if (!anchorLocation) {
-            anchorLocation = newLocation;
-          }
-    
-          // Kiszámoljuk a távolságot a horgonyponttól méterben
-          const distFromAnchor = getDistanceInMeters(newLocation, anchorLocation);
-    
-          // --- 10 MÉTERES HOLTTÉR / HORGONYZÁS VIZSGÁLATA ---
-          if (distFromAnchor < 10) {
-            // 10 méteren belül vagyunk -> HORGONYON VAGYUNK
-            // A pozíciót (pontot) finoman frissíthetjük, de a forgatást letiltjuk
-            isAnchored = true;
-            userSpeedKmH = 0; // Álló helyzetnek tekintjük
-          } else {
-            // Eltávolodtunk legalább 10 métert -> TÉNYLEGES MOZGÁS TÖRTÉNT
-            anchorLocation = newLocation; // Új horgonypont kitűzése
-            isAnchored = false;
-    
-            // Sebesség számítása km/h-ban
-            if (pos.coords.speed !== null && !isNaN(pos.coords.speed) && pos.coords.speed >= 0) {
-              userSpeedKmH = pos.coords.speed * 3.6;
-            }
-          }
-    
-          userLocation = newLocation;
-    
-          // Ha van pontos GPS irány ÉS nem vagyunk horgonyon, frissítjük az irányt
-          if (!isAnchored && pos.coords.heading !== null && !isNaN(pos.coords.heading)) {
-            userHeading = filterHeading(pos.coords.heading);
-          }
-    
-          updatePositionAndBearing();
-        },
-        (err) => console.warn("GPS hiba:", err),
-        { enableHighAccuracy: true }
+  return smoothedHeading;
+}
+
+
+// ============================================================================
+// 6. WAKE LOCK
+// ============================================================================
+
+async function requestWakeLock() {
+  try {
+    if (
+      'wakeLock' in navigator &&
+      !wakeLock
+    ) {
+      wakeLock =
+        await navigator
+          .wakeLock
+          .request('screen');
+    }
+  } catch (err) {
+    console.warn(
+      "Wake Lock hiba:",
+      err.message
+    );
+  }
+}
+
+
+function releaseWakeLock() {
+  if (wakeLock !== null) {
+    wakeLock
+      .release()
+      .then(() => {
+        wakeLock = null;
+      })
+      .catch(() => {
+        wakeLock = null;
+      });
+  }
+}
+
+
+document.addEventListener(
+  'visibilitychange',
+  async () => {
+
+    if (
+      document.visibilityState ===
+        'visible' &&
+      isFollowing
+    ) {
+      // A böngésző háttérbe kerüléskor
+      // automatikusan elengedheti a lockot.
+      wakeLock = null;
+
+      await requestWakeLock();
+    }
+  }
+);
+
+
+// ============================================================================
+// 7. ORIENTATION / IRÁNYTŰ
+// ============================================================================
+
+function handleOrientation(e) {
+
+  // Horgonyon állva nem használjuk
+  // a kompasszt.
+  if (isAnchored) {
+    return;
+  }
+
+
+  const now = Date.now();
+
+  if (
+    now -
+      lastOrientationTime <
+    100
+  ) {
+    return;
+  }
+
+  lastOrientationTime = now;
+
+
+  let rawHeading = null;
+
+
+  // iOS
+  if (
+    e.webkitCompassHeading !==
+    undefined
+  ) {
+    rawHeading =
+      e.webkitCompassHeading;
+  }
+
+  // Android / szabványos API
+  else if (e.alpha !== null) {
+    rawHeading =
+      360 - e.alpha;
+  }
+
+
+  if (rawHeading !== null) {
+    userHeading =
+      filterHeading(rawHeading);
+
+    updatePositionAndBearing();
+  }
+}
+
+
+// Orientation listener egyszeri hozzáadása
+function attachOrientationListener() {
+
+  if (orientationListenerAttached) {
+    return;
+  }
+
+  if (!window.DeviceOrientationEvent) {
+    return;
+  }
+
+
+  // iOS-en ugyanaz a deviceorientation
+  // esemény használható engedély után.
+  window.addEventListener(
+    'deviceorientation',
+    handleOrientation,
+    true
+  );
+
+  orientationListenerAttached =
+    true;
+}
+
+
+// iOS engedélykérés.
+// FONTOS: ezt csak valódi felhasználói
+// gombnyomásból hívjuk.
+async function requestOrientationPermission() {
+
+  if (
+    typeof DeviceOrientationEvent ===
+      'undefined'
+  ) {
+    return;
+  }
+
+
+  if (
+    typeof DeviceOrientationEvent
+      .requestPermission ===
+    'function'
+  ) {
+    try {
+
+      const response =
+        await DeviceOrientationEvent
+          .requestPermission();
+
+
+      if (response === 'granted') {
+        attachOrientationListener();
+      }
+
+    } catch (err) {
+      console.warn(
+        "Orientation engedély hiba:",
+        err
       );
     }
-    
-    // Ha a felhasználó átvált más appra majd visszatér, a böngésző alapból elengedi a zárat.
-    // Ezzel automatikusan újraigényeljük, ha a követés még aktív:
-    document.addEventListener('visibilitychange', async () => {
-      if (wakeLock !== null && document.visibilityState === 'visible' && isFollowing) {
-        await requestWakeLock();
-      }
-    });
+  }
 
-    
-    // Felhasználó marker eleme
-    const userMarkerEl = document.createElement('div');
-    userMarkerEl.className = 'user-marker';
-    let userMarker = null;
+  // Android / egyéb böngészők
+  else {
+    attachOrientationListener();
+  }
+}
 
-    // GeoJSON érvényesítés (Python fix_geojson megfelelője)
-    function fixGeojson(data) {
-      if (!data || typeof data !== 'object') return { type: "FeatureCollection", features: [] };
-      if (data.type === "FeatureCollection") {
-        (data.features || []).forEach(f => { if (!f.properties) f.properties = {}; });
+
+// Androidon / engedélykérés nélküli
+// böngészőben már induláskor feliratkozunk.
+if (
+  typeof DeviceOrientationEvent !==
+    'undefined' &&
+  typeof DeviceOrientationEvent
+    .requestPermission !==
+    'function'
+) {
+  attachOrientationListener();
+}
+
+
+// ============================================================================
+// 8. KÖVETÉSI ÉS VISSZASZÁMLÁLÓ ÁLLAPOTGÉP
+// ============================================================================
+
+function startFollowing() {
+
+  stopCountdown();
+
+  isFollowing = true;
+
+  wasFollowingBeforeTouch =
+    false;
+
+
+  btnFollow.classList.remove(
+    'counting'
+  );
+
+  btnFollow.classList.add(
+    'active'
+  );
+
+  btnFollowIcon.textContent =
+    '🧭';
+
+
+  requestWakeLock();
+
+
+  // Azonnali visszaigazítás
+  updatePositionAndBearing(true);
+}
+
+
+function stopFollowing() {
+
+  stopCountdown();
+
+  isFollowing = false;
+
+
+  btnFollow.classList.remove(
+    'active',
+    'counting'
+  );
+
+  btnFollowIcon.textContent =
+    '🧭';
+
+
+  releaseWakeLock();
+
+  // Futó gépi kameramozgás
+  // azonnali leállítása.
+  map.stop();
+}
+
+
+function stopCountdown() {
+
+  if (countdownTimer) {
+
+    clearInterval(
+      countdownTimer
+    );
+
+    countdownTimer = null;
+  }
+
+
+  countdownSeconds = 5;
+}
+
+
+function startCountdown() {
+
+  stopCountdown();
+
+
+  btnFollow.classList.remove(
+    'active'
+  );
+
+  btnFollow.classList.add(
+    'counting'
+  );
+
+
+  btnFollowIcon.textContent =
+    countdownSeconds;
+
+
+  countdownTimer =
+    setInterval(() => {
+
+      countdownSeconds--;
+
+
+      if (countdownSeconds > 0) {
+
+        btnFollowIcon.textContent =
+          countdownSeconds;
+
+      } else {
+
+        // 5 → 4 → 3 → 2 → 1 után
+        // automatikus újraaktiválás.
+        startFollowing();
       }
-      return data;
+
+    }, 1000);
+}
+
+
+// ============================================================================
+// 9. POZÍCIÓ ÉS TÉRKÉP FRISSÍTÉSE
+// ============================================================================
+
+function updatePositionAndBearing(
+  forceBearingUpdate = false
+) {
+
+  if (
+    !userLocation ||
+    isNaN(userLocation[0]) ||
+    isNaN(userLocation[1])
+  ) {
+    return;
+  }
+
+
+  const safeHeading =
+    (
+      typeof userHeading ===
+        'number' &&
+      !isNaN(userHeading)
+    )
+      ? userHeading
+      : 0;
+
+
+  // --------------------------------------------------------------------------
+  // Felhasználói marker mindig frissül
+  // --------------------------------------------------------------------------
+
+  if (!userMarker) {
+
+    userMarker =
+      new maplibregl.Marker({
+        element:
+          userMarkerEl,
+
+        rotationAlignment:
+          'map'
+      })
+
+      .setLngLat(
+        userLocation
+      )
+
+      .setRotation(
+        safeHeading
+      )
+
+      .addTo(map);
+
+  } else {
+
+    userMarker.setLngLat(
+      userLocation
+    );
+
+    userMarker.setRotation(
+      safeHeading
+    );
+  }
+
+
+  // --------------------------------------------------------------------------
+  // A LEGFONTOSABB A-SZABÁLY:
+  //
+  // ha nincs követés, a kamera teljesen
+  // békén marad.
+  // --------------------------------------------------------------------------
+
+  if (!isFollowing) {
+    return;
+  }
+
+
+  // --------------------------------------------------------------------------
+  // Automatikus követés
+  // --------------------------------------------------------------------------
+
+  let targetBearing =
+    map.getBearing();
+
+
+  // Menet közben 5 km/h fölött
+  // vagy kényszerített visszatéréskor
+  // frissítjük a bearinget.
+  if (
+    userSpeedKmH > 5 ||
+    forceBearingUpdate
+  ) {
+    targetBearing =
+      safeHeading;
+  }
+
+
+  map.easeTo({
+    center:
+      userLocation,
+
+    bearing:
+      targetBearing,
+
+    duration:
+      800,
+
+    easing:
+      (t) => t,
+
+    essential:
+      true
+  });
+}
+
+
+// ============================================================================
+// 10. GPS
+// ============================================================================
+
+if ('geolocation' in navigator) {
+
+  navigator.geolocation.watchPosition(
+
+    (pos) => {
+
+      const newLocation = [
+        pos.coords.longitude,
+        pos.coords.latitude
+      ];
+
+
+      // Első horgonypont
+      if (!anchorLocation) {
+        anchorLocation =
+          newLocation;
+      }
+
+
+      const distFromAnchor =
+        getDistanceInMeters(
+          newLocation,
+          anchorLocation
+        );
+
+
+      // ----------------------------------------------------------------------
+      // 10 MÉTERES HORGONYZÁS
+      // ----------------------------------------------------------------------
+
+      if (distFromAnchor < 10) {
+
+        isAnchored = true;
+
+        userSpeedKmH = 0;
+
+      } else {
+
+        anchorLocation =
+          newLocation;
+
+        isAnchored = false;
+
+
+        if (
+          pos.coords.speed !==
+            null &&
+          !isNaN(
+            pos.coords.speed
+          ) &&
+          pos.coords.speed >= 0
+        ) {
+          userSpeedKmH =
+            pos.coords.speed *
+            3.6;
+        }
+      }
+
+
+      userLocation =
+        newLocation;
+
+
+      // GPS heading csak valódi
+      // mozgás esetén.
+      if (
+        !isAnchored &&
+        pos.coords.heading !==
+          null &&
+        !isNaN(
+          pos.coords.heading
+        )
+      ) {
+
+        userHeading =
+          filterHeading(
+            pos.coords.heading
+          );
+      }
+
+
+      updatePositionAndBearing();
+    },
+
+
+    (err) => {
+      console.warn(
+        "GPS Hiba:",
+        err
+      );
+    },
+
+
+    {
+      enableHighAccuracy: true
     }
+  );
+}
 
-    // Keret számítása (Python get_bounds megfelelője)
-    function fitDataBounds(geojson, markers) {
-      const bounds = new maplibregl.LngLatBounds();
-      let count = 0;
 
-      if (geojson && geojson.features) {
-        geojson.features.forEach(f => {
-          if (f.geometry && f.geometry.type === "LineString") {
-            f.geometry.coordinates.forEach(coord => { bounds.extend(coord); count++; });
-          }
-        });
-      }
+// ============================================================================
+// 11. FELHASZNÁLÓI INTERAKCIÓK
+// ============================================================================
 
-      markers.forEach(m => {
-        if (m.lat && m.lng) { bounds.extend([m.lng, m.lat]); count++; }
+function onUserInteractionStart() {
+
+  if (
+    isFollowing ||
+    countdownTimer
+  ) {
+
+    // Megjegyezzük, hogy automatikus
+    // követési folyamatból érkeztünk.
+    wasFollowingBeforeTouch =
+      true;
+
+
+    // TELJESEN lekapcsoljuk a
+    // gépi kameravezérlést.
+    stopFollowing();
+  }
+}
+
+
+function onUserInteractionEnd() {
+
+  if (
+    wasFollowingBeforeTouch
+  ) {
+
+    wasFollowingBeforeTouch =
+      false;
+
+    startCountdown();
+  }
+}
+
+
+// --------------------------------------------------------------------------
+// Pointer / touch KEZDETE
+// --------------------------------------------------------------------------
+
+mapCanvas.addEventListener(
+  'pointerdown',
+  onUserInteractionStart
+);
+
+mapCanvas.addEventListener(
+  'touchstart',
+  onUserInteractionStart,
+  { passive: true }
+);
+
+
+// --------------------------------------------------------------------------
+// Pointer / touch VÉGE
+// --------------------------------------------------------------------------
+
+window.addEventListener(
+  'pointerup',
+  onInteractionEndCheck
+);
+
+window.addEventListener(
+  'touchend',
+  onInteractionEndCheck
+);
+
+window.addEventListener(
+  'touchcancel',
+  onInteractionEndCheck
+);
+
+
+function onInteractionEndCheck() {
+
+  // Kis késleltetés a dupla
+  // érintések / gesztusok miatt.
+  setTimeout(
+    onUserInteractionEnd,
+    50
+  );
+}
+
+
+// --------------------------------------------------------------------------
+// Egérgörgő / touchpad
+// --------------------------------------------------------------------------
+
+mapCanvas.addEventListener(
+  'wheel',
+  () => {
+
+    onUserInteractionStart();
+
+    onUserInteractionEnd();
+
+  },
+  { passive: true }
+);
+
+
+// ============================================================================
+// 12. FŐ KÖVETÉS GOMB
+// ============================================================================
+
+btnFollow.addEventListener(
+  'click',
+  async () => {
+
+    // ------------------------------------------------------------------------
+    // Ha követés vagy countdown fut:
+    // manuális teljes kikapcsolás.
+    // ------------------------------------------------------------------------
+
+    if (
+      isFollowing ||
+      countdownTimer
+    ) {
+
+      stopFollowing();
+
+      wasFollowingBeforeTouch =
+        false;
+
+
+      // Északra állítás
+      map.easeTo({
+        bearing: 0,
+        duration: 500
       });
 
-      if (count > 0 && !isFollowing) {
-        map.fitBounds(bounds, { padding: 40 });
-      }
     }
 
-    // Réteg betöltése index alapján
-    async function loadLayer(index) {
-      const item = layerList[index];
-      if (!item) return;
+    // ------------------------------------------------------------------------
+    // Kikapcsolt állapotból:
+    // azonnali bekapcsolás.
+    // ------------------------------------------------------------------------
 
-      const [rawGeojson, markersData] = await Promise.all([
-        fetchJson(item.geojson),
-        fetchJson(item.markers)
+    else {
+
+      // iOS szenzorengedély csak valódi
+      // felhasználói gesztusból kérhető.
+      await requestOrientationPermission();
+
+      startFollowing();
+    }
+  }
+);
+
+
+// ============================================================================
+// 13. GEOJSON SEGÉDFÜGGVÉNYEK
+// ============================================================================
+
+function fixGeojson(data) {
+
+  if (
+    !data ||
+    typeof data !== 'object'
+  ) {
+    return {
+      type:
+        "FeatureCollection",
+
+      features:
+        []
+    };
+  }
+
+
+  if (
+    data.type ===
+    "FeatureCollection"
+  ) {
+
+    (
+      data.features || []
+    ).forEach(f => {
+
+      if (!f.properties) {
+        f.properties = {};
+      }
+
+    });
+  }
+
+
+  return data;
+}
+
+
+// ============================================================================
+// 14. ADATOK KERETÉNEK KISZÁMÍTÁSA
+// ============================================================================
+
+function fitDataBounds(
+  geojson,
+  markers
+) {
+
+  const bounds =
+    new maplibregl
+      .LngLatBounds();
+
+  let count = 0;
+
+
+  if (
+    geojson &&
+    geojson.features
+  ) {
+
+    geojson.features.forEach(
+      f => {
+
+        if (
+          f.geometry &&
+          f.geometry.type ===
+            "LineString"
+        ) {
+
+          f.geometry.coordinates
+            .forEach(coord => {
+
+              bounds.extend(
+                coord
+              );
+
+              count++;
+            });
+        }
+      }
+    );
+  }
+
+
+  markers.forEach(m => {
+
+    if (
+      m.lat !== undefined &&
+      m.lng !== undefined
+    ) {
+
+      bounds.extend([
+        m.lng,
+        m.lat
       ]);
 
-      const geojsonData = fixGeojson(rawGeojson);
-
-      // Vonallánc frissítése / hozzáadása
-      if (map.getSource('route-source')) {
-        map.getSource('route-source').setData(geojsonData);
-      } else {
-        map.addSource('route-source', { type: 'geojson', data: geojsonData });
-        map.addLayer({
-          id: 'route-layer',
-          type: 'line',
-          source: 'route-source',
-          paint: {
-            'line-color': '#90EE90',
-            'line-width': 4.5
-          }
-        });
-      }
-
-      // Korábbi jelölők törlése
-      currentMarkers.forEach(m => m.remove());
-      currentMarkers = [];
-
-      // Új Circle + Label jelölők felrakása
-      (markersData || []).forEach(pt => {
-        if (pt.lat === undefined || pt.lng === undefined) return;
-
-        const el = document.createElement('div');
-        el.className = 'marker-container';
-        el.innerHTML = `
-          <div class="marker-dot"></div>
-          <div class="label-text">${pt.name || ''}</div>
-        `;
-
-        const marker = new maplibregl.Marker({ element: el, anchor: 'left' })
-          .setLngLat([pt.lng, pt.lat])
-          .addTo(map);
-
-        currentMarkers.push(marker);
-      });
-
-      fitDataBounds(geojsonData, markersData || []);
+      count++;
     }
+  });
 
-    // 1. Felhasználói beavatkozás szigorú szűrése (Csak VALÓDI emberi gesztusra reagál!)
-    function handleUserInteraction(e) {
-      // Ha a mozgást a kód/animáció okozta (nincs originalEvent), figyelmen kívül hagyjuk
-      if (!e || !e.originalEvent) return;
-      if (!isFollowing) return;
-    
-      // Emberi touch/drag történt: AZONNAL átadjuk a teljes vezérlést a felhasználónak
-      userInteracting = true;
-      map.stop(); // Azonnal leállítjuk az esetlegesen futó gépi kameramozgást
-    
-      // Időzítő újraindítása az UTOLSÓ gesztustól számítva
-      if (interactionTimeout) {
-        clearTimeout(interactionTimeout);
+
+  // FONTOS:
+  //
+  // Countdown alatt is békén hagyjuk
+  // a térképet.
+  //
+  // fitBounds csak ténylegesen manuális
+  // követés-kikapcsolás esetén történhet.
+
+  if (
+    count > 0 &&
+    !isFollowing &&
+    !countdownTimer &&
+    !wasFollowingBeforeTouch
+  ) {
+
+    map.fitBounds(
+      bounds,
+      {
+        padding: 40
       }
-    
-      // 5 másodperc (5000 ms) teljes tétlenség után visszaállítjuk az automatikus nézetet
-      interactionTimeout = setTimeout(() => {
-        userInteracting = false;
-        
-        if (isFollowing && userLocation) {
-          // Visszatéréskor KÉNYSZERÍTJÜK a bearing és a pozíció helyreállítását (forceBearingUpdate = true)
-          updatePositionAndBearing(true);
+    );
+  }
+}
+
+
+// ============================================================================
+// 15. ADATRÉTEG BETÖLTÉSE
+// ============================================================================
+
+async function loadLayer(index) {
+
+  const item =
+    layerList[index];
+
+  if (!item) {
+    return;
+  }
+
+
+  try {
+
+    const [
+      rawGeojson,
+      markersData
+    ] = await Promise.all([
+
+      fetchJson(
+        item.geojson
+      ),
+
+      fetchJson(
+        item.markers
+      )
+    ]);
+
+
+    const geojsonData =
+      fixGeojson(
+        rawGeojson
+      );
+
+
+    // ------------------------------------------------------------------------
+    // Útvonal
+    // ------------------------------------------------------------------------
+
+    if (
+      map.getSource(
+        'route-source'
+      )
+    ) {
+
+      map
+        .getSource(
+          'route-source'
+        )
+        .setData(
+          geojsonData
+        );
+
+    } else {
+
+      map.addSource(
+        'route-source',
+        {
+          type: 'geojson',
+          data: geojsonData
         }
-      }, 5000);
+      );
+
+
+      map.addLayer({
+        id:
+          'route-layer',
+
+        type:
+          'line',
+
+        source:
+          'route-source',
+
+        paint: {
+          'line-color':
+            '#90EE90',
+
+          'line-width':
+            4.5
+        }
+      });
     }
-    
-    // Kizárólag a valódi felhasználói gesztusok kezdetét figyeljük
-    map.on('dragstart', handleUserInteraction);
-    map.on('zoomstart', handleUserInteraction);
-    map.on('rotatestart', handleUserInteraction);
-    map.on('pitchstart', handleUserInteraction);
-    map.on('touchstart', handleUserInteraction);
-    
-    // 2. Pozíció és Tájolás frissítése
-    function updatePositionAndBearing(forceBearingUpdate = false) {
-      if (!userLocation || isNaN(userLocation[0]) || isNaN(userLocation[1])) return;
-    
-      const safeHeading = (typeof userHeading === 'number' && !isNaN(userHeading)) ? userHeading : 0;
-    
-      // A pozíciójelző nyíl mindentől függetlenül frissül a képernyőn (akkor is, ha a felhasználó elgördítette a térképet)
-      if (!userMarker) {
-        userMarker = new maplibregl.Marker({ 
-          element: userMarkerEl,
-          rotationAlignment: 'map'
-        })
-          .setLngLat(userLocation)
-          .setRotation(safeHeading)
-          .addTo(map);
-      } else {
-        userMarker.setLngLat(userLocation);
-        userMarker.setRotation(safeHeading);
+
+
+    // ------------------------------------------------------------------------
+    // Régi markerek törlése
+    // ------------------------------------------------------------------------
+
+    currentMarkers.forEach(
+      marker => {
+        marker.remove();
       }
-    
-      // HA A FELHASZNÁLÓ ÉPPEN VEZÉRLI A TÉRKÉPET: A kód TELJESEN BÉKÉN HAGYJA a kamerát!
-      if (!isFollowing || userInteracting) {
+    );
+
+    currentMarkers = [];
+
+
+    // ------------------------------------------------------------------------
+    // Új markerek
+    // ------------------------------------------------------------------------
+
+    (
+      markersData || []
+    ).forEach(pt => {
+
+      if (
+        pt.lat === undefined ||
+        pt.lng === undefined
+      ) {
         return;
       }
-    
-      // AUTOMATIKUS KÖVETÉSI MÓD (Amikor a gép vezérel):
-      let targetBearing = map.getBearing();
-    
-      // A bearing-et (elforgatást) csak 5 km/h felett, vagy visszatéréskor (forceBearingUpdate) frissítjük
-      if (userSpeedKmH > 5 || forceBearingUpdate) {
-        targetBearing = safeHeading;
+
+
+      const el =
+        document.createElement(
+          'div'
+        );
+
+
+      el.className =
+        'marker-container';
+
+
+      el.innerHTML = `
+        <div class="marker-dot"></div>
+        <div class="label-text">${pt.name || ''}</div>
+      `;
+
+
+      const marker =
+        new maplibregl.Marker({
+          element: el,
+          anchor: 'left'
+        })
+
+        .setLngLat([
+          pt.lng,
+          pt.lat
+        ])
+
+        .addTo(map);
+
+
+      currentMarkers.push(
+        marker
+      );
+    });
+
+
+    // Csak akkor igazítjuk az
+    // adatokhoz a kamerát, ha az
+    // A állapotgépe ezt megengedi.
+    fitDataBounds(
+      geojsonData,
+      markersData || []
+    );
+
+  } catch (err) {
+
+    console.error(
+      "Réteg betöltési hiba:",
+      err
+    );
+  }
+}
+
+
+// ============================================================================
+// 16. ALKALMAZÁS INDÍTÁSA / LISTA BETÖLTÉSE
+// ============================================================================
+
+map.on(
+  'load',
+  async () => {
+
+    try {
+
+      layerList =
+        await fetchJson(
+          LIST_URL
+        );
+
+
+      const dropdown =
+        document.getElementById(
+          'layerSelect'
+        );
+
+
+      dropdown.innerHTML =
+        layerList
+          .map(
+            (item, i) =>
+              `<option value="${i}">${item.name}</option>`
+          )
+          .join('');
+
+
+      dropdown.addEventListener(
+        'change',
+        e => {
+
+          loadLayer(
+            Number(
+              e.target.value
+            )
+          );
+        }
+      );
+
+
+      // Első réteg
+      if (
+        layerList.length > 0
+      ) {
+        await loadLayer(0);
       }
-    
-      // Finom, lágy siklás az új koordinátára
-      map.easeTo({
-        center: userLocation,
-        bearing: targetBearing,
-        duration: 800,
-        easing: (t) => t, // Lineáris átmenet
-        essential: true
-      });
-    }
-    
-    // 1. Geolocation API (GPS nyomkövetés)
-    if ('geolocation' in navigator) {
-      navigator.geolocation.watchPosition(
-        (pos) => {
-          userLocation = [pos.coords.longitude, pos.coords.latitude];
-          if (pos.coords.heading !== null && !isNaN(pos.coords.heading)) {
-            userHeading = pos.coords.heading;
-          }
-          updatePositionAndBearing();
-        },
-        (err) => console.warn("GPS hiba:", err),
-        { enableHighAccuracy: true }
+
+    } catch (err) {
+
+      console.error(
+        "Alkalmazás indítási hiba:",
+        err
       );
     }
-
-    // 2. Gyroskóp / Kompassz eseménykezelő (Álló helyzeti tájolás)
-    function handleOrientation(e) {
-      // HA 10 MÉTEREN BELÜL VAGYUNK: Teljesen elutasítunk minden iránytű/giroszkóp jelet!
-      if (isAnchored) return;
-      const now = Date.now();
-      // Ha még nem telt el 100 ms az utolsó frissítés óta, figyelmen kívül hagyjuk az eseményt
-      if (now - lastOrientationTime < 100) return;
-      lastOrientationTime = now;
-    
-      let rawHeading = null;
-    
-      if (e.webkitCompassHeading !== undefined) {
-        // iOS Safari támogatás
-        rawHeading = e.webkitCompassHeading;
-      } else if (e.alpha !== null) {
-        // Android Chrome támogatás
-        rawHeading = 360 - e.alpha;
-      }
-    
-      if (rawHeading !== null) {
-        userHeading = filterHeading(rawHeading);
-        updatePositionAndBearing();
-      }
-    }
-
-    // Gomb eseménykezelője
-    const btnFollow = document.getElementById('btnFollow');
-    btnFollow.addEventListener('click', async () => {
-      isFollowing = !isFollowing;
-      btnFollow.classList.toggle('active', isFollowing);
-    
-      if (isFollowing) {
-        await requestWakeLock(); // <-- Képernyő ébren tartásának bekapcsolása
-        userInteracting = false; // Bekapcsoláskor azonnal átvesszük a vezérlést
-        
-        if (typeof DeviceOrientationEvent !== 'undefined' && typeof DeviceOrientationEvent.requestPermission === 'function') {
-          try {
-            const resp = await DeviceOrientationEvent.requestPermission();
-            if (resp === 'granted') {
-              window.addEventListener('deviceorientation', handleOrientation, true);
-            }
-          } catch (e) { console.error(e); }
-        } else {
-          window.addEventListener('deviceorientationabsolute', handleOrientation, true) ||
-          window.addEventListener('deviceorientation', handleOrientation, true);
-        }
-        
-        if (userLocation) {
-          //map.flyTo({ center: userLocation, bearing: userHeading, zoom: 16 });
-          updatePositionAndBearing(true);
-        }
-        //updatePositionAndBearing();
-      } else {
-        releaseWakeLock();
-        if (interactionTimeout) clearTimeout(interactionTimeout);
-        userInteracting = false;
-        //map.setBearing(0); // Kikapcsoláskor vissza északra
-        map.stop();
-        map.easeTo({ bearing: 0, duration: 500 }); // Kikapcsoláskor északra állítjuk a térképet
-      }
-    });
-
-    // Alkalmazás indítása
-    map.on('load', async () => {
-      layerList = await fetchJson(LIST_URL);
-
-      const dropdown = document.getElementById('layerSelect');
-      dropdown.innerHTML = layerList.map((item, i) => `<option value="${i}">${item.name}</option>`).join('');
-
-      dropdown.addEventListener('change', (e) => loadLayer(e.target.value));
-
-      // Első réteg betöltése
-      if (layerList.length > 0) {
-        loadLayer(0);
-      }
-    });
+  }
+);
   </script>
 </body>
 </html>
