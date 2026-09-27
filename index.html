@@ -641,36 +641,40 @@ function filterHeading(rawHeading) {
     Math.abs(diff);
 
 
-  // Álló helyzet
+  // 1. ÁLLÓ HELYZET (userSpeedKmH <= 3)
   if (userSpeedKmH <= 3) {
-
     // Nagy tüske eldobása
     if (absDiff > 35) {
       return smoothedHeading;
     }
 
-    if (absDiff > 5.0) {
-      smoothedHeading =
-        (
-          smoothedHeading +
-          diff * 0.05 +
-          360
-        ) % 360;
+    // 1.5 fok alatti mikromozgásokat álló helyzetben teljesen figyelmen kívül hagyunk
+    if (absDiff < 1.5) {
+      return smoothedHeading;
     }
+
+    // Álló helyzetben nagyon lusta reagálás (Alpha: 0.01 - 0.08)
+    const norm = Math.min(absDiff / 30, 1);
+    const dynamicAlpha = 0.01 + (0.08 - 0.01) * Math.pow(norm, 2);
+
+    smoothedHeading = (smoothedHeading + diff * dynamicAlpha + 360) % 360;
   }
 
-  // Mozgás
+  // 2. MOZGÁS KÖZBEN (userSpeedKmH > 3)
   else {
-    if (absDiff > 1.5) {
-      smoothedHeading =
-        (
-          smoothedHeading +
-          diff * 0.2 +
-          360
-        ) % 360;
-    }
-  }
+    // Normalizálás: 0° -> 0.0 | 30° vagy több -> 1.0
+    // (A 30 fok feletti eltérést tekintjük "határozott kanyarnak")
+    const norm = Math.min(absDiff / 30, 1);
 
+    const minAlpha = 0.02; // Lusta alap-reagálás (kis szögeknél nagyon simít)
+    const maxAlpha = 0.45; // Gyors reagálás határozott kanyarban
+
+    // Négyzetes skálázás: Math.pow(norm, 2)
+    // Ez biztosítja, hogy kis értékeknél alig nő az alpha, nagyoknál pedig felugrik.
+    const dynamicAlpha = minAlpha + (maxAlpha - minAlpha) * Math.pow(norm, 2);
+
+    smoothedHeading = (smoothedHeading + diff * dynamicAlpha + 360) % 360;
+  }
 
   return smoothedHeading;
 }
