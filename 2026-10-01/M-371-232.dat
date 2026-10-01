@@ -1,0 +1,32 @@
+[
+    {
+        "name": "Hukvaldy,,hotel",
+        "lng": 18.2206394103287,
+        "lat": 49.6245094042334
+    },
+    {
+        "name": "Hukvaldy,Doln\u00ed Sklenov,rozc.",
+        "lng": 18.223897810343,
+        "lat": 49.6291044040033
+    },
+    {
+        "name": "Hukvaldy,Doln\u00ed Sklenov,\u0161kola",
+        "lng": 18.2203567102995,
+        "lat": 49.6312197037654
+    },
+    {
+        "name": "Hukvaldy,Doln\u00ed Sklenov,restaurace",
+        "lng": 18.2168925104477,
+        "lat": 49.6341142036027
+    },
+    {
+        "name": "Hukvaldy,Rychaltice,u dvora",
+        "lng": 18.218285609672,
+        "lat": 49.6429203042392
+    },
+    {
+        "name": "Hukvaldy,Rychaltice,pod mostem",
+        "lng": 18.2171503107811,
+        "lat": 49.650007804483
+    }
+]

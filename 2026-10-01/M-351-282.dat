@@ -1,0 +1,97 @@
+[
+    {
+        "name": "Fr\u00fddek-M\u00edstek,Fr\u00fddek,aut.n\u00e1dr.",
+        "lng": 18.3508812359452,
+        "lat": 49.6788118963148
+    },
+    {
+        "name": "Fr\u00fddek-M\u00edstek,M\u00edstek,poliklinika",
+        "lng": 18.3417176502636,
+        "lat": 49.6776920914122
+    },
+    {
+        "name": "Fr\u00fddek-M\u00edstek,M\u00edstek,Anensk\u00e1",
+        "lng": 18.3373245831487,
+        "lat": 49.6783266700511
+    },
+    {
+        "name": "Sviadnov,,\u010cSAD",
+        "lng": 18.3315997105333,
+        "lat": 49.6846503042977
+    },
+    {
+        "name": "Sviadnov,,Husinec",
+        "lng": 18.3272692104553,
+        "lat": 49.6896442042647
+    },
+    {
+        "name": "Sviadnov,,rest.Pod \u0160imlem",
+        "lng": 18.3202553102645,
+        "lat": 49.6959342043789
+    },
+    {
+        "name": "Sviadnov,,D\u016fl Sta\u0159\u00ed\u010d 1",
+        "lng": 18.3124714103945,
+        "lat": 49.701370304266
+    },
+    {
+        "name": "\u017dabe\u0148,,st\u0159ed",
+        "lng": 18.3046111105066,
+        "lat": 49.7090378042123
+    },
+    {
+        "name": "Paskov,,Biocel",
+        "lng": 18.297061910952,
+        "lat": 49.7182769037565
+    },
+    {
+        "name": "Paskov,,autoopravna",
+        "lng": 18.2912180859233,
+        "lat": 49.7239929214255
+    },
+    {
+        "name": "Paskov,,u h\u0159bitova",
+        "lng": 18.2851322108588,
+        "lat": 49.7300478044756
+    },
+    {
+        "name": "Paskov,,podchod",
+        "lng": 18.282858010722,
+        "lat": 49.733327003938
+    },
+    {
+        "name": "Paskov,,rozc.k dolu",
+        "lng": 18.2825020105954,
+        "lat": 49.7421440043777
+    },
+    {
+        "name": "Ostrava,Hrab\u016fvka,Benzina",
+        "lng": 18.2718535463817,
+        "lat": 49.7826674262228
+    },
+    {
+        "name": "Ostrava,Hrab\u016fvka,D\u0159evoprodej",
+        "lng": 18.2719710096149,
+        "lat": 49.7921330041619
+    },
+    {
+        "name": "Ostrava,V\u00edtkovice,D\u016fl Jeremenko",
+        "lng": 18.2755970101323,
+        "lat": 49.8068850038661
+    },
+    {
+        "name": "Ostrava,V\u00edtkovice,\u010cesk\u00fd d\u016fm-M\u00edsteck\u00e1",
+        "lng": 18.275645309667,
+        "lat": 49.8133261043594
+    },
+    {
+        "name": "Ostrava,V\u00edtkovice,Doln\u00ed V\u00edtkovice",
+        "lng": 18.2759793892618,
+        "lat": 49.8184827107652
+    },
+    {
+        "name": "Ostrava,Mor.Ostrava,N\u00e1m\u011bst\u00ed Republiky",
+        "lng": 18.280222110328822,
+        "lat": 49.830215167715444
+    }
+]

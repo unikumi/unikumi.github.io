@@ -1,0 +1,87 @@
+[
+    {
+        "name": "Ostrava,P\u0159\u00edvoz,sad B.N\u011bmcov\u00e9",
+        "lng": 18.2771381032426,
+        "lat": 49.8520773970074
+    },
+    {
+        "name": "Ostrava,Mor.Ostrava,N\u00e1kladn\u00ed",
+        "lng": 18.2591328096102,
+        "lat": 49.8406489040989
+    },
+    {
+        "name": "Ostrava,Nov\u00e1 Ves,vod\u00e1rna",
+        "lng": 18.2336659023001,
+        "lat": 49.8257691500163
+    },
+    {
+        "name": "Ostrava,Z\u00e1b\u0159eh,Hotel B\u011blsk\u00fd les",
+        "lng": 18.2481433108171,
+        "lat": 49.7924364044311
+    },
+    {
+        "name": "Ostrava,Star\u00e1 B\u011bl\u00e1,B\u011blsk\u00fd les",
+        "lng": 18.2457164100988,
+        "lat": 49.7824014038787
+    },
+    {
+        "name": "Ostrava,Nov\u00e1 B\u011bl\u00e1,Plze\u0148sk\u00e1 rozc.",
+        "lng": 18.247008160638,
+        "lat": 49.7557271664137
+    },
+    {
+        "name": "Krmel\u00edn,,u lesa",
+        "lng": 18.2384192101216,
+        "lat": 49.7393514041276
+    },
+    {
+        "name": "Krmel\u00edn,,Sv\u011btlov",
+        "lng": 18.2252453103267,
+        "lat": 49.7332889042825
+    },
+    {
+        "name": "Star\u00e1 Ves n.Ond\u0159.,,k\u0159i\u017e.",
+        "lng": 18.1950153103998,
+        "lat": 49.7267592041983
+    },
+    {
+        "name": "Mo\u0161nov,,Airport n\u00e1dra\u017e\u00ed",
+        "lng": 18.1196024935753,
+        "lat": 49.6936849670003
+    },
+    {
+        "name": "Mo\u0161nov,,PZ BEHR",
+        "lng": 18.1152075479023,
+        "lat": 49.6873904443403
+    },
+    {
+        "name": "Mo\u0161nov,,PZ Cromodora",
+        "lng": 18.1095601868423,
+        "lat": 49.6840949701871
+    },
+    {
+        "name": "Mo\u0161nov,,OAMP",
+        "lng": 18.1071794848776,
+        "lat": 49.6818398517447
+    },
+    {
+        "name": "Mo\u0161nov,,PZ Mobis",
+        "lng": 18.1170996343024,
+        "lat": 49.6800626941873
+    },
+    {
+        "name": "Sedlnice,,PZ Mo\u0161nov OAMP 2",
+        "lng": 18.105806847938048,
+        "lat": 49.674069512639946
+    },
+    {
+        "name": "Sedlnice,,PZ Mo\u0161nov Contera Park",
+        "lng": 18.0987930102018,
+        "lat": 49.6784710037558
+    },
+    {
+        "name": "Mo\u0161nov,,Airport n\u00e1dra\u017e\u00ed",
+        "lng": 18.1203772183352,
+        "lat": 49.6940743371264
+    }
+]
