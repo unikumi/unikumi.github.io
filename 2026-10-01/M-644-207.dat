@@ -1,0 +1,82 @@
+[
+    {
+        "name": "Kop\u0159ivnice,,aut.n\u00e1dr.",
+        "lng": 18.1480801452619,
+        "lat": 49.6041016830759
+    },
+    {
+        "name": "Kop\u0159ivnice,,Kaufland",
+        "lng": 18.1474856100433,
+        "lat": 49.6007222036009
+    },
+    {
+        "name": "Kop\u0159ivnice,,\u017eel.st.",
+        "lng": 18.1452870107379,
+        "lat": 49.5963630038097
+    },
+    {
+        "name": "Kop\u0159ivnice,,n\u00e1m.",
+        "lng": 18.1438353097847,
+        "lat": 49.5940078042409
+    },
+    {
+        "name": "Kop\u0159ivnice,,rest.Pod ka\u0161tany",
+        "lng": 18.1419433100827,
+        "lat": 49.5897169037342
+    },
+    {
+        "name": "Kop\u0159ivnice,,\u0160trambersk\u00e1",
+        "lng": 18.1386139105628,
+        "lat": 49.586731103777
+    },
+    {
+        "name": "Kop\u0159ivnice,,Uheln\u00e9 sklady",
+        "lng": 18.1355684237717,
+        "lat": 49.5845839745181
+    },
+    {
+        "name": "\u0160tramberk,,rest.Pal\u00e1rna",
+        "lng": 18.1300567096096,
+        "lat": 49.5833614042642
+    },
+    {
+        "name": "\u0160tramberk,,s\u00eddl.Ba\u0159iny",
+        "lng": 18.1251668389362,
+        "lat": 49.5778231958281
+    },
+    {
+        "name": "\u0160tramberk,,rest.Pal\u00e1rna",
+        "lng": 18.1300567096096,
+        "lat": 49.5833614042642
+    },
+    {
+        "name": "\u0160tramberk,,rest.Prosek",
+        "lng": 18.1222567106191,
+        "lat": 49.5873858036691
+    },
+    {
+        "name": "\u0160tramberk,,M\u011bstsk\u00fd \u00fa\u0159ad",
+        "lng": 18.1177994106635,
+        "lat": 49.5906450042117
+    },
+    {
+        "name": "\u0160tramberk,,rest.Pod B\u00edlou horou",
+        "lng": 18.1101138327735,
+        "lat": 49.5931330131246
+    },
+    {
+        "name": "\u0160tramberk,,u ml\u00fdna",
+        "lng": 18.1015764104263,
+        "lat": 49.5940297040572
+    },
+    {
+        "name": "\u0160tramberk,,Pet\u0159kovsk\u00fd",
+        "lng": 18.1012894108823,
+        "lat": 49.5867581037966
+    },
+    {
+        "name": "\u0160tramberk,Libot\u00edn,koupali\u0161t\u011b",
+        "lng": 18.0979233106359,
+        "lat": 49.5863219036657
+    }
+]

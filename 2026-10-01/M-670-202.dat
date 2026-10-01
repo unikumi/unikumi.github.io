@@ -1,0 +1,142 @@
+[
+    {
+        "name": "Ostrava,Dubina",
+        "lng": 18.24610468173635,
+        "lat": 49.77016588520162
+    },
+    {
+        "name": "Ostrava,Nov\u00e1 B\u011bl\u00e1,Plze\u0148sk\u00e1 rozc.",
+        "lng": 18.247008160638,
+        "lat": 49.7557271664137
+    },
+    {
+        "name": "Krmel\u00edn,,u lesa",
+        "lng": 18.2384192101216,
+        "lat": 49.7393514041276
+    },
+    {
+        "name": "Krmel\u00edn,,Sv\u011btlov",
+        "lng": 18.2252453103267,
+        "lat": 49.7332889042825
+    },
+    {
+        "name": "Star\u00e1 Ves n.Ond\u0159.,,k\u0159i\u017e.",
+        "lng": 18.1950153103998,
+        "lat": 49.7267592041983
+    },
+    {
+        "name": "Mo\u0161nov,,Airport n\u00e1dra\u017e\u00ed",
+        "lng": 18.1196024935753,
+        "lat": 49.6936849670003
+    },
+    {
+        "name": "Mo\u0161nov,,PZ BEHR",
+        "lng": 18.1152075479023,
+        "lat": 49.6873904443403
+    },
+    {
+        "name": "Mo\u0161nov,,PZ Cromodora",
+        "lng": 18.1095601868423,
+        "lat": 49.6840949701871
+    },
+    {
+        "name": "Mo\u0161nov,,OAMP",
+        "lng": 18.1071794848776,
+        "lat": 49.6818398517447
+    },
+    {
+        "name": "Mo\u0161nov,,PZ Mobis",
+        "lng": 18.1170996343024,
+        "lat": 49.6800626941873
+    },
+    {
+        "name": "Sedlnice,,PZ Mo\u0161nov OAMP 2",
+        "lng": 18.105806847938048,
+        "lat": 49.674069512639946
+    },
+    {
+        "name": "Sedlnice,,Jednota",
+        "lng": 18.0847122104616,
+        "lat": 49.6711925040328
+    },
+    {
+        "name": "Sedlnice,,rozc.Barto\u0161ovice",
+        "lng": 18.0851608106962,
+        "lat": 49.6630611040954
+    },
+    {
+        "name": "Sedlnice,,obecn\u00ed \u00fa\u0159ad",
+        "lng": 18.0869997096978,
+        "lat": 49.6586469044396
+    },
+    {
+        "name": "Sedlnice,,u \u010cunt\u016f",
+        "lng": 18.0893106099219,
+        "lat": 49.6512839043932
+    },
+    {
+        "name": "Sedlnice,,\u0161kola",
+        "lng": 18.0920531101585,
+        "lat": 49.6442194044775
+    },
+    {
+        "name": "Sedlnice,,Borovec",
+        "lng": 18.0967572107881,
+        "lat": 49.636314403663
+    },
+    {
+        "name": "Libho\u0161\u0165,,Mal\u00e1 V\u00edde\u0148",
+        "lng": 18.0875164105611,
+        "lat": 49.6320247042435
+    },
+    {
+        "name": "Libho\u0161\u0165,,u kov\u00e1rny",
+        "lng": 18.0805886106135,
+        "lat": 49.6287008040149
+    },
+    {
+        "name": "Libho\u0161\u0165,,rest.u Leid\u016f",
+        "lng": 18.0744025094842,
+        "lat": 49.6243828040553
+    },
+    {
+        "name": "Libho\u0161\u0165,,transform\u00e1tor",
+        "lng": 18.0678400104446,
+        "lat": 49.6194536041976
+    },
+    {
+        "name": "Nov\u00fd Ji\u010d\u00edn,,Sirn\u00e9 l\u00e1zn\u011b",
+        "lng": 18.0474183097071,
+        "lat": 49.60753080403
+    },
+    {
+        "name": "Nov\u00fd Ji\u010d\u00edn,,pr\u016fmyslov\u00fd park",
+        "lng": 18.0374199648875,
+        "lat": 49.6047629941217
+    },
+    {
+        "name": "Nov\u00fd Ji\u010d\u00edn,,Hasi\u010dsk\u00e1 zbrojnice",
+        "lng": 18.0324503101688,
+        "lat": 49.6043156037028
+    },
+    {
+        "name": "Nov\u00fd Ji\u010d\u00edn,,Suvorovova Tech.slu\u017eby",
+        "lng": 18.0243924759713,
+        "lat": 49.6055590937776
+    },
+    {
+        "name": "Nov\u00fd Ji\u010d\u00edn,,Suvorovova Spr\u00e1va silnic",
+        "lng": 18.0174619103196,
+        "lat": 49.6032581037921
+    },
+    {
+        "name": "Nov\u00fd Ji\u010d\u00edn,,Autopal",
+        "lng": 18.0136269099541,
+        "lat": 49.6019872040382
+    },
+    {
+        "name": "Nov\u00fd Ji\u010d\u00edn,,aut.n\u00e1dr.",
+        "lng": 18.01026904179225,
+        "lat": 49.59748443178157
+    }
+]

@@ -1,0 +1,177 @@
+[
+    {
+        "name": "Kop\u0159ivnice,,aut.n\u00e1dr.",
+        "lng": 18.1476753098753,
+        "lat": 49.604075604018
+    },
+    {
+        "name": "Kop\u0159ivnice,,Kaufland",
+        "lng": 18.1474856100433,
+        "lat": 49.6007222036009
+    },
+    {
+        "name": "Kop\u0159ivnice,,\u017eel.st.",
+        "lng": 18.1454631100342,
+        "lat": 49.5966733041105
+    },
+    {
+        "name": "Kop\u0159ivnice,,kolonie",
+        "lng": 18.1381983100848,
+        "lat": 49.6038100042202
+    },
+    {
+        "name": "Z\u00e1vi\u0161ice,,rozc.P\u0159\u00edbor Pali\u010dka",
+        "lng": 18.1202264096751,
+        "lat": 49.6109067042221
+    },
+    {
+        "name": "Z\u00e1vi\u0161ice,Paseky",
+        "lng": 18.11955442406078,
+        "lat": 49.61420017410182
+    },
+    {
+        "name": "P\u0159\u00edbor,,to\u010dna",
+        "lng": 18.1315417102698,
+        "lat": 49.6218131044573
+    },
+    {
+        "name": "P\u0159\u00edbor,,kolonie",
+        "lng": 18.1388136098823,
+        "lat": 49.6296681041814
+    },
+    {
+        "name": "P\u0159\u00edbor,,\u0160trambersk\u00e1",
+        "lng": 18.139863949824612,
+        "lat": 49.63568961798622
+    },
+    {
+        "name": "P\u0159\u00edbor,,u \u0161kol",
+        "lng": 18.1399072098809,
+        "lat": 49.639748303634
+    },
+    {
+        "name": "P\u0159\u00edbor,,u Voln\u00e9ho",
+        "lng": 18.1441081103096,
+        "lat": 49.6415731037559
+    },
+    {
+        "name": "Skotnice,,na d\u00e1lnici",
+        "lng": 18.1386953105939,
+        "lat": 49.6551217036657
+    },
+    {
+        "name": "Skotnice,,Stikovec",
+        "lng": 18.1383211097219,
+        "lat": 49.6603153042773
+    },
+    {
+        "name": "Skotnice,,Skorot\u00edn",
+        "lng": 18.1375603104212,
+        "lat": 49.6667936043318
+    },
+    {
+        "name": "Mo\u0161nov,,ml\u00fdn",
+        "lng": 18.1312714094891,
+        "lat": 49.6817433042204
+    },
+    {
+        "name": "Mo\u0161nov,,kulturn\u00ed d\u016fm",
+        "lng": 18.1322660094602,
+        "lat": 49.6875080043994
+    },
+    {
+        "name": "Mo\u0161nov,,Airport n\u00e1dra\u017e\u00ed",
+        "lng": 18.1203772183352,
+        "lat": 49.6940743371264
+    },
+    {
+        "name": "Pet\u0159vald,,Vysock\u00fd",
+        "lng": 18.1463525102507,
+        "lat": 49.7026003036998
+    },
+    {
+        "name": "Pet\u0159vald,,kino",
+        "lng": 18.1502303104112,
+        "lat": 49.7062553042005
+    },
+    {
+        "name": "Pet\u0159vald,,n\u00e1m.",
+        "lng": 18.156347778442964,
+        "lat": 49.70981289420321
+    },
+    {
+        "name": "Pet\u0159vald,,u \u0160ev\u010d\u00edk\u016f",
+        "lng": 18.1570493115053,
+        "lat": 49.7117103041251
+    },
+    {
+        "name": "Pet\u0159vald,,u Klimk\u016f",
+        "lng": 18.1594236106245,
+        "lat": 49.7159639043582
+    },
+    {
+        "name": "Star\u00e1 Ves n.Ond\u0159.,,k\u0159i\u017e.",
+        "lng": 18.1955628103696,
+        "lat": 49.7269622042605
+    },
+    {
+        "name": "Krmel\u00edn,,Sv\u011btlov",
+        "lng": 18.225506709977,
+        "lat": 49.7331983037857
+    },
+    {
+        "name": "Krmel\u00edn,,u lesa",
+        "lng": 18.2385714103513,
+        "lat": 49.7392931042929
+    },
+    {
+        "name": "Ostrava,Nov\u00e1 B\u011bl\u00e1,Plze\u0148sk\u00e1 rozc.",
+        "lng": 18.2471842811593,
+        "lat": 49.7573537074753
+    },
+    {
+        "name": "Ostrava,Dubina",
+        "lng": 18.246435158288314,
+        "lat": 49.77055591523086
+    },
+    {
+        "name": "Ostrava,Hrab\u016fvka,Poliklinika",
+        "lng": 18.2595233742792,
+        "lat": 49.7846232489418
+    },
+    {
+        "name": "Ostrava,Hrab\u016fvka,D\u0159evoprodej",
+        "lng": 18.2719710096149,
+        "lat": 49.7921330041619
+    },
+    {
+        "name": "Ostrava,V\u00edtkovice,D\u016fl Jeremenko",
+        "lng": 18.2755970101323,
+        "lat": 49.8068850038661
+    },
+    {
+        "name": "Ostrava,V\u00edtkovice,\u010cesk\u00fd d\u016fm-M\u00edsteck\u00e1",
+        "lng": 18.275645309667,
+        "lat": 49.8133261043594
+    },
+    {
+        "name": "Ostrava,V\u00edtkovice,Doln\u00ed V\u00edtkovice",
+        "lng": 18.2759793892618,
+        "lat": 49.8184827107652
+    },
+    {
+        "name": "Ostrava,,\u017eel.st.st\u0159ed",
+        "lng": 18.28174275476044,
+        "lat": 49.8290991940184
+    },
+    {
+        "name": "Ostrava,Mor.Ostrava,Senov\u00e1\u017en\u00e1",
+        "lng": 18.2796090097137,
+        "lat": 49.8325590037379
+    },
+    {
+        "name": "Ostrava,Mor.Ostrava,N\u00e1m\u011bst\u00ed Republiky",
+        "lng": 18.280222110328822,
+        "lat": 49.830215167715444
+    }
+]

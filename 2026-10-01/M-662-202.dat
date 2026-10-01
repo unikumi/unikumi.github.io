@@ -1,0 +1,82 @@
+[
+    {
+        "name": "Kop\u0159ivnice,,aut.n\u00e1dr.",
+        "lng": 18.1477128098579,
+        "lat": 49.6041658035881
+    },
+    {
+        "name": "Kop\u0159ivnice,Lubina,rozc.",
+        "lng": 18.1606083097032,
+        "lat": 49.6137169043874
+    },
+    {
+        "name": "Kop\u0159ivnice,Lubina,Na Holot\u011b",
+        "lng": 18.1522453101898,
+        "lat": 49.6206342039498
+    },
+    {
+        "name": "P\u0159\u00edbor,,\u017eel.st.",
+        "lng": 18.1429744097364,
+        "lat": 49.6366367037966
+    },
+    {
+        "name": "P\u0159\u00edbor,,u \u0161kol",
+        "lng": 18.1399072098809,
+        "lat": 49.639748303634
+    },
+    {
+        "name": "P\u0159\u00edbor,,Tatra",
+        "lng": 18.1517878098834,
+        "lat": 49.64207030433
+    },
+    {
+        "name": "P\u0159\u00edbor,H\u00e1jov,rozc.",
+        "lng": 18.1827050100368,
+        "lat": 49.6463880038003
+    },
+    {
+        "name": "Hukvaldy,Rychaltice,pod mostem",
+        "lng": 18.2171503107811,
+        "lat": 49.650007804483
+    },
+    {
+        "name": "Hukvaldy,Krnalovice",
+        "lng": 18.242758525950336,
+        "lat": 49.65442676164487
+    },
+    {
+        "name": "Fr\u00fddek-M\u00edstek,Chlebovice,pr\u016fmyslov\u00e1 z\u00f3na",
+        "lng": 18.2690640100314,
+        "lat": 49.6591220037397
+    },
+    {
+        "name": "Fr\u00fddek-M\u00edstek,Chlebovice,st\u0159ed",
+        "lng": 18.2796192490303,
+        "lat": 49.6610610578248
+    },
+    {
+        "name": "Fr\u00fddek-M\u00edstek,Zelinkovice",
+        "lng": 18.293787250381623,
+        "lat": 49.6638788274453
+    },
+    {
+        "name": "Fr\u00fddek-M\u00edstek,M\u00edstek,u V\u00e1clav\u00edk\u016f",
+        "lng": 18.309818910912,
+        "lat": 49.6670639039844
+    },
+    {
+        "name": "Fr\u00fddek-M\u00edstek,M\u00edstek,P\u0159\u00edborsk\u00e1",
+        "lng": 18.3290300103983,
+        "lat": 49.6707244041737
+    },
+    {
+        "name": "Fr\u00fddek-M\u00edstek,M\u00edstek,Politick\u00fdch ob\u011bt\u00ed",
+        "lng": 18.3449103103527,
+        "lat": 49.6759311036153
+    },
+    {
+        "name": "Fr\u00fddek-M\u00edstek,Fr\u00fddek,aut.n\u00e1dr.",
+        "lng": 18.3515166146457,
+        "lat": 49.6783497679979
+    }
+]
