@@ -668,6 +668,46 @@
         "name": "374/206 - Trnávka - Ostrava,Svinov,mosty",
         "geojson": "2026-10-01/G-374-206.dat",
         "markers": "2026-10-01/M-374-206.dat"
+    },
+    {
+        "name": "633/202 - ...",
+        "geojson": "2026-10-01/G-ODIS-633-202.dat",
+        "markers": "2026-10-01/M-ODIS-633-202.dat"
+    },
+    {
+        "name": "655/205 - ...",
+        "geojson": "2026-10-01/G-ODIS-655-205.dat",
+        "markers": "2026-10-01/M-ODIS-655-205.dat"
+    },
+    {
+        "name": "655/206 - ...",
+        "geojson": "2026-10-01/G-ODIS-655-206.dat",
+        "markers": "2026-10-01/M-ODIS-655-206.dat"
+    },
+    {
+        "name": "656/203 - ...",
+        "geojson": "2026-10-01/G-ODIS-656-203.dat",
+        "markers": "2026-10-01/M-ODIS-656-203.dat"
+    },
+    {
+        "name": "656/204 - ...",
+        "geojson": "2026-10-01/G-ODIS-656-204.dat",
+        "markers": "2026-10-01/M-ODIS-656-204.dat"
+    },
+    {
+        "name": "657/202 - ...",
+        "geojson": "2026-10-01/G-ODIS-657-202.dat",
+        "markers": "2026-10-01/M-ODIS-657-202.dat"
+    },
+    {
+        "name": "696/251 - ...",
+        "geojson": "2026-10-01/G-ODIS-696-251.dat",
+        "markers": "2026-10-01/M-ODIS-696-251.dat"
+    },
+    {
+        "name": "696/252 - ...",
+        "geojson": "2026-10-01/G-ODIS-696-252.dat",
+        "markers": "2026-10-01/M-ODIS-696-252.dat"
     }
 
 ]
