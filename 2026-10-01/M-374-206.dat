@@ -1,0 +1,127 @@
+[
+    {
+        "name": "Trn\u00e1vka,,po\u017e.zbroj.",
+        "lng": 18.176763,
+        "lat": 49.688682
+    },
+    {
+        "name": "Trn\u00e1vka,,Jednota",
+        "lng": 18.177828,
+        "lat": 49.684813
+    },
+    {
+        "name": "Trn\u00e1vka,,dvorek",
+        "lng": 18.181024,
+        "lat": 49.682603
+    },
+    {
+        "name": "Bru\u0161perk,,u Chamr\u00e1d\u016f",
+        "lng": 18.225383,
+        "lat": 49.694424
+    },
+    {
+        "name": "Bru\u0161perk,,st\u0159ed",
+        "lng": 18.223793,
+        "lat": 49.698461
+    },
+    {
+        "name": "Bru\u0161perk,,Starovesk\u00e1",
+        "lng": 18.218872,
+        "lat": 49.704345
+    },
+    {
+        "name": "Star\u00e1 Ves n.Ond\u0159.,,Na h\u016f\u0159e",
+        "lng": 18.206735,
+        "lat": 49.713962
+    },
+    {
+        "name": "Star\u00e1 Ves n.Ond\u0159.,,u dubu",
+        "lng": 18.199581,
+        "lat": 49.721382
+    },
+    {
+        "name": "Star\u00e1 Ves n.Ond\u0159.,,Na drah\u00e1ch",
+        "lng": 18.193609,
+        "lat": 49.726763
+    },
+    {
+        "name": "Star\u00e1 Ves n.Ond\u0159.,,po\u0161ta",
+        "lng": 18.187424,
+        "lat": 49.728498
+    },
+    {
+        "name": "Ostrava,Proskovice",
+        "lng": 18.19768,
+        "lat": 49.75175
+    },
+    {
+        "name": "Ostrava,Proskovice,Horn\u00ed cesta",
+        "lng": 18.200345,
+        "lat": 49.755337
+    },
+    {
+        "name": "Ostrava,Star\u00e1 B\u011bl\u00e1,k\u0159i\u017e.",
+        "lng": 18.205908,
+        "lat": 49.763277
+    },
+    {
+        "name": "Ostrava,V\u00fd\u0161kovice,osada",
+        "lng": 18.211477,
+        "lat": 49.77591
+    },
+    {
+        "name": "Ostrava,V\u00fd\u0161kovice,Smr\u010dkova",
+        "lng": 18.215694,
+        "lat": 49.781288
+    },
+    {
+        "name": "Ostrava,V\u00fd\u0161kovice,Star\u00e9 V\u00fd\u0161kovice",
+        "lng": 18.219409,
+        "lat": 49.784944
+    },
+    {
+        "name": "Ostrava,Z\u00e1b\u0159eh,Kino Luna",
+        "lng": 18.226107,
+        "lat": 49.787716
+    },
+    {
+        "name": "Ostrava,Z\u00e1b\u0159eh,Kotva",
+        "lng": 18.229737,
+        "lat": 49.791113
+    },
+    {
+        "name": "Ostrava,Z\u00e1b\u0159eh,Shopping Park",
+        "lng": 18.223663,
+        "lat": 49.798801
+    },
+    {
+        "name": "Ostrava,Svinov,Fibichova",
+        "lng": 18.198671,
+        "lat": 49.807902
+    },
+    {
+        "name": "Ostrava,Svinov,Jel\u00ednkova",
+        "lng": 18.198664,
+        "lat": 49.811797
+    },
+    {
+        "name": "Ostrava,Svinov,n\u00e1m\u011bst\u00ed",
+        "lng": 18.197158,
+        "lat": 49.815094
+    },
+    {
+        "name": "Ostrava,Svinov,\u0161kola",
+        "lng": 18.201947,
+        "lat": 49.818361
+    },
+    {
+        "name": "Ostrava,Svinov,n\u00e1dra\u017e\u00ed",
+        "lng": 18.208703,
+        "lat": 49.821312
+    },
+    {
+        "name": "Ostrava,Svinov,mosty",
+        "lng": 18.209999,
+        "lat": 49.824307
+    }
+]
