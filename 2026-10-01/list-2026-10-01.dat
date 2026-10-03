@@ -653,5 +653,16 @@
         "name": "697/219 - Nový Jičín - Kopřivnice,,Tymphany",
         "geojson": "2026-10-01/G-697-219.dat",
         "markers": "2026-10-01/M-697-219.dat"
+    },
+    {
+        "name": "374/203 - Ostrava - Trnávka,pož.zbroj.",
+        "geojson": "2026-10-01/G-374-203.dat",
+        "markers": "2026-10-01/M-374-203.dat"
+    },
+    {
+        "name": "374/209 - Ostrava - Trnávka,pož.zbroj.",
+        "geojson": "2026-10-01/G-374-209.dat",
+        "markers": "2026-10-01/M-374-209.dat"
     }
+
 ]
