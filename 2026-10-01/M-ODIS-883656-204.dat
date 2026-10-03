@@ -1,0 +1,42 @@
+[
+    {
+        "name": "Trojanovice,Bystr\u00e9,Maral\u016fv kopec",
+        "lng": 18.2822558109143,
+        "lat": 49.523328904063
+    },
+    {
+        "name": "Trojanovice,Bystr\u00e9,u k\u0159\u00ed\u017ee",
+        "lng": 18.2737344097997,
+        "lat": 49.5244253038018
+    },
+    {
+        "name": "Trojanovice,,rest.U \u0161enku",
+        "lng": 18.2630650105244,
+        "lat": 49.5244850038424
+    },
+    {
+        "name": "Trojanovice,,u Jand\u016f",
+        "lng": 18.2540417100264,
+        "lat": 49.5263858037498
+    },
+    {
+        "name": "Trojanovice,,u Barto\u0148\u016f",
+        "lng": 18.2438597098714,
+        "lat": 49.5315642043238
+    },
+    {
+        "name": "Fren\u0161t\u00e1t p.Radh.,,u Braun\u016f",
+        "lng": 18.2361719097183,
+        "lat": 49.5354808038989
+    },
+    {
+        "name": "Fren\u0161t\u00e1t p.Radh.,,\u017eel.st.",
+        "lng": 18.2246020273129,
+        "lat": 49.5428941071954
+    },
+    {
+        "name": "Fren\u0161t\u00e1t p.Radh.,,u \u0161kol",
+        "lng": 18.213772250331,
+        "lat": 49.5460431930191
+    }
+]

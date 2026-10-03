@@ -1,0 +1,112 @@
+[
+    {
+        "name": "Fren\u0161t\u00e1t p.Radh.,,u \u0161kol",
+        "lng": 18.213772250331,
+        "lat": 49.5460431930191
+    },
+    {
+        "name": "Fren\u0161t\u00e1t p.Radh.,,Doln\u00ed",
+        "lng": 18.203420810382,
+        "lat": 49.5502711036647
+    },
+    {
+        "name": "Lichnov,,u P\u0159ibyl\u016f",
+        "lng": 18.1911981100201,
+        "lat": 49.5540033036742
+    },
+    {
+        "name": "Lichnov,,Na B\u0159ezin\u00e1ch",
+        "lng": 18.1779439108193,
+        "lat": 49.55210330381
+    },
+    {
+        "name": "Bordovice,,rozc.",
+        "lng": 18.1604527160909,
+        "lat": 49.549153259367
+    },
+    {
+        "name": "Bordovice,,R\u016f\u017ee",
+        "lng": 18.1462431100072,
+        "lat": 49.5431481037575
+    },
+    {
+        "name": "Ve\u0159ovice,,\u017eel.st.",
+        "lng": 18.1299811101088,
+        "lat": 49.5364056037499
+    },
+    {
+        "name": "Ve\u0159ovice,,n\u00e1kup.st\u0159.",
+        "lng": 18.1253817098923,
+        "lat": 49.5374994037975
+    },
+    {
+        "name": "Ve\u0159ovice,,\u0161kola",
+        "lng": 18.1144450100001,
+        "lat": 49.5396500036733
+    },
+    {
+        "name": "Ve\u0159ovice,,SITEX",
+        "lng": 18.1042267105948,
+        "lat": 49.5388589042189
+    },
+    {
+        "name": "Ve\u0159ovice,,rozc.sm\u011br Mo\u0159kov",
+        "lng": 18.0932760801015,
+        "lat": 49.5412974619324
+    },
+    {
+        "name": "Mo\u0159kov,,pomn\u00edk rudoarm\u011bjce",
+        "lng": 18.0740707413632,
+        "lat": 49.5453657293625
+    },
+    {
+        "name": "Mo\u0159kov,,rozc.Fren\u0161t\u00e1t p.Radh.",
+        "lng": 18.0628537429283,
+        "lat": 49.5452630489996
+    },
+    {
+        "name": "\u017divotice u N.Ji\u010d\u00edna,,kostel",
+        "lng": 18.0516123286942,
+        "lat": 49.5528272098753
+    },
+    {
+        "name": "\u017divotice u N.Ji\u010d\u00edna,,obecn\u00ed \u00fa\u0159ad",
+        "lng": 18.0467360727295,
+        "lat": 49.5584612446707
+    },
+    {
+        "name": "\u017divotice u N.Ji\u010d\u00edna,,u Jana",
+        "lng": 18.0435817950118,
+        "lat": 49.5652358427858
+    },
+    {
+        "name": "Nov\u00fd Ji\u010d\u00edn,\u017dilina,po\u017e.zbroj.",
+        "lng": 18.0406761677109,
+        "lat": 49.5740093458322
+    },
+    {
+        "name": "Nov\u00fd Ji\u010d\u00edn,\u017dilina,u partyz\u00e1na",
+        "lng": 18.038626958682,
+        "lat": 49.5779435280057
+    },
+    {
+        "name": "Nov\u00fd Ji\u010d\u00edn,\u017dilina,kult.d\u016fm",
+        "lng": 18.0333054568621,
+        "lat": 49.5844215400529
+    },
+    {
+        "name": "Nov\u00fd Ji\u010d\u00edn,\u017dilina,zem\u011bd\u011blsk\u00e1 \u0161kola",
+        "lng": 18.0226544047378,
+        "lat": 49.5900084612168
+    },
+    {
+        "name": "Nov\u00fd Ji\u010d\u00edn,,Bezru\u010dova",
+        "lng": 18.0178827547276,
+        "lat": 49.5952557245921
+    },
+    {
+        "name": "Nov\u00fd Ji\u010d\u00edn,,aut.n\u00e1dr.",
+        "lng": 18.01026904179225,
+        "lat": 49.59748443178157
+    }
+]
