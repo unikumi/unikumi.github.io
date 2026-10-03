@@ -1,0 +1,127 @@
+[
+    {
+        "name": "Ostrava,Svinov,mosty",
+        "lng": 18.210541536198,
+        "lat": 49.8234977053509
+    },
+    {
+        "name": "Ostrava,Svinov,n\u00e1dra\u017e\u00ed",
+        "lng": 18.2085517105197,
+        "lat": 49.8212136044465
+    },
+    {
+        "name": "Ostrava,Svinov,\u0161kola",
+        "lng": 18.2017990104454,
+        "lat": 49.8183510041191
+    },
+    {
+        "name": "Ostrava,Svinov,n\u00e1m\u011bst\u00ed",
+        "lng": 18.1970828108103,
+        "lat": 49.8151500039526
+    },
+    {
+        "name": "Ostrava,Svinov,Jel\u00ednkova",
+        "lng": 18.1985622109045,
+        "lat": 49.8116781038992
+    },
+    {
+        "name": "Ostrava,Svinov,Fibichova",
+        "lng": 18.1985331106681,
+        "lat": 49.8080883041761
+    },
+    {
+        "name": "Ostrava,Z\u00e1b\u0159eh,Shopping Park",
+        "lng": 18.2244190108241,
+        "lat": 49.7981340037569
+    },
+    {
+        "name": "Ostrava,Z\u00e1b\u0159eh,Kotva",
+        "lng": 18.228401910806,
+        "lat": 49.7908150040845
+    },
+    {
+        "name": "Ostrava,Z\u00e1b\u0159eh,Kino Luna",
+        "lng": 18.2260311100152,
+        "lat": 49.7879542037237
+    },
+    {
+        "name": "Ostrava,V\u00fd\u0161kovice,Star\u00e9 V\u00fd\u0161kovice",
+        "lng": 18.2191790097739,
+        "lat": 49.7850540037298
+    },
+    {
+        "name": "Ostrava,V\u00fd\u0161kovice,Smr\u010dkova",
+        "lng": 18.2155374450207,
+        "lat": 49.7812555571466
+    },
+    {
+        "name": "Ostrava,V\u00fd\u0161kovice,osada",
+        "lng": 18.2114110095946,
+        "lat": 49.7758840044263
+    },
+    {
+        "name": "Ostrava,Star\u00e1 B\u011bl\u00e1,k\u0159i\u017e.",
+        "lng": 18.2062426924497,
+        "lat": 49.7637568067045
+    },
+    {
+        "name": "Ostrava,Proskovice,Horn\u00ed cesta",
+        "lng": 18.1996911108683,
+        "lat": 49.7540542041272
+    },
+    {
+        "name": "Ostrava,Proskovice",
+        "lng": 18.19768,
+        "lat": 49.75175
+    },
+    {
+        "name": "Star\u00e1 Ves n.Ond\u0159.,,po\u0161ta",
+        "lng": 18.1872886098154,
+        "lat": 49.7285906040165
+    },
+    {
+        "name": "Star\u00e1 Ves n.Ond\u0159.,,Na drah\u00e1ch",
+        "lng": 18.193584923611,
+        "lat": 49.7265025783452
+    },
+    {
+        "name": "Star\u00e1 Ves n.Ond\u0159.,,u dubu",
+        "lng": 18.1995808095752,
+        "lat": 49.7213203037236
+    },
+    {
+        "name": "Star\u00e1 Ves n.Ond\u0159.,,Na h\u016f\u0159e",
+        "lng": 18.2063152889944,
+        "lat": 49.7145904920428
+    },
+    {
+        "name": "Bru\u0161perk,,Starovesk\u00e1",
+        "lng": 18.2188206099474,
+        "lat": 49.7043247038675
+    },
+    {
+        "name": "Bru\u0161perk,,st\u0159ed",
+        "lng": 18.2237642100747,
+        "lat": 49.6983797041747
+    },
+    {
+        "name": "Bru\u0161perk,,u Chamr\u00e1d\u016f",
+        "lng": 18.2254222100541,
+        "lat": 49.6942533041783
+    },
+    {
+        "name": "Trn\u00e1vka,,dvorek",
+        "lng": 18.1810178100191,
+        "lat": 49.6826322042084
+    },
+    {
+        "name": "Trn\u00e1vka,,Jednota",
+        "lng": 18.1779228095483,
+        "lat": 49.6847831038523
+    },
+    {
+        "name": "Trn\u00e1vka,,po\u017e.zbroj.",
+        "lng": 18.176714710285,
+        "lat": 49.6887456044041
+    }
+]
