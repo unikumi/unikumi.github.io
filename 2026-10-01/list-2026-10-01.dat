@@ -663,6 +663,11 @@
         "name": "374/209 - Ostrava - Trnávka,pož.zbroj.",
         "geojson": "2026-10-01/G-374-209.dat",
         "markers": "2026-10-01/M-374-209.dat"
+    },
+    {
+        "name": "374/206 - Trnávka - Ostrava,Svinov,mosty",
+        "geojson": "2026-10-01/G-374-206.dat",
+        "markers": "2026-10-01/M-374-206.dat"
     }
 
 ]
