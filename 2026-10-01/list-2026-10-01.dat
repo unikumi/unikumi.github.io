@@ -721,8 +721,8 @@
     },
     {
         "name": "999/KOZLOVICE - FR. P. R. ŽST.",
-        "geojson": "2026-10-01/G-999-KFR.dat",
-        "markers": "2026-10-01/M-999-KFR.dat"
+        "geojson": "2026-10-01/G-999-KFZ.dat",
+        "markers": "2026-10-01/M-999-KFZ.dat"
     }
 
 ]
