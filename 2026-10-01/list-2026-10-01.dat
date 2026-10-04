@@ -708,6 +708,21 @@
         "name": "696/252 - ...",
         "geojson": "2026-10-01/G-ODIS-883696-252.dat",
         "markers": "2026-10-01/M-ODIS-883696-252.dat"
+    },
+    {
+        "name": "999/FRÝDEK-MÍSTEK - KOPŘ.",
+        "geojson": "2026-10-01/G-999-FMK.dat",
+        "markers": "2026-10-01/M-999-FMK.dat"
+    },
+    {
+        "name": "999/OVA NÁM REP. - DUBINA",
+        "geojson": "2026-10-01/G-999-NRD.dat",
+        "markers": "2026-10-01/M-999-NRD.dat"
+    },
+    {
+        "name": "999/KOZLOVICE - FR. P. R. ŽST.",
+        "geojson": "2026-10-01/G-999-KFR.dat",
+        "markers": "2026-10-01/M-999-KFR.dat"
     }
 
 ]
