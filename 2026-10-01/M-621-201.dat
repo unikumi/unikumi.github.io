@@ -1,0 +1,147 @@
+[
+    {
+        "name": "Fr\u00fddek-M\u00edstek,Fr\u00fddek,aut.n\u00e1dr.",
+        "lng": 18.3509630897896,
+        "lat": 49.6787410643706
+    },
+    {
+        "name": "Fr\u00fddek-M\u00edstek,M\u00edstek,poliklinika",
+        "lng": 18.3417176502636,
+        "lat": 49.6776920914122
+    },
+    {
+        "name": "Fr\u00fddek-M\u00edstek,M\u00edstek,P\u0159\u00edborsk\u00e1",
+        "lng": 18.3314300096346,
+        "lat": 49.6710792041074
+    },
+    {
+        "name": "Fr\u00fddek-M\u00edstek,M\u00edstek,u V\u00e1clav\u00edk\u016f",
+        "lng": 18.3075728102181,
+        "lat": 49.6667761040678
+    },
+    {
+        "name": "Fr\u00fddek-M\u00edstek,Zelinkovice",
+        "lng": 18.293320040136212,
+        "lat": 49.66391870381277
+    },
+    {
+        "name": "Fr\u00fddek-M\u00edstek,Chlebovice,st\u0159ed",
+        "lng": 18.2792269104945,
+        "lat": 49.6611300036739
+    },
+    {
+        "name": "Fr\u00fddek-M\u00edstek,Chlebovice,pr\u016fmyslov\u00e1 z\u00f3na",
+        "lng": 18.2694570100417,
+        "lat": 49.6593290038829
+    },
+    {
+        "name": "Hukvaldy,Krnalovice",
+        "lng": 18.240166608967016,
+        "lat": 49.65388119790568
+    },
+    {
+        "name": "Hukvaldy,Rychaltice,pod mostem",
+        "lng": 18.2171311102172,
+        "lat": 49.6497186037064
+    },
+    {
+        "name": "P\u0159\u00edbor,H\u00e1jov,rozc.",
+        "lng": 18.183347744529,
+        "lat": 49.6466669021142
+    },
+    {
+        "name": "P\u0159\u00edbor,,Tatra",
+        "lng": 18.1518833099853,
+        "lat": 49.6421556040556
+    },
+    {
+        "name": "P\u0159\u00edbor,,u kostela",
+        "lng": 18.1407144102801,
+        "lat": 49.6410728044604
+    },
+    {
+        "name": "P\u0159\u00edbor,,u Voln\u00e9ho",
+        "lng": 18.1441081103096,
+        "lat": 49.6415731037559
+    },
+    {
+        "name": "Skotnice,,ml\u00fdn",
+        "lng": 18.138481409771,
+        "lat": 49.6526581038466
+    },
+    {
+        "name": "P\u0159\u00edbor,Prchalov,u B\u00f6nisch\u016f",
+        "lng": 18.1282700096281,
+        "lat": 49.6504381044208
+    },
+    {
+        "name": "P\u0159\u00edbor,Prchalov,U Simpr\u016f",
+        "lng": 18.1216108103613,
+        "lat": 49.6480956039322
+    },
+    {
+        "name": "P\u0159\u00edbor,Prchalov,autoservis Jahn",
+        "lng": 18.1110739096708,
+        "lat": 49.644299404223
+    },
+    {
+        "name": "Sedlnice,,Borovec",
+        "lng": 18.0967572107881,
+        "lat": 49.636314403663
+    },
+    {
+        "name": "Libho\u0161\u0165,,Mal\u00e1 V\u00edde\u0148",
+        "lng": 18.0875164105611,
+        "lat": 49.6320247042435
+    },
+    {
+        "name": "Libho\u0161\u0165,,u kov\u00e1rny",
+        "lng": 18.0805886106135,
+        "lat": 49.6287008040149
+    },
+    {
+        "name": "Libho\u0161\u0165,,rest.u Leid\u016f",
+        "lng": 18.0744025094842,
+        "lat": 49.6243828040553
+    },
+    {
+        "name": "Libho\u0161\u0165,,transform\u00e1tor",
+        "lng": 18.0678400104446,
+        "lat": 49.6194536041976
+    },
+    {
+        "name": "Nov\u00fd Ji\u010d\u00edn,,Sirn\u00e9 l\u00e1zn\u011b",
+        "lng": 18.0474183097071,
+        "lat": 49.60753080403
+    },
+    {
+        "name": "Nov\u00fd Ji\u010d\u00edn,,pr\u016fmyslov\u00fd park",
+        "lng": 18.0374199648875,
+        "lat": 49.6047629941217
+    },
+    {
+        "name": "Nov\u00fd Ji\u010d\u00edn,,Hasi\u010dsk\u00e1 zbrojnice",
+        "lng": 18.0324503101688,
+        "lat": 49.6043156037028
+    },
+    {
+        "name": "Nov\u00fd Ji\u010d\u00edn,,Suvorovova Tech.slu\u017eby",
+        "lng": 18.0243924759713,
+        "lat": 49.6055590937776
+    },
+    {
+        "name": "Nov\u00fd Ji\u010d\u00edn,,Suvorovova Spr\u00e1va silnic",
+        "lng": 18.0174619103196,
+        "lat": 49.6032581037921
+    },
+    {
+        "name": "Nov\u00fd Ji\u010d\u00edn,,Autopal",
+        "lng": 18.0136269099541,
+        "lat": 49.6019872040382
+    },
+    {
+        "name": "Nov\u00fd Ji\u010d\u00edn,,aut.n\u00e1dr.",
+        "lng": 18.01026904179225,
+        "lat": 49.59748443178157
+    }
+]
