@@ -743,6 +743,11 @@
         "name": "690/214, 216 - ... /T610",
         "geojson": "2026-10-01/G-690-214.dat",
         "markers": "2026-10-01/M-690-214.dat"
+    },
+    {
+        "name": "999/FRÝDEK-MÍSTEK - NJ GAR.",
+        "geojson": "2026-10-01/G-999-FMJ.dat",
+        "markers": "2026-10-01/M-999-FMJ.dat"
     }
 
 ]
