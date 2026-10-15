@@ -760,6 +760,11 @@
         "markers": "2026-10-01/M-ODIS-883643-206V.dat"
     },
     {
+        "name": "662/405 - Příbor - Kopřivnice,,aut.nádr. /T692",
+        "geojson": "2026-10-01/G-ODIS-883662-405.dat",
+        "markers": "2026-10-01/M-ODIS-883662-405.dat"
+    },
+    {
         "name": "634/215 - Kopřivnice - Frenštát p.Radh.,,žel.st. /T692",
         "geojson": "2026-10-01/G-ODIS-883634-215.dat",
         "markers": "2026-10-01/M-634-215.dat"
