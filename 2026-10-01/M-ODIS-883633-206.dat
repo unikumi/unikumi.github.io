@@ -1,0 +1,77 @@
+[
+    {
+        "name": "Ve\u0159ovice,,n\u00e1kup.st\u0159.",
+        "lng": 18.1253817098923,
+        "lat": 49.5374994037975
+    },
+    {
+        "name": "Ve\u0159ovice,,\u0161kola",
+        "lng": 18.1144450100001,
+        "lat": 49.5396500036733
+    },
+    {
+        "name": "Ve\u0159ovice,,SITEX",
+        "lng": 18.1042267105948,
+        "lat": 49.5388589042189
+    },
+    {
+        "name": "Ve\u0159ovice,,rozc.sm\u011br \u017denklava",
+        "lng": 18.0962990099255,
+        "lat": 49.5418230043872
+    },
+    {
+        "name": "\u017denklava,,Lacina",
+        "lng": 18.1036844099241,
+        "lat": 49.5569661039913
+    },
+    {
+        "name": "\u017denklava,,kostel",
+        "lng": 18.1079008097508,
+        "lat": 49.5638403036135
+    },
+    {
+        "name": "\u017denklava,,most",
+        "lng": 18.1092725107899,
+        "lat": 49.5719350040144
+    },
+    {
+        "name": "\u0160tramberk,,s\u00eddl.Ba\u0159iny",
+        "lng": 18.1241698344427,
+        "lat": 49.5771632225515
+    },
+    {
+        "name": "\u0160tramberk,,rest.Pal\u00e1rna",
+        "lng": 18.1303234302261,
+        "lat": 49.5834585679599
+    },
+    {
+        "name": "Kop\u0159ivnice,,Uheln\u00e9 sklady",
+        "lng": 18.137094209807,
+        "lat": 49.585200603839
+    },
+    {
+        "name": "Kop\u0159ivnice,,\u0160trambersk\u00e1",
+        "lng": 18.1396500105991,
+        "lat": 49.5874460041616
+    },
+    {
+        "name": "Kop\u0159ivnice,,rest.Pod ka\u0161tany",
+        "lng": 18.142217209727,
+        "lat": 49.5900481043387
+    },
+    {
+        "name": "Kop\u0159ivnice,,\u017eel.st.",
+        "lng": 18.1452825105415,
+        "lat": 49.5958531039207
+    },
+    {
+        "name": "Kop\u0159ivnice,,Kaufland",
+        "lng": 18.1477031105878,
+        "lat": 49.6009019044949
+    },
+    {
+        "name": "Kop\u0159ivnice,,aut.n\u00e1dr.",
+        "lng": 18.1472200105444,
+        "lat": 49.6042431038499
+    }
+]
