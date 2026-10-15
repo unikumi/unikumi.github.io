@@ -748,6 +748,16 @@
         "name": "999/FRÝDEK-MÍSTEK - NJ GAR.",
         "geojson": "2026-10-01/G-999-FMJ.dat",
         "markers": "2026-10-01/M-999-FMJ.dat"
+    },
+    {
+        "name": "643/203V - Kopřivnice - Bartošovice,rozc.k pískovně /T692",
+        "geojson": "2026-10-01/G-643-203V.dat",
+        "markers": "2026-10-01/M-643-203V.dat"
+    },
+    {
+        "name": "643/206V - Bartošovice - Příbor,u škol /T692",
+        "geojson": "2026-10-01/G-643-206V.dat",
+        "markers": "2026-10-01/M-643-206V.dat"
     }
 
 ]
