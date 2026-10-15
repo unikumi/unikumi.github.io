@@ -758,6 +758,11 @@
         "name": "643/206V - Bartošovice - Příbor,u škol /T692",
         "geojson": "2026-10-01/G-643-206V.dat",
         "markers": "2026-10-01/M-643-206V.dat"
+    },
+    {
+        "name": "634/215 - Kopřivnice - Frenštát p.Radh.,,žel.st. /T692",
+        "geojson": "2026-10-01/G-634-215.dat",
+        "markers": "2026-10-01/M-634-215.dat"
     }
 
 ]
