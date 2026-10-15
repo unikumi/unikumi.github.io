@@ -768,6 +768,36 @@
         "name": "634/215 - Kopřivnice - Frenštát p.Radh.,,žel.st. /T692",
         "geojson": "2026-10-01/G-ODIS-883634-215.dat",
         "markers": "2026-10-01/M-634-215.dat"
+    },
+    {
+        "name": "633/205 - Kopřivnice - Veřovice,,nákup.stř. /T692",
+        "geojson": "2026-10-01/G-633-205.dat",
+        "markers": "2026-10-01/M-633-205.dat"
+    },
+    {
+        "name": "633/206 - Veřovice - Kopřivnice,,aut.nádr. /T692",
+        "geojson": "2026-10-01/G-633-206.dat",
+        "markers": "2026-10-01/M-633-206.dat"
+    },
+    {
+        "name": "690/219 - Nový Jičín - Kopřivnice,aut.nádr. /T692",
+        "geojson": "2026-10-01/G-690-211.dat",
+        "markers": "2026-10-01/M-690-211.dat"
+    },
+    {
+        "name": "690/218, 220 - Kopřivnice - Nový Jičín,aut.nádr. /T692",
+        "geojson": "2026-10-01/G-690-214.dat",
+        "markers": "2026-10-01/M-690-214.dat"
+    },
+    {
+        "name": "999/NOVÝ JIČÍN - KOPŘ.",
+        "geojson": "2026-10-01/G-999-NJK.dat",
+        "markers": "2026-10-01/M-999-NJK.dat"
+    },
+    {
+        "name": "999/FRENŠTÁT - KOPŘ.",
+        "geojson": "2026-10-01/G-999-FRK.dat",
+        "markers": "2026-10-01/M-999-FRK.dat"
     }
 
 ]
