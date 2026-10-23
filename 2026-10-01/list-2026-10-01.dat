@@ -838,6 +838,26 @@
         "name": "374/31 - od z. OV, KOTVA (UL. ČUJKOVOVA) - Trnávka,pož.zbroj. /T252",
         "geojson": "2026-10-01/G-374-209.dat",
         "markers": "2026-10-01/M-374-209.dat"
+    },
+    {
+        "name": "999/ROŽNOV - KOPŘ. 24km 29m",
+        "geojson": "2026-10-01/G-999-ROK.dat",
+        "markers": "2026-10-01/M-999-FRK.dat"
+    },
+    {
+        "name": "999/PET. VYS. - OV NÁM. REP. 21km 21m",
+        "geojson": "2026-10-01/G-999-PVO.dat",
+        "markers": "2026-10-01/M-999-FRK.dat"
+    },
+    {
+        "name": "999/OV DUBINA - PET. VYS. 14km 14m",
+        "geojson": "2026-10-01/G-999-ODP.dat",
+        "markers": "2026-10-01/M-999-FRK.dat"
+    },
+    {
+        "name": "980/213 - Ostrava - Rožnov p.R., aut. nádr.",
+        "geojson": "2026-10-01/G-ODIS-883980-213.dat",
+        "markers": "2026-10-01/M-ODIS-883980-213.dat"
     }
     
 
