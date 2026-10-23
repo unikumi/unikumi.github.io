@@ -1,0 +1,97 @@
+[
+    {
+        "name": "Fren\u0161t\u00e1t p.Radh.,,u \u0161kol",
+        "lng": 18.2130104182629,
+        "lat": 49.5455438269723
+    },
+    {
+        "name": "Fren\u0161t\u00e1t p.Radh.,,M\u00edsteck\u00e1",
+        "lng": 18.2166886097305,
+        "lat": 49.5519192042712
+    },
+    {
+        "name": "Tich\u00e1,,u h\u0159bitova",
+        "lng": 18.2171500103368,
+        "lat": 49.556423304263
+    },
+    {
+        "name": "Tich\u00e1,,rest.Fojtstv\u00ed",
+        "lng": 18.2211522174702,
+        "lat": 49.5706091706215
+    },
+    {
+        "name": "Tich\u00e1,,u l\u00e1vky",
+        "lng": 18.2141044102844,
+        "lat": 49.5712614037381
+    },
+    {
+        "name": "Tich\u00e1,,u lomu",
+        "lng": 18.2033344102733,
+        "lat": 49.5712353036407
+    },
+    {
+        "name": "Tich\u00e1,,rest.Pod H\u016frkou",
+        "lng": 18.1930036102145,
+        "lat": 49.5786725042793
+    },
+    {
+        "name": "Tich\u00e1,,rozc.Tich\u00e1",
+        "lng": 18.188018508102,
+        "lat": 49.5813161302615
+    },
+    {
+        "name": "Kop\u0159ivnice,Vl\u010dovice,u mostu",
+        "lng": 18.1907689103875,
+        "lat": 49.5871756037239
+    },
+    {
+        "name": "Kop\u0159ivnice,Vl\u010dovice,u kostela",
+        "lng": 18.1914925106998,
+        "lat": 49.5917664038587
+    },
+    {
+        "name": "Kop\u0159ivnice,Vl\u010dovice,rozc.",
+        "lng": 18.189297810635,
+        "lat": 49.5977672043475
+    },
+    {
+        "name": "Kop\u0159ivnice,Vl\u010dovice,Z\u00e1b\u0159e\u017eky",
+        "lng": 18.1797800104196,
+        "lat": 49.6022061036217
+    },
+    {
+        "name": "Kop\u0159ivnice,,Erich Jaeger",
+        "lng": 18.1728233101025,
+        "lat": 49.6048636036448
+    },
+    {
+        "name": "Kop\u0159ivnice,,DURA",
+        "lng": 18.1689911101501,
+        "lat": 49.6024214043903
+    },
+    {
+        "name": "Kop\u0159ivnice,,Tatra vr\u00e1t.2",
+        "lng": 18.1592011994805,
+        "lat": 49.6045665866187
+    },
+    {
+        "name": "Kop\u0159ivnice,,\u010cs.arm\u00e1dy",
+        "lng": 18.1438350095747,
+        "lat": 49.6010500041591
+    },
+    {
+        "name": "Kop\u0159ivnice,,\u017eel.st.",
+        "lng": 18.1452825105415,
+        "lat": 49.5958531039207
+    },
+    {
+        "name": "Kop\u0159ivnice,,Kaufland",
+        "lng": 18.1477031105878,
+        "lat": 49.6009019044949
+    },
+    {
+        "name": "Kop\u0159ivnice,,aut.n\u00e1dr.",
+        "lng": 18.1472200105444,
+        "lat": 49.6042431038499
+    }
+]
