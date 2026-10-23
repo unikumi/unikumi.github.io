@@ -821,8 +821,8 @@
     },
     {
         "name": "641/32 - Ostrava - Kopřivnice,aut.nádr. /T252",
-        "geojson": "2026-10-01/G-641-32.dat",
-        "markers": "2026-10-01/M-641-32.dat"
+        "geojson": "2026-10-01/G-ODIS-883641-32.dat",
+        "markers": "2026-10-01/M-ODIS-883641-32.dat"
     },
     {
         "name": "999/KOPŘ. - TRNÁVKA, POŽ. ZBR. 12.3km 15m",
