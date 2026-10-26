@@ -69,10 +69,10 @@
                 </div>
                 <div>
                     <h1 class="font-bold text-base leading-tight tracking-wide text-white">Sledování spojů</h1>
-                    <div class="flex items-center text-xs text-slate-400 space-x-2">
-                        <span id="date-display">----.--.--</span>
+                    <div class="flex items-center text-xs text-slate-400 space-x-2 whitespace-nowrap shrink-0">
+                        <span id="date-display" class="whitespace-nowrap">----.--.--</span>
                         <span>•</span>
-                        <span id="status-text" class="text-slate-400">Čekání...</span>
+                        <span id="status-text" class="text-slate-400 whitespace-nowrap">Čekání...</span>
                     </div>
                 </div>
             </div>
@@ -94,36 +94,15 @@
     <!-- Main Content Container -->
     <main class="max-w-md mx-auto w-full px-4 pt-4 flex-grow space-y-4">
         
-        <!-- Add Subscription Bar -->
-        <section class="glass-panel rounded-2xl p-3.5 shadow-xl border border-slate-800">
-            <form id="add-form" onsubmit="handleAddSubscription(event)" class="space-y-2">
-                <div class="flex gap-2 items-center">
-                    <div class="flex-1 flex gap-2">
-                        <div class="relative flex-1">
-                            <input type="number" id="input-linka" placeholder="Linka" required inputmode="numeric"
-                                class="w-full bg-slate-900/90 border border-slate-700/70 rounded-xl px-3 py-2 text-sm text-white placeholder-slate-500 focus:outline-none focus:border-blue-500 transition">
-                        </div>
-                        <div class="relative flex-1">
-                            <input type="number" id="input-spoj" placeholder="Spoj" required inputmode="numeric"
-                                class="w-full bg-slate-900/90 border border-slate-700/70 rounded-xl px-3 py-2 text-sm text-white placeholder-slate-500 focus:outline-none focus:border-blue-500 transition">
-                        </div>
-                    </div>
-                    <button type="submit" class="bg-blue-600 hover:bg-blue-500 active:scale-95 text-white font-medium px-4 py-2 rounded-xl text-sm flex items-center gap-1.5 shadow-lg shadow-blue-600/25 transition shrink-0">
-                        <i class="fa-solid fa-plus text-xs"></i>
-                        <span>Přidat</span>
-                    </button>
-                </div>
-                <div>
-                    <input type="text" id="input-zastavka" placeholder="Sledovaná zastávka (volitelné)"
-                        class="w-full bg-slate-900/90 border border-slate-700/70 rounded-xl px-3 py-1.5 text-xs text-white placeholder-slate-500 focus:outline-none focus:border-emerald-500 transition">
-                </div>
-            </form>
-        </section>
-
         <!-- Active Connections Header -->
         <div class="flex items-center justify-between px-1">
             <h2 class="text-xs font-semibold uppercase tracking-wider text-slate-400">Sledované spoje (<span id="sub-count">0</span>)</h2>
-            <button onclick="clearAllSubscriptions()" class="text-xs text-slate-500 hover:text-red-400 transition">Smazat vše</button>
+            <div class="flex items-center space-x-3">
+                <button onclick="toggleSettingsModal(true)" class="text-xs text-blue-400 hover:text-blue-300 transition flex items-center gap-1 font-medium">
+                    <i class="fa-solid fa-plus text-[10px]"></i> Přidat spoj
+                </button>
+                <button onclick="clearAllSubscriptions()" class="text-xs text-slate-500 hover:text-red-400 transition">Smazat vše</button>
+            </div>
         </div>
 
         <!-- Cards Container -->
@@ -138,7 +117,7 @@
             </div>
             <div>
                 <h3 class="font-semibold text-slate-200">Žádné sledované spoje</h3>
-                <p class="text-xs text-slate-400 mt-1">Zadejte číslo linky a spoje výše pro sledování aktuální polohy a zpoždění.</p>
+                <p class="text-xs text-slate-400 mt-1">Klepněte na ozubené kolečko nebo tlačítko "Přidat spoj" pro přidání linky.</p>
             </div>
         </div>
 
@@ -149,11 +128,36 @@
         <div class="glass-panel bg-slate-900/95 max-w-sm w-full rounded-2xl p-5 space-y-4 border border-slate-700 shadow-2xl">
             <div class="flex justify-between items-center border-b border-slate-800 pb-3">
                 <h3 class="font-bold text-slate-100 flex items-center gap-2">
-                    <i class="fa-solid fa-sliders text-blue-400"></i> Nastavení
+                    <i class="fa-solid fa-sliders text-blue-400"></i> Nastavení a Přidání
                 </h3>
                 <button onclick="toggleSettingsModal(false)" class="text-slate-400 hover:text-white p-1">
                     <i class="fa-solid fa-xmark text-lg"></i>
                 </button>
+            </div>
+
+            <!-- Add Subscription Section in Modal -->
+            <div class="space-y-2 pb-3 border-b border-slate-800">
+                <div class="text-xs font-semibold text-slate-300 mb-1">Přidat nový spoj</div>
+                <form id="add-form" onsubmit="handleAddSubscription(event)" class="space-y-2">
+                    <div class="flex gap-2">
+                        <div class="relative flex-1">
+                            <input type="number" id="input-linka" placeholder="Linka" required inputmode="numeric"
+                                class="w-full bg-slate-950 border border-slate-700/70 rounded-xl px-3 py-2 text-sm text-white placeholder-slate-500 focus:outline-none focus:border-blue-500 transition">
+                        </div>
+                        <div class="relative flex-1">
+                            <input type="number" id="input-spoj" placeholder="Spoj" required inputmode="numeric"
+                                class="w-full bg-slate-950 border border-slate-700/70 rounded-xl px-3 py-2 text-sm text-white placeholder-slate-500 focus:outline-none focus:border-blue-500 transition">
+                        </div>
+                    </div>
+                    <div>
+                        <input type="text" id="input-zastavka" placeholder="Sledovaná zastávka (volitelné)"
+                            class="w-full bg-slate-950 border border-slate-700/70 rounded-xl px-3 py-2 text-xs text-white placeholder-slate-500 focus:outline-none focus:border-emerald-500 transition">
+                    </div>
+                    <button type="submit" class="w-full bg-blue-600 hover:bg-blue-500 active:scale-95 text-white font-medium py-2 rounded-xl text-xs flex items-center justify-center gap-1.5 shadow-lg shadow-blue-600/25 transition">
+                        <i class="fa-solid fa-plus text-xs"></i>
+                        <span>Přidat spoj do sledování</span>
+                    </button>
+                </form>
             </div>
 
             <div class="space-y-3 text-xs">
@@ -165,16 +169,9 @@
                     </div>
                     <input type="checkbox" id="daily-reset-toggle" class="w-4 h-4 accent-blue-600 rounded cursor-pointer" checked onchange="toggleDailyResetSetting(this.checked)">
                 </div>
-
-                <!-- Debug Simulator Button -->
-                <div class="pt-3 border-t border-slate-800">
-                    <button onclick="injectDemoData()" class="w-full bg-slate-800 hover:bg-slate-700 text-blue-400 border border-blue-500/30 rounded-xl py-2 font-medium flex items-center justify-center gap-2 transition">
-                        <i class="fa-solid fa-flask"></i> Načíst testovací data (Demo)
-                    </button>
-                </div>
             </div>
 
-            <button onclick="toggleSettingsModal(false)" class="w-full bg-blue-600 hover:bg-blue-500 text-white font-medium py-2.5 rounded-xl text-xs transition">
+            <button onclick="toggleSettingsModal(false)" class="w-full bg-slate-800 hover:bg-slate-700 text-slate-300 font-medium py-2 rounded-xl text-xs transition border border-slate-700">
                 Zavřít
             </button>
         </div>
@@ -352,6 +349,7 @@
             zastavkaInput.value = '';
             showToast(`Přidáno: Linka ${linka} / Spoj ${spoj}`);
 
+            toggleSettingsModal(false);
             fetchMapData();
         }
 
@@ -499,20 +497,17 @@
                     const arrowLineColor = isVcas ? 'border-emerald-500' : 'border-amber-500';
 
                     html += `
-                        <div class="${cardBgClass} rounded-2xl p-3.5 space-y-3 border border-slate-700/80 shadow-lg relative overflow-hidden transition-all duration-500">
+                        <div class="${cardBgClass} rounded-2xl p-3.5 space-y-2.5 border border-slate-700/80 shadow-lg relative overflow-hidden transition-all duration-500">
                             <div class="absolute top-0 left-0 w-1.5 h-full ${isStopMatched ? 'bg-emerald-400' : (isVcas ? 'bg-emerald-500' : 'bg-amber-500')}"></div>
 
-                            <!-- Header: Linka/Spoj + Cíl + (SPZ) + Actions -->
+                            <!-- Header: Linka/Spoj + SPZ + Actions -->
                             <div class="flex items-center justify-between gap-2 pl-1">
-                                <div class="flex items-center space-x-2 truncate min-w-0">
+                                <div class="flex items-center space-x-2 shrink-0">
                                     <span class="bg-blue-600 text-white font-black text-lg px-2.5 py-0.5 rounded-lg tracking-wide shrink-0">
                                         ${liveData.linka}
                                     </span>
                                     <span class="bg-slate-800 text-slate-300 font-bold text-sm px-2 py-0.5 rounded-md border border-slate-700 shrink-0">
                                         /${liveData.spoj}
-                                    </span>
-                                    <span class="text-base font-bold text-white truncate">
-                                        ${liveData.cil}
                                     </span>
                                     ${liveData.spz ? `<span class="text-xs text-slate-400 font-medium shrink-0">(${liveData.spz})</span>` : ''}
                                 </div>
@@ -523,6 +518,14 @@
                                     <button onclick="removeSubscription('${sub.linka}', '${sub.spoj}')" title="Odebrat" class="text-slate-400 hover:text-red-400 p-1">
                                         <i class="fa-solid fa-xmark text-base"></i>
                                     </button>
+                                </div>
+                            </div>
+
+                            <!-- Destination (Cíl) in its own dedicated line -->
+                            <div class="pl-1 pr-1">
+                                <div class="text-xs text-slate-400 uppercase tracking-wider font-semibold text-[10px]">Cíl</div>
+                                <div class="text-sm font-bold text-white truncate" title="${liveData.cil}">
+                                    ${liveData.cil}
                                 </div>
                             </div>
 
@@ -539,25 +542,25 @@
                             </div>
 
                             <!-- Integrated Route & Delay Arrow Display -->
-                            <div class="bg-slate-900/80 rounded-xl p-3 border border-slate-800/90 flex items-center justify-between gap-2">
-                                <!-- Poslední Zastávka -->
-                                <div class="flex-1 text-left min-w-0 px-2">
-                                    <div class="font-bold ${isCurrentStopActiveMatch ? 'text-emerald-300 underline decoration-emerald-400 decoration-2' : 'text-slate-100'} text-xs sm:text-sm leading-snug break-normal line-clamp-2">
+                            <div class="bg-slate-900/80 rounded-xl p-2.5 border border-slate-800/90 flex items-center justify-between gap-2">
+                                <!-- Poslední Zastávka (With hover/touch reveal) -->
+                                <div class="flex-1 text-left min-w-0 px-1.5 cursor-pointer group" title="${liveData.posledniZastavka}">
+                                    <div class="font-bold ${isCurrentStopActiveMatch ? 'text-emerald-300 underline decoration-emerald-400 decoration-2' : 'text-slate-100'} text-xs sm:text-sm leading-snug truncate group-hover:whitespace-normal group-hover:overflow-visible active:whitespace-normal">
                                         ${liveData.posledniZastavka}
                                     </div>
                                 </div>
 
                                 <!-- Arrow with Delay Embedded -->
-                                <div class="flex flex-col items-center justify-center shrink-0 px-1 relative w-24">
+                                <div class="flex flex-col items-center justify-center shrink-0 px-1 relative w-20">
                                     <div class="w-full border-t-2 border-dashed ${arrowLineColor} absolute top-1/2 -translate-y-1/2 z-0"></div>
                                     <span class="z-10 text-[11px] font-extrabold px-2 py-0.5 rounded-full shadow-md ${badgeBg}">
                                         ${delayText}
                                     </span>
                                 </div>
 
-                                <!-- Následující Zastávka -->
-                                <div class="flex-1 text-right min-w-0 px-2">
-                                    <div class="font-bold text-blue-400 text-xs sm:text-sm leading-snug break-normal line-clamp-2">
+                                <!-- Následující Zastávka (With hover/touch reveal) -->
+                                <div class="flex-1 text-right min-w-0 px-1.5 cursor-pointer group" title="${liveData.nasledujiciZastavka}">
+                                    <div class="font-bold text-blue-400 text-xs sm:text-sm leading-snug truncate group-hover:whitespace-normal group-hover:overflow-visible active:whitespace-normal">
                                         ${liveData.nasledujiciZastavka}
                                     </div>
                                 </div>
@@ -632,25 +635,6 @@
         function toggleDailyResetSetting(checked) {
             dailyResetEnabled = checked;
             localStorage.setItem('odis_daily_reset', checked);
-        }
-
-        function injectDemoData() {
-            const mockItems = [
-                {
-                    l: "440", s: "54", d: 0, d_txt: "$z1~min.~29~s",
-                    dest: "Havířov,Šumbark", p_stop: "Ostrava,Kunčice,NH Zářičí",
-                    n_stop: "Ostrava,Bartovice,Pod Tratí", plate: "9T46105", t: new Date().toLocaleTimeString('cs-CZ')
-                },
-                {
-                    l: "543", s: "42", d: 3, d_txt: "$z1~min.~50~s",
-                    dest: "Dětmarovice,žel.st.", p_stop: "Ostrava,Heřmanice",
-                    n_stop: "Rychvald,zámek", plate: "1TJ7104", t: new Date().toLocaleTimeString('cs-CZ')
-                }
-            ];
-            processItems(mockItems);
-            renderCards();
-            toggleSettingsModal(false);
-            showToast("Testovací data byla úspěšně načtena!");
         }
 
         function showToast(msg) {
