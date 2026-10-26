@@ -41,6 +41,11 @@
             -webkit-backdrop-filter: blur(12px);
             border: 1px solid rgba(255, 255, 255, 0.08);
         }
+        .match-green-bg {
+            background: linear-gradient(135deg, rgba(6, 78, 59, 0.85) 0%, rgba(15, 23, 42, 0.9) 100%) !important;
+            border-color: rgba(16, 185, 129, 0.5) !important;
+            box-shadow: 0 10px 25px -5px rgba(16, 185, 129, 0.2);
+        }
         /* Hide number input spinners (arrows) */
         input[type=number]::-webkit-inner-spin-button, 
         input[type=number]::-webkit-outer-spin-button { 
@@ -91,21 +96,27 @@
         
         <!-- Add Subscription Bar -->
         <section class="glass-panel rounded-2xl p-3.5 shadow-xl border border-slate-800">
-            <form id="add-form" onsubmit="handleAddSubscription(event)" class="flex gap-2 items-center">
-                <div class="flex-1 flex gap-2">
-                    <div class="relative flex-1">
-                        <input type="number" id="input-linka" placeholder="Linka" required inputmode="numeric"
-                            class="w-full bg-slate-900/90 border border-slate-700/70 rounded-xl px-3 py-2 text-sm text-white placeholder-slate-500 focus:outline-none focus:border-blue-500 transition">
+            <form id="add-form" onsubmit="handleAddSubscription(event)" class="space-y-2">
+                <div class="flex gap-2 items-center">
+                    <div class="flex-1 flex gap-2">
+                        <div class="relative flex-1">
+                            <input type="number" id="input-linka" placeholder="Linka" required inputmode="numeric"
+                                class="w-full bg-slate-900/90 border border-slate-700/70 rounded-xl px-3 py-2 text-sm text-white placeholder-slate-500 focus:outline-none focus:border-blue-500 transition">
+                        </div>
+                        <div class="relative flex-1">
+                            <input type="number" id="input-spoj" placeholder="Spoj" required inputmode="numeric"
+                                class="w-full bg-slate-900/90 border border-slate-700/70 rounded-xl px-3 py-2 text-sm text-white placeholder-slate-500 focus:outline-none focus:border-blue-500 transition">
+                        </div>
                     </div>
-                    <div class="relative flex-1">
-                        <input type="number" id="input-spoj" placeholder="Spoj" required inputmode="numeric"
-                            class="w-full bg-slate-900/90 border border-slate-700/70 rounded-xl px-3 py-2 text-sm text-white placeholder-slate-500 focus:outline-none focus:border-blue-500 transition">
-                    </div>
+                    <button type="submit" class="bg-blue-600 hover:bg-blue-500 active:scale-95 text-white font-medium px-4 py-2 rounded-xl text-sm flex items-center gap-1.5 shadow-lg shadow-blue-600/25 transition shrink-0">
+                        <i class="fa-solid fa-plus text-xs"></i>
+                        <span>Přidat</span>
+                    </button>
                 </div>
-                <button type="submit" class="bg-blue-600 hover:bg-blue-500 active:scale-95 text-white font-medium px-4 py-2 rounded-xl text-sm flex items-center gap-1.5 shadow-lg shadow-blue-600/25 transition">
-                    <i class="fa-solid fa-plus text-xs"></i>
-                    <span>Přidat</span>
-                </button>
+                <div>
+                    <input type="text" id="input-zastavka" placeholder="Sledovaná zastávka (volitelné)"
+                        class="w-full bg-slate-900/90 border border-slate-700/70 rounded-xl px-3 py-1.5 text-xs text-white placeholder-slate-500 focus:outline-none focus:border-emerald-500 transition">
+                </div>
             </form>
         </section>
 
@@ -178,15 +189,31 @@
     <!-- Application Logic -->
     <script>
         /**
-         * Backend API Endpoint URL
+         * Dynamic obfuscated URL assembly algorithm
          */
-        const API_ENDPOINT = "https://vablob.vercel.app/api/collect-flw";
+        function getApiEndpoint() {
+            const _p1 = ["aHR0cHM6Ly", "92YWJsb2I"];
+            const _p2 = ["udmVyY2Vs", "LmFwcC9hcGkv"];
+            const _p3 = ["Y29sbGVjdC1mbHc="];
+            const raw = atob(_p1.join("") + _p2.join("") + _p3.join(""));
+            return raw;
+        }
 
         let subscriptions = [];
         let latestDataMap = new Map();
+        let matchedStopsSet = new Set(); // Tracks items that hit the custom stop alert
         let countdown = 40;
         let timerInterval = null;
         let dailyResetEnabled = localStorage.getItem('odis_daily_reset') !== 'false';
+
+        function normalizeString(str) {
+            if (!str) return '';
+            return str
+                .toLowerCase()
+                .normalize("NFD")
+                .replace(/[\u0300-\u036f]/g, "") // Remove accents/diacritics
+                .replace(/[^a-z0-9]/g, "");     // Keep only alphanumeric
+        }
 
         function getTodayString() {
             const d = new Date();
@@ -218,8 +245,8 @@
             } else {
                 const data = localStorage.getItem('odis_subscriptions');
                 subscriptions = data ? JSON.parse(data) : [
-                    { linka: "440", spoj: "54" },
-                    { linka: "543", spoj: "42" }
+                    { linka: "440", spoj: "54", zastavka: "" },
+                    { linka: "543", spoj: "42", zastavka: "" }
                 ];
             }
             updateSubCount();
@@ -239,9 +266,11 @@
             e.preventDefault();
             const linkaInput = document.getElementById('input-linka');
             const spojInput = document.getElementById('input-spoj');
+            const zastavkaInput = document.getElementById('input-zastavka');
             
             const linka = linkaInput.value.trim();
             const spoj = spojInput.value.trim();
+            const zastavka = zastavkaInput.value.trim();
 
             if (!linka || !spoj) return;
 
@@ -251,15 +280,31 @@
                 return;
             }
 
-            subscriptions.push({ linka, spoj });
+            subscriptions.push({ linka, spoj, zastavka });
             saveSubscriptions();
             renderCards();
             
             linkaInput.value = '';
             spojInput.value = '';
+            zastavkaInput.value = '';
             showToast(`Přidáno: Linka ${linka} / Spoj ${spoj}`);
 
             fetchMapData();
+        }
+
+        function updateSubscriptionZastavka(linka, spoj, newZastavka) {
+            const sub = subscriptions.find(s => s.linka === linka && s.spoj === spoj);
+            if (sub) {
+                sub.zastavka = newZastavka.trim();
+                saveSubscriptions();
+                renderCards();
+                showToast("Cílová zastávka aktualizována");
+            }
+        }
+
+        function toggleEditZastavka(key) {
+            const el = document.getElementById(`edit-zastavka-${key}`);
+            if (el) el.classList.toggle('hidden');
         }
 
         function removeSubscription(linka, spoj) {
@@ -286,7 +331,8 @@
             refreshIcon.classList.add('fa-spin');
 
             try {
-                const response = await fetch(API_ENDPOINT, {
+                const endpoint = getApiEndpoint();
+                const response = await fetch(endpoint, {
                     method: 'GET',
                     headers: {
                         'Accept': 'application/json'
@@ -338,7 +384,8 @@
             if (!name) return '';
             return name
                 .replace(/^Ostrava,/i, 'OV,')
-                .replace(/^Frýdek-Místek,/i, 'FM,');
+                .replace(/^Frýdek-Místek,/i, 'FM,')
+                .replace(/,/g, ', '); // Ensure space after commas for proper word wrapping
         }
 
         function renderCards() {
@@ -357,20 +404,42 @@
             subscriptions.forEach(sub => {
                 const key = `${sub.linka}-${sub.spoj}`;
                 const liveData = latestDataMap.get(key);
+                const userZastavka = sub.zastavka || '';
 
                 if (liveData) {
                     const isVcas = liveData.delayMin === 0;
                     const delayText = isVcas ? 'Včas' : `+${liveData.delayMin}'`;
                     
-                    // Delay styling for embedded arrow badge
+                    // Match check with normalized strings
+                    const normUserZastavka = normalizeString(userZastavka);
+                    const normPosledniStop = normalizeString(liveData.posledniZastavka);
+                    
+                    let isStopMatched = false;
+                    if (normUserZastavka.length > 0 && normPosledniStop.length > 0) {
+                        if (normPosledniStop.includes(normUserZastavka)) {
+                            matchedStopsSet.add(key); // Persistent hit during runtime
+                        }
+                    }
+                    if (matchedStopsSet.has(key)) {
+                        isStopMatched = true;
+                    }
+
+                    // Checks if CURRENT stop specifically matches the search query right now
+                    const isCurrentStopActiveMatch = normUserZastavka.length > 0 && normPosledniStop.includes(normUserZastavka);
+
+                    // Card background dynamic state
+                    const cardBgClass = isStopMatched 
+                        ? 'match-green-bg' 
+                        : 'glass-panel';
+
                     const badgeBg = isVcas ? 'bg-emerald-600 text-white' : 'bg-amber-500 text-slate-950 font-black';
                     const arrowLineColor = isVcas ? 'border-emerald-500' : 'border-amber-500';
 
                     html += `
-                        <div class="glass-panel rounded-2xl p-3.5 space-y-3 border border-slate-700/80 shadow-lg relative overflow-hidden">
-                            <div class="absolute top-0 left-0 w-1.5 h-full ${isVcas ? 'bg-emerald-500' : 'bg-amber-500'}"></div>
+                        <div class="${cardBgClass} rounded-2xl p-3.5 space-y-3 border border-slate-700/80 shadow-lg relative overflow-hidden transition-all duration-500">
+                            <div class="absolute top-0 left-0 w-1.5 h-full ${isStopMatched ? 'bg-emerald-400' : (isVcas ? 'bg-emerald-500' : 'bg-amber-500')}"></div>
 
-                            <!-- Header: Linka/Spoj + Cíl + (SPZ) + Delete Button -->
+                            <!-- Header: Linka/Spoj + Cíl + (SPZ) + Actions -->
                             <div class="flex items-center justify-between gap-2 pl-1">
                                 <div class="flex items-center space-x-2 truncate min-w-0">
                                     <span class="bg-blue-600 text-white font-black text-lg px-2.5 py-0.5 rounded-lg tracking-wide shrink-0">
@@ -384,16 +453,33 @@
                                     </span>
                                     ${liveData.spz ? `<span class="text-xs text-slate-400 font-medium shrink-0">(${liveData.spz})</span>` : ''}
                                 </div>
-                                <button onclick="removeSubscription('${sub.linka}', '${sub.spoj}')" title="Odebrat" class="text-slate-400 hover:text-red-400 p-1 shrink-0">
-                                    <i class="fa-solid fa-xmark text-base"></i>
-                                </button>
+                                <div class="flex items-center space-x-1 shrink-0">
+                                    <button onclick="toggleEditZastavka('${key}')" title="Upravit sledovanou zastávku" class="text-slate-400 hover:text-emerald-400 p-1">
+                                        <i class="fa-solid fa-pen text-xs"></i>
+                                    </button>
+                                    <button onclick="removeSubscription('${sub.linka}', '${sub.spoj}')" title="Odebrat" class="text-slate-400 hover:text-red-400 p-1">
+                                        <i class="fa-solid fa-xmark text-base"></i>
+                                    </button>
+                                </div>
+                            </div>
+
+                            <!-- Collapsible Stop Filter Editor -->
+                            <div id="edit-zastavka-${key}" class="hidden bg-slate-900/90 rounded-xl p-2 border border-slate-700/80">
+                                <div class="flex gap-2 items-center">
+                                    <input type="text" id="input-edit-z-${key}" value="${userZastavka}" placeholder="Sledovaná zastávka..."
+                                        class="flex-1 bg-slate-800 border border-slate-700 rounded-lg px-2.5 py-1 text-xs text-white placeholder-slate-500 focus:outline-none focus:border-emerald-500">
+                                    <button onclick="updateSubscriptionZastavka('${sub.linka}', '${sub.spoj}', document.getElementById('input-edit-z-${key}').value)"
+                                        class="bg-emerald-600 hover:bg-emerald-500 text-white px-3 py-1 rounded-lg text-xs font-medium">
+                                        Uložit
+                                    </button>
+                                </div>
                             </div>
 
                             <!-- Integrated Route & Delay Arrow Display -->
                             <div class="bg-slate-900/80 rounded-xl p-3 border border-slate-800/90 flex items-center justify-between gap-2">
                                 <!-- Poslední Zastávka -->
-                                <div class="flex-1 text-left min-w-0 px-1">
-                                    <div class="font-bold text-slate-100 text-xs sm:text-sm leading-snug break-words line-clamp-2">
+                                <div class="flex-1 text-left min-w-0 px-2">
+                                    <div class="font-bold ${isCurrentStopActiveMatch ? 'text-emerald-300 underline decoration-emerald-400 decoration-2' : 'text-slate-100'} text-xs sm:text-sm leading-snug break-normal line-clamp-2">
                                         ${liveData.posledniZastavka}
                                     </div>
                                 </div>
@@ -407,8 +493,8 @@
                                 </div>
 
                                 <!-- Následující Zastávka -->
-                                <div class="flex-1 text-right min-w-0 px-1">
-                                    <div class="font-bold text-blue-400 text-xs sm:text-sm leading-snug break-words line-clamp-2">
+                                <div class="flex-1 text-right min-w-0 px-2">
+                                    <div class="font-bold text-blue-400 text-xs sm:text-sm leading-snug break-normal line-clamp-2">
                                         ${liveData.nasledujiciZastavka}
                                     </div>
                                 </div>
@@ -426,6 +512,7 @@
                                     <span class="text-slate-400 text-sm font-semibold">
                                         /${sub.spoj}
                                     </span>
+                                    ${sub.zastavka ? `<span class="text-xs text-slate-500 italic">(${sub.zastavka})</span>` : ''}
                                 </div>
                                 <div class="flex items-center space-x-2">
                                     <span class="text-[10px] bg-slate-800 text-slate-400 px-2 py-0.5 rounded-full border border-slate-700/80">
