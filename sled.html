@@ -206,6 +206,10 @@
         let timerInterval = null;
         let dailyResetEnabled = localStorage.getItem('odis_daily_reset') !== 'false';
 
+        // Wake Lock & Background Worker Variables
+        let wakeLock = null;
+        let worker = null;
+
         function normalizeString(str) {
             if (!str) return '';
             return str
@@ -231,7 +235,66 @@
             renderCards();
             fetchMapData();
             startTimer();
+
+            // Initialize Wake Lock & Background Web Worker
+            requestWakeLock();
+            initBackgroundWorker();
+
+            // Re-acquire Wake Lock when page becomes visible again
+            document.addEventListener('visibilitychange', () => {
+                if (document.visibilityState === 'visible') {
+                    requestWakeLock();
+                }
+            });
         };
+
+        /**
+         * Screen Wake Lock API to prevent mobile screen sleep while active
+         */
+        async function requestWakeLock() {
+            try {
+                if ('wakeLock' in navigator) {
+                    wakeLock = await navigator.wakeLock.request('screen');
+                }
+            } catch (err) {
+                console.log('Wake Lock request failed:', err.message);
+            }
+        }
+
+        /**
+         * Inline Web Worker to bypass main thread timer throttling when backgrounded/screen locked
+         */
+        function initBackgroundWorker() {
+            try {
+                const workerCode = `
+                    let interval = null;
+                    self.onmessage = function(e) {
+                        if (e.data === 'start') {
+                            if (!interval) {
+                                interval = setInterval(() => {
+                                    self.postMessage('tick');
+                                }, 1000);
+                            }
+                        } else if (e.data === 'stop') {
+                            clearInterval(interval);
+                            interval = null;
+                        }
+                    };
+                `;
+                const blob = new Blob([workerCode], { type: 'application/javascript' });
+                worker = new Worker(URL.createObjectURL(blob));
+
+                worker.onmessage = function(e) {
+                    if (e.data === 'tick') {
+                        onTimerTick();
+                    }
+                };
+
+                worker.postMessage('start');
+            } catch (err) {
+                console.warn('Web Worker setup failed, falling back to window.setInterval', err);
+            }
+        }
 
         function loadSubscriptions() {
             const storedDate = localStorage.getItem('odis_sub_date');
@@ -536,14 +599,19 @@
             countdown = 40;
             updateBadge();
             
-            timerInterval = setInterval(() => {
-                countdown--;
-                updateBadge();
-                if (countdown <= 0) {
-                    countdown = 40;
-                    fetchMapData();
-                }
-            }, 1000);
+            // If Web Worker is active, it will handle ticks independently of tab focus
+            if (!worker) {
+                timerInterval = setInterval(onTimerTick, 1000);
+            }
+        }
+
+        function onTimerTick() {
+            countdown--;
+            updateBadge();
+            if (countdown <= 0) {
+                countdown = 40;
+                fetchMapData();
+            }
         }
 
         function updateBadge() {
