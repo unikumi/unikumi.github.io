@@ -323,15 +323,22 @@
                 latestDataMap.set(key, {
                     linka: linka,
                     spoj: spoj,
-                    cil: item.dest || 'Neznámý cíl',
-                    posledniZastavka: item.p_stop || '-',
-                    nasledujiciZastavka: item.n_stop || '-',
+                    cil: formatStopName(item.dest || 'Neznámý cíl'),
+                    posledniZastavka: formatStopName(item.p_stop || '-'),
+                    nasledujiciZastavka: formatStopName(item.n_stop || '-'),
                     spz: item.plate || '',
                     delayMin: item.d !== undefined ? item.d : 0,
                     delayTxt: item.d_txt || '',
                     time: item.t || ''
                 });
             });
+        }
+
+        function formatStopName(name) {
+            if (!name) return '';
+            return name
+                .replace(/^Ostrava,/i, 'OV,')
+                .replace(/^Frýdek-Místek,/i, 'FM,');
         }
 
         function renderCards() {
@@ -385,8 +392,8 @@
                             <!-- Integrated Route & Delay Arrow Display -->
                             <div class="bg-slate-900/80 rounded-xl p-3 border border-slate-800/90 flex items-center justify-between gap-2">
                                 <!-- Poslední Zastávka -->
-                                <div class="flex-1 text-left min-w-0">
-                                    <div class="font-bold text-slate-100 text-sm leading-snug line-clamp-2">
+                                <div class="flex-1 text-left min-w-0 px-1">
+                                    <div class="font-bold text-slate-100 text-xs sm:text-sm leading-snug break-words line-clamp-2">
                                         ${liveData.posledniZastavka}
                                     </div>
                                 </div>
@@ -400,8 +407,8 @@
                                 </div>
 
                                 <!-- Následující Zastávka -->
-                                <div class="flex-1 text-right min-w-0">
-                                    <div class="font-bold text-blue-400 text-sm leading-snug line-clamp-2">
+                                <div class="flex-1 text-right min-w-0 px-1">
+                                    <div class="font-bold text-blue-400 text-xs sm:text-sm leading-snug break-words line-clamp-2">
                                         ${liveData.nasledujiciZastavka}
                                     </div>
                                 </div>
