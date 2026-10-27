@@ -1,0 +1,82 @@
+[
+    {
+        "name": "Fr\u00fddek-M\u00edstek,Fr\u00fddek,aut.n\u00e1dr.",
+        "lng": 18.3509630897896,
+        "lat": 49.6787410643706
+    },
+    {
+        "name": "Fr\u00fddek-M\u00edstek,M\u00edstek,poliklinika",
+        "lng": 18.3417176502636,
+        "lat": 49.6776920914122
+    },
+    {
+        "name": "Fr\u00fddek-M\u00edstek,M\u00edstek,P\u0159\u00edborsk\u00e1",
+        "lng": 18.3314300096346,
+        "lat": 49.6710792041074
+    },
+    {
+        "name": "Fr\u00fddek-M\u00edstek,M\u00edstek,u V\u00e1clav\u00edk\u016f",
+        "lng": 18.3075728102181,
+        "lat": 49.6667761040678
+    },
+    {
+        "name": "Fr\u00fddek-M\u00edstek,Zelinkovice",
+        "lng": 18.293320040136212,
+        "lat": 49.66391870381277
+    },
+    {
+        "name": "Fr\u00fddek-M\u00edstek,Chlebovice,st\u0159ed",
+        "lng": 18.2792269104945,
+        "lat": 49.6611300036739
+    },
+    {
+        "name": "Fr\u00fddek-M\u00edstek,Chlebovice,pr\u016fmyslov\u00e1 z\u00f3na",
+        "lng": 18.2694570100417,
+        "lat": 49.6593290038829
+    },
+    {
+        "name": "Hukvaldy,Krnalovice",
+        "lng": 18.240166608967016,
+        "lat": 49.65388119790568
+    },
+    {
+        "name": "Hukvaldy,Rychaltice,pod mostem",
+        "lng": 18.2171311102172,
+        "lat": 49.6497186037064
+    },
+    {
+        "name": "P\u0159\u00edbor,H\u00e1jov,rozc.",
+        "lng": 18.183347744529,
+        "lat": 49.6466669021142
+    },
+    {
+        "name": "P\u0159\u00edbor,,Tatra",
+        "lng": 18.1518833099853,
+        "lat": 49.6421556040556
+    },
+    {
+        "name": "P\u0159\u00edbor,,u \u0161kol",
+        "lng": 18.139656250772454,
+        "lat": 49.63957230720737
+    },
+    {
+        "name": "P\u0159\u00edbor,,\u017eel.st.",
+        "lng": 18.1429686107814,
+        "lat": 49.6363578041292
+    },
+    {
+        "name": "Kop\u0159ivnice,Lubina,Na Holot\u011b",
+        "lng": 18.1527136095263,
+        "lat": 49.6196319042874
+    },
+    {
+        "name": "Kop\u0159ivnice,Lubina,rozc.",
+        "lng": 18.1604196488789,
+        "lat": 49.6137766275005
+    },
+    {
+        "name": "Kop\u0159ivnice,,aut.n\u00e1dr.",
+        "lng": 18.148351910884,
+        "lat": 49.6041736036618
+    }
+]
