@@ -858,7 +858,55 @@
         "name": "980/213 - Ostrava - Rožnov p.R., aut. nádr.",
         "geojson": "2026-10-01/G-ODIS-883980-213.dat",
         "markers": "2026-10-01/M-ODIS-883980-213.dat"
+    },
+    {
+        "name": "662/201 - Frýdek-Místek - Kopřivnice,aut.nádr. /T602",
+        "geojson": "2026-10-01/G-ODIS-883662-201.dat",
+        "markers": "2026-10-01/M-ODIS-883662-201.dat"
+    },
+    {
+        "name": "690/202 - Kopřivnice - Nový Jičín,,aut.nádr. /T602",
+        "geojson": "2026-10-01/G-690-202.dat",
+        "markers": "2026-10-01/M-690-202.dat"
+    },    
+    {
+        "name": "621/213 - Frýdek-Místek - Nový Jičín,aut.nádr. /T602",
+        "geojson": "2026-10-01/G-ODIS-883621-213.dat",
+        "markers": "2026-10-01/M-ODIS-883621-213.dat"
+    }, 
+    {
+        "name": "670/203 - Nový Jičín - Ostrava,Náměstí Republiky /T602",
+        "geojson": "2026-10-01/G-ODIS-883670-203.dat",
+        "markers": "2026-10-01/M-ODIS-883670-203.dat"
+    },
+    {
+        "name": "371/203 - Ostrava - Kozlovice,,střed /T602",
+        "geojson": "2026-10-01/G-371-203.dat",
+        "markers": "2026-10-01/M-371-203.dat"
+    },
+    {
+        "name": "371/208 - Kozlovice - Ostrava,Náměstí Republiky /T602",
+        "geojson": "2026-10-01/G-371-208.dat",
+        "markers": "2026-10-01/M-371-208.dat"
+    },
+    {
+        "name": "371/207 - Ostrava - Kozlovice,,střed /T602",
+        "geojson": "2026-10-01/G-371-207.dat",
+        "markers": "2026-10-01/M-371-207.dat"
+    },
+    {
+        "name": "371/212 - Kozlovice - Ostrava,Náměstí Republiky /T602",
+        "geojson": "2026-10-01/G-371-212.dat",
+        "markers": "2026-10-01/M-371-212.dat"
+    },
+    {
+        "name": "670/212 - Ostrava - Nový Jičín,,aut.nádr. /T602",
+        "geojson": "2026-10-01/G-670-212.dat",
+        "markers": "2026-10-01/M-670-212.dat"
+    },
+    {
+        "name": "621/212 - Nový Jičín - Frýdek-Místek,Frýdek,aut.nádr. /T602",
+        "geojson": "2026-10-01/G-ODIS-883621-212.dat",
+        "markers": "2026-10-01/M-ODIS-883621-212.dat"
     }
-    
-
 ]
