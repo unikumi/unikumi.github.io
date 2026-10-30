@@ -908,5 +908,80 @@
         "name": "621/212 - Nový Jičín - Frýdek-Místek,Frýdek,aut.nádr. /T602",
         "geojson": "2026-10-01/G-ODIS-883621-212.dat",
         "markers": "2026-10-01/M-ODIS-883621-212.dat"
+    },
+    {
+        "name": "999/KOPŘ. - BARTOŠOVICE V 18km8 19m",
+        "geojson": "2026-10-01/G-999-KVB.dat",
+        "markers": "2026-10-01/M-999-FRK.dat"
+    },
+    {
+        "name": "643/202V - Bartošovice OD ZAST. OBÚ - Příbor,u škol",
+        "geojson": "2026-10-01/G-ODIS-883643-206V.dat",
+        "markers": "2026-10-01/M-ODIS-883643-206V.dat"
+    },
+    {
+        "name": "662/401 - Příbor - Kopřivnice,,aut.nádr.",
+        "geojson": "2026-10-01/G-ODIS-883662-405.dat",
+        "markers": "2026-10-01/M-ODIS-883662-405.dat"
+    },
+    {
+        "name": "643/201V - Kopřivnice - Bartošovice,rozc.k pískovně",
+        "geojson": "2026-10-01/G-ODIS-883643-203V.dat",
+        "markers": "2026-10-01/M-ODIS-883643-203V.dat"
+    },
+    {
+        "name": "643/204V - Bartošovice - Příbor,u škol",
+        "geojson": "2026-10-01/G-ODIS-883643-206V.dat",
+        "markers": "2026-10-01/M-ODIS-883643-206V.dat"
+    },
+    {
+        "name": "662/403 - Příbor - Kopřivnice,,aut.nádr.",
+        "geojson": "2026-10-01/G-ODIS-883662-405.dat",
+        "markers": "2026-10-01/M-ODIS-883662-405.dat"
+    },
+    {
+        "name": "634/209 - Kopřivnice - Frenštát p.Radh.,,u škol",
+        "geojson": "2026-10-01/G-634-209.dat",
+        "markers": "2026-10-01/M-634-209.dat"
+    },
+    {
+        "name": "634/210 - Frenštát p.Radh. - Kopřivnice,,aut.nádr.",
+        "geojson": "2026-10-01/G-634-214.dat",
+        "markers": "2026-10-01/M-634-214.dat"
+    },
+    {
+        "name": "644/207 - Kopřivnice - Štramberk,Libotín,koupaliště",
+        "geojson": "2026-10-01/G-644-207.dat",
+        "markers": "2026-10-01/M-644-207.dat"
+    },
+    {
+        "name": "644/210 - Štramberk - Kopřivnice,,aut.nádr.",
+        "geojson": "2026-10-01/G-644-210.dat",
+        "markers": "2026-10-01/M-644-210.dat"
+    },
+    {
+        "name": "634/216 - Frenštát p.Radh. - Kopřivnice,,aut.nádr.",
+        "geojson": "2026-10-01/G-634-214.dat",
+        "markers": "2026-10-01/M-634-214.dat"
+    },
+    {
+        "name": "999/KOPŘ. - FRÝDEK-MÍSTEK 20km6 21m",
+        "geojson": "2026-10-01/G-999-KFM.dat",
+        "markers": "2026-10-01/M-999-FRK.dat"
+    },
+    {
+        "name": "621/211 - Frýdek-Místek - Nový Jičín,aut.nádr.",
+        "geojson": "2026-10-01/G-ODIS-883621-213.dat",
+        "markers": "2026-10-01/M-ODIS-883621-213.dat"
+    }, 
+    {
+        "name": "670/217 - Nový Jičín - Mošnov,Airport,nádraží",
+        "geojson": "2026-10-01/G-ODIS-883670-217.dat",
+        "markers": "2026-10-01/M-ODIS-883670-217.dat"
+    },
+    {
+        "name": "999/MOŠNOV AIRP. - KOPŘ. 13km5 15m",
+        "geojson": "2026-10-01/G-999-KFM.dat",
+        "markers": "2026-10-01/M-999-FRK.dat"
     }
 ]
