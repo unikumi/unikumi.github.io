@@ -116,13 +116,18 @@
 
   <!-- Kiegészítő járatfigyelő panel: a térkép stílusait nem módosítja. -->
   <style>
-    #sled-launcher { position:fixed; left:12px; top:12px; z-index:30; padding:11px 15px; border:1px solid #38414e; border-radius:12px; background:#151c28; color:#f3f4f6; font:600 14px system-ui,sans-serif; box-shadow:0 4px 18px #0008; cursor:pointer; }
+    #sled-launcher { padding:10px 13px; border:1px solid #38414e; border-radius:12px; background:#151c28; color:#f3f4f6; font:600 14px system-ui,sans-serif; box-shadow:0 4px 18px #0008; cursor:pointer; }
     #sled-panel { position:fixed; right:0; bottom:0; z-index:29; width:min(430px,100vw); height:48dvh; max-height:50dvh; display:flex; flex-direction:column; background:#0b0f17; border:1px solid #38414e; border-radius:16px 16px 0 0; box-shadow:0 -8px 28px #0009; overflow:hidden; }
     #sled-panel[hidden] { display:none; }
     #sled-panel-header { height:39px; flex:none; display:flex; align-items:center; justify-content:space-between; padding:0 12px; color:#f3f4f6; background:#151c28; font:600 13px system-ui,sans-serif; }
     #sled-close { color:#f3f4f6; border:0; background:transparent; font-size:23px; cursor:pointer; padding:3px 9px; }
     #sled-frame { flex:1; width:100%; border:0; background:#0b0f17; }
     @media(max-width:600px) { #sled-panel { width:100vw; border-radius:14px 14px 0 0; } }
+    #sled-actions { position:fixed; top:10px; left:10px; z-index:30; display:flex; gap:6px; align-items:center; }
+    #sled-actions[hidden], #next-layer[hidden] { display:none !important; }
+    #sled-launcher, #sled-destroy, #next-layer { border:1px solid #38414e; border-radius:12px; background:#151c28; color:#f3f4f6; box-shadow:0 4px 18px #0008; cursor:pointer; font:700 20px system-ui; min-width:44px; height:44px; }
+    #sled-destroy { color:#fca5a5; }
+    #next-layer { position:fixed; left:10px; top:62px; z-index:30; }
   </style>
 </head>
 <body>
@@ -1203,6 +1208,7 @@ if ('geolocation' in navigator) {
 
 
       updatePositionAndBearing();
+      window.ODISIntegration?.onPosition();
     },
 
 
@@ -1504,7 +1510,10 @@ function fitDataBounds(
 // 15. ADATRÉTEG BETÖLTÉSE
 // ============================================================================
 
+let layerLoadSequence = 0;
 async function loadLayer(index) {
+  const sequence = ++layerLoadSequence;
+  window.ODISIntegration?.onLayerLoading();
 
   const item =
     layerList[index];
@@ -1530,6 +1539,8 @@ async function loadLayer(index) {
       )
     ]);
 
+
+    if (sequence !== layerLoadSequence) return;
 
     const geojsonData =
       fixGeojson(
@@ -1659,6 +1670,7 @@ async function loadLayer(index) {
       geojsonData,
       markersData || []
     );
+    window.ODISIntegration?.onLayerSelected(item, index, markersData || []);
 
   } catch (err) {
 
@@ -1733,29 +1745,91 @@ map.on(
   </script>
 
   <!-- Elkülönített sled alkalmazás; a térkép canvasát és eseményeit nem érinti. -->
-  <button id="sled-launcher" type="button" aria-controls="sled-panel" aria-expanded="false">🚌 Járatfigyelő</button>
+  <div id="sled-actions" hidden>
+    <button id="sled-launcher" type="button" aria-label="Járatfigyelő megnyitása" aria-controls="sled-panel" aria-expanded="false" title="Járatfigyelő">⌃</button>
+    <button id="sled-destroy" type="button" aria-label="Járatfigyelő leállítása" title="Járatfigyelő leállítása">×</button>
+  </div>
+  <button id="next-layer" type="button" hidden aria-label="Következő réteg" title="Következő réteg">⏭</button>
   <section id="sled-panel" aria-label="Járatfigyelő panel" hidden>
     <div id="sled-panel-header"><span>Járatfigyelő · Sledování spojů</span><button id="sled-close" type="button" aria-label="Panel bezárása">×</button></div>
-    <iframe id="sled-frame" title="ODIS járatfigyelő" loading="lazy" allow="screen-wake-lock"></iframe>
+    <iframe id="sled-frame" title="ODIS járatfigyelő" loading="eager" allow="screen-wake-lock"></iframe>
   </section>
   <script>
-    // Elkülönített integrációs adapter. A meglévő térképes állapotgép változatlan.
+    // A térkép eredeti követési állapotgépét nem módosító adapter.
     (() => {
+      const actions = document.getElementById('sled-actions');
       const launcher = document.getElementById('sled-launcher');
+      const destroy = document.getElementById('sled-destroy');
       const panel = document.getElementById('sled-panel');
       const frame = document.getElementById('sled-frame');
       const close = document.getElementById('sled-close');
+      const next = document.getElementById('next-layer');
+      let activeFilters = null;
+      let destroyedByUser = false;
+      let lastPoint = null;
+      let nextTriggered = false;
+      let nextLayerAvailable = false;
       function setOpen(open) {
-        if (open && !frame.getAttribute('src')) frame.src = './sled2.html';
         panel.hidden = !open;
         launcher.setAttribute('aria-expanded', String(open));
-        launcher.textContent = open ? '🚌 Járatfigyelő ▲' : '🚌 Járatfigyelő';
+        launcher.textContent = open ? '⌄' : '⌃';
+        launcher.setAttribute('aria-label', open ? 'Járatfigyelő bezárása' : 'Járatfigyelő megnyitása');
       }
-      launcher.addEventListener('click', () => setOpen(panel.hidden));
+      function stopFrame() {
+        if (frame.contentWindow) frame.contentWindow.postMessage({type:'ODIS_STOP'}, location.origin);
+        frame.removeAttribute('src'); // iframe dokumentum és a hozzá tartozó worker megszűnik
+        setOpen(false);
+      }
+      function startFrame() {
+        if (!activeFilters || frame.hasAttribute('src')) return;
+        const url = new URL('./sled2.html', location.href);
+        url.searchParams.set('filters', activeFilters);
+        frame.src = url.href;
+      }
+      function updateNext() {
+        if (!lastPoint || !userLocation || !nextLayerAvailable || nextTriggered) {
+          next.hidden = true; return;
+        }
+        const distance = getDistanceInMeters(userLocation, lastPoint);
+        if (distance <= 500) {
+          nextTriggered = true; // csak az első belépéskor, rétegenként
+          next.hidden = false;
+        } else next.hidden = true;
+      }
+      window.ODISIntegration = {
+        onLayerLoading() {
+          stopFrame(); actions.hidden = true; next.hidden = true;
+          lastPoint = null; nextTriggered = false;
+        },
+        onLayerSelected(item, index, markers) {
+          activeFilters = typeof item.filters === 'string' && item.filters.trim() ? item.filters.trim() : null;
+          destroyedByUser = false;
+          stopFrame();
+          actions.hidden = !activeFilters;
+          if (activeFilters) startFrame(); // csukott panelben is indul a worker
+          const valid = Array.isArray(markers) ? markers.filter(p => Number.isFinite(Number(p.lat)) && Number.isFinite(Number(p.lng)) && p.lat != null && p.lng != null) : [];
+          const last = valid.at(-1);
+          lastPoint = last ? [Number(last.lng), Number(last.lat)] : null;
+          nextLayerAvailable = index < layerList.length - 1;
+          nextTriggered = false;
+          updateNext();
+        },
+        onPosition() { updateNext(); }
+      };
+      launcher.addEventListener('click', () => {
+        if (!activeFilters) return;
+        if (destroyedByUser) { destroyedByUser = false; startFrame(); }
+        setOpen(panel.hidden);
+      });
+      destroy.addEventListener('click', () => { destroyedByUser = true; stopFrame(); });
       close.addEventListener('click', () => setOpen(false));
-      // Jövőbeli adatcsatorna helye: verziózott postMessage protokoll,
-      // ellenőrzött origin és event.source, explicit adatleképezés.
-      // Most nincs adat- vagy eseménykapcsolat a két alkalmazás között.
+      next.addEventListener('click', () => {
+        const dropdown = document.getElementById('layerSelect');
+        const current = Number(dropdown.value);
+        if (!Number.isInteger(current) || current >= layerList.length - 1) return;
+        dropdown.value = String(current + 1);
+        dropdown.dispatchEvent(new Event('change', {bubbles:true}));
+      });
     })();
   </script>
 </body>

@@ -56,6 +56,9 @@
             -moz-appearance: textfield;
             appearance: textfield;
         }
+        .sled-managed #settings-modal, .sled-managed #add-form, .sled-managed #daily-reset-toggle,
+        .sled-managed .sled-settings-button, .sled-managed #subscription-actions { display:none !important; }
+        .sled-managed #cards-container button { display:none !important; }
     </style>
 
   <!-- Csak a beágyazott változat megjelenítésének tömörítése. -->
@@ -90,8 +93,8 @@
                     <i id="refresh-icon" class="fa-solid fa-rotate text-sm"></i>
                     <span id="timer-badge" class="absolute -top-1 -right-1 bg-blue-600 text-white text-[10px] font-bold w-5 h-5 rounded-full flex items-center justify-center border-2 border-slate-900">40</span>
                 </button>
-                <!-- Settings button -->
-                <button onclick="toggleSettingsModal(true)" title="Nastavení" class="p-2.5 rounded-xl bg-slate-800/80 hover:bg-slate-700/80 border border-slate-700/50 text-slate-300 active:scale-95 transition">
+                <!-- Settings button (rétegvezérelt módban elrejtve) -->
+                <button onclick="toggleSettingsModal(true)" title="Nastavení" class="sled-settings-button p-2.5 rounded-xl bg-slate-800/80 hover:bg-slate-700/80 border border-slate-700/50 text-slate-300 active:scale-95 transition">
                     <i class="fa-solid fa-gear text-sm"></i>
                 </button>
             </div>
@@ -104,7 +107,7 @@
         <!-- Active Connections Header -->
         <div class="flex items-center justify-between px-1">
             <h2 class="text-xs font-semibold uppercase tracking-wider text-slate-400">Sledované spoje (<span id="sub-count">0</span>)</h2>
-            <div class="flex items-center space-x-3">
+            <div id="subscription-actions" class="flex items-center space-x-3">
                 <button onclick="toggleSettingsModal(true)" class="text-xs text-blue-400 hover:text-blue-300 transition flex items-center gap-1 font-medium">
                     <i class="fa-solid fa-plus text-[10px]"></i> Přidat spoj
                 </button>
@@ -203,6 +206,33 @@
             return raw;
         }
 
+        // filters: "linka:spoj[:névrészlet]|linka:spoj[:névrészlet]"
+        // A névrészlet a meglévő sled.zastavka keresési mezőbe kerül.
+        const managedFilters = new URLSearchParams(location.search).get('filters');
+        const managedMode = managedFilters !== null;
+        if (managedMode) document.body.classList.add('sled-managed');
+        function parseManagedFilters(value) {
+            if (!value || !value.trim()) return [];
+            const seen = new Set();
+            return value.split('|').map(part => {
+                const fields = part.trim().split(':');
+                if (fields.length < 2 || fields.length > 3 || !/^\d+$/.test(fields[0].trim()) || !/^\d+$/.test(fields[1].trim())) {
+                    console.warn('Érvénytelen filters elem:', part); return null;
+                }
+                const linka = fields[0].trim(), spoj = fields[1].trim();
+                const key = linka + ':' + spoj;
+                if (seen.has(key)) return null;
+                seen.add(key);
+                return {linka, spoj, zastavka:(fields[2] || '').trim()};
+            }).filter(Boolean);
+        }
+        window.addEventListener('message', event => {
+            if (event.origin !== location.origin || event.source !== window.parent) return;
+            if (event.data?.type === 'ODIS_STOP') {
+                worker?.postMessage('stop'); worker?.terminate(); worker = null;
+                clearInterval(timerInterval);
+            }
+        });
         let subscriptions = [];
         let latestDataMap = new Map();
         let matchedStopsSet = new Set(); // Tracks items that hit the custom stop alert
@@ -235,7 +265,10 @@
             document.getElementById('date-display').innerText = getTodayString();
             document.getElementById('daily-reset-toggle').checked = dailyResetEnabled;
             
-            loadSubscriptions();
+            if (managedMode) {
+                subscriptions = parseManagedFilters(managedFilters);
+                updateSubCount();
+            } else loadSubscriptions();
             renderCards();
             fetchMapData();
             startTimer();
@@ -320,6 +353,7 @@
         }
 
         function saveSubscriptions() {
+            if (managedMode) return;
             localStorage.setItem('odis_subscriptions', JSON.stringify(subscriptions));
             localStorage.setItem('odis_sub_date', getTodayString());
             updateSubCount();
@@ -639,6 +673,7 @@
         }
 
         function toggleDailyResetSetting(checked) {
+            if (managedMode) return;
             dailyResetEnabled = checked;
             localStorage.setItem('odis_daily_reset', checked);
         }
