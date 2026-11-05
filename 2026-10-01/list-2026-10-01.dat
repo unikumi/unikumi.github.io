@@ -982,7 +982,130 @@
     {
         "name": "999/MOŠNOV AIRP. - KOPŘ. 13km5 15m",
         "geojson": "2026-10-01/G-999-MAK.dat",
-        "markers": "2026-10-01/M-999-FRK.dat",
-        "filters": "678:59:Poruba"
+        "markers": "2026-10-01/M-999-FRK.dat"
+    },
+    {
+        "name": "634/203 - Kopřivnice - Frenštát p.Radh.,,u škol /T611",
+        "geojson": "2026-10-01/G-634-203.dat",
+        "markers": "2026-10-01/M-634-203.dat"
+    },
+    {
+        "name": "696/254 - Frenštát p.Radh. - Nový Jičín,aut.nádr. /T611",
+        "geojson": "2026-10-01/G-ODIS-883696-252.dat",
+        "markers": "2026-10-01/M-ODIS-883696-252.dat",
+        "filters": "655:204:u skol"
+    },
+    {
+        "name": "690/205 - Nový Jičín - Kopřivnice,aut.nádr. /T611",
+        "geojson": "2026-10-01/G-690-211.dat",
+        "markers": "2026-10-01/M-690-211.dat"
+    },
+    {
+        "name": "690/208 - Kopřivnice - Nový Jičín,,aut.nádr. /T611",
+        "geojson": "2026-10-01/G-690-208.dat",
+        "markers": "2026-10-01/M-690-208.dat",
+        "filters": "644:203:horou|643:202:palicka"
+    },
+    {
+        "name": "670/205 - Nový Jičín - Ostrava,Mor.Ostrava,Náměstí Republiky /T611",
+        "geojson": "2026-10-01/G-670-205.dat",
+        "markers": "2026-10-01/M-670-205.dat"
+    },
+    {
+        "name": "670/208 - Ostrava - Nový Jičín,,aut.nádr. /T611",
+        "geojson": "2026-10-01/G-670-208.dat",
+        "markers": "2026-10-01/M-670-208.dat"
+    },
+    {
+        "name": "670/209 - Nový Jičín - Ostrava,Mor.Ostrava,Náměstí Republiky /T611",
+        "geojson": "2026-10-01/G-670-209.dat",
+        "markers": "2026-10-01/M-670-209.dat"
+    },
+    {
+        "name": "641/212 - Ostrava - Kopřivnice,,aut.nádr. /T611",
+        "geojson": "2026-10-01/G-641-214.dat",
+        "markers": "2026-10-01/M-641-214.dat",
+        "filters": "621:209:volneho|621:212:volneho"
+    },
+    {
+        "name": "643/205 - Kopřivnice - Bartošovice,,obecní úřad /T611",
+        "geojson": "2026-10-01/G-643-205.dat",
+        "markers": "2026-10-01/M-643-205.dat",
+        "filters": "690:217:palicka"
+    },
+    {
+        "name": "999/BARTOŠ. OBÚ - PŘÍBOR 13km5 15m",
+        "geojson": "2026-10-01/G-999-BOP.dat",
+        "markers": "2026-10-01/M-999-FRK.dat"
+    },
+    {
+        "name": "331/207 - Ostrava - Mošnov,,Airport nádraží /T705",
+        "geojson": "2026-10-01/G-331-207.dat",
+        "markers": "2026-10-01/M-331-207.dat"
+    },
+    {
+        "name": "670/229 - Mošnov - Ostrava,Dubina /T705",
+        "geojson": "2026-10-01/G-670-229.dat",
+        "markers": "2026-10-01/M-670-229.dat"
+    },
+    {
+        "name": "373/201 - Petřvald - Kopřivnice,,aut.nádr. /T705",
+        "geojson": "2026-10-01/G-373-201.dat",
+        "markers": "2026-10-01/M-373-201.dat",
+        "filters": "641:202:petrvald nam"
+    },
+    {
+        "name": "644/201 - Kopřivnice - Štramberk,Libotín,koupaliště /T705",
+        "geojson": "2026-10-01/G-644-201.dat",
+        "markers": "2026-10-01/M-644-201.dat"
+    },
+    {
+        "name": "644/204 - Štramberk - Kopřivnice,,aut.nádr. /T705",
+        "geojson": "2026-10-01/G-644-204.dat",
+        "markers": "2026-10-01/M-644-204.dat"
+    },
+    {
+        "name": "690/208 - Kopřivnice - Nový Jičín,,aut.nádr. /T705",
+        "geojson": "2026-10-01/G-690-208.dat",
+        "markers": "2026-10-01/M-690-208.dat",
+        "filters": "644:203:horou|643:202:palicka"
+    },
+    {
+        "name": "670/205 - Nový Jičín - Ostrava,Mor.Ostrava,Náměstí Republiky /T705",
+        "geojson": "2026-10-01/G-670-205.dat",
+        "markers": "2026-10-01/M-670-205.dat"
+    },
+    {
+        "name": "371/205 - Ostrava - Kozlovice,,střed /T705",
+        "geojson": "2026-10-01/G-371-205.dat",
+        "markers": "2026-10-01/M-371-205.dat",
+        "filters": "374:203:brusperk stred"
+    },
+    {
+        "name": "371/210 - Kozlovice - Ostrava,Mor.Ostrava,Náměstí Republiky /T705",
+        "geojson": "2026-10-01/G-371-210.dat",
+        "markers": "2026-10-01/M-371-210.dat",
+        "filters": "980:220:kozlovice stred|312:209:brusperk stred|374:206:brusperk stred"
+    },
+    {
+        "name": "376/211 - Ostrava - Brušperk,,střed /T705",
+        "geojson": "2026-10-01/G-376-211.dat",
+        "markers": "2026-10-01/M-376-211.dat"
+    },
+    {
+        "name": "371/231 - Brušperk - Hukvaldy,,hotel /T705",
+        "geojson": "2026-10-01/G-371-231.dat",
+        "markers": "2026-10-01/M-371-231.dat",
+        "filters": "621:209:pod mostem"
+    },
+    {
+        "name": "371/236 - Hukvaldy - Hukvaldy,Rychaltice,pod mostem /T705",
+        "geojson": "2026-10-01/G-371-236.dat",
+        "markers": "2026-10-01/M-371-236.dat"
+    },
+    {
+        "name": "376/216 - Hukvaldy - Ostrava,Mor.Ostrava,Náměstí Republiky /T705",
+        "geojson": "2026-10-01/G-376-216.dat",
+        "markers": "2026-10-01/M-376-216.dat"
     }
 ]
