@@ -114,7 +114,7 @@
     }
   </style>
 
-  <!-- Kiegészítő járatfigyelő panel: a térkép stílusait nem módosítja. -->
+  <!-- Kiegészítő panel: a térkép stílusait nem módosítja. -->
   <style>
     #sled-launcher { padding:10px 13px; border:1px solid #38414e; border-radius:12px; background:#151c28; color:#f3f4f6; font:600 14px system-ui,sans-serif; box-shadow:0 4px 18px #0008; cursor:pointer; }
     #sled-panel { position:fixed; right:0; bottom:0; z-index:29; width:min(430px,100vw); height:48dvh; max-height:50dvh; display:flex; flex-direction:column; background:#0b0f17; border:1px solid #38414e; border-radius:16px 16px 0 0; box-shadow:0 -8px 28px #0009; overflow:hidden; }
@@ -1751,8 +1751,8 @@ map.on(
   </div>
   <button id="next-layer" type="button" hidden aria-label="Következő réteg" title="Következő réteg">⏭</button>
   <section id="sled-panel" aria-label="Járatfigyelő panel" hidden>
-    <div id="sled-panel-header"><span>Járatfigyelő · Sledování spojů</span><button id="sled-close" type="button" aria-label="Panel bezárása">×</button></div>
-    <iframe id="sled-frame" title="ODIS járatfigyelő" loading="eager" allow="screen-wake-lock"></iframe>
+    <div id="sled-panel-header"><span>Sledování spojů</span><button id="sled-close" type="button" aria-label="Panel bezárása">×</button></div>
+    <iframe id="sled-frame" title="Sledování spojů" loading="eager" allow="screen-wake-lock"></iframe>
   </section>
   <script>
     // A térkép eredeti követési állapotgépét nem módosító adapter.
