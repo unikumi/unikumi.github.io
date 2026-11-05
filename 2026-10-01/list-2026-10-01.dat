@@ -982,6 +982,7 @@
     {
         "name": "999/MOŠNOV AIRP. - KOPŘ. 13km5 15m",
         "geojson": "2026-10-01/G-999-MAK.dat",
-        "markers": "2026-10-01/M-999-FRK.dat"
+        "markers": "2026-10-01/M-999-FRK.dat",
+        "filters": "678:59:Poruba"
     }
 ]
