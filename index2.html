@@ -1787,8 +1787,8 @@ map.on(
         frame.src = url.href;
       }
       function updateNext() {
-        if (!lastPoint || !userLocation || !nextLayerAvailable || nextTriggered) {
-          next.hidden = true; return;
+        if (!lastPoint || !userLocation || !nextLayerAvailable || !nextTriggered) {
+          next.hidden = false; return;
         }
         const distance = getDistanceInMeters(userLocation, lastPoint);
           if (distance <= 500) {
@@ -1796,10 +1796,10 @@ map.on(
              if (!nextTriggered) {
                nextTriggered = true; // Itt fut le az egyszeri esemény (pl. értesítés)
              }
-             next.hidden = false; // A gomb látható marad, ha egyszer elérte
+             next.hidden = true; // A gomb látható marad, ha egyszer elérte
           } else {
              // Itt eldöntheti, hogy ha eltávolodik, eltűnjön-e a gomb
-             next.hidden = false; 
+             next.hidden = true; 
           }
        // if (distance <= 500) {
        //   nextTriggered = true; // csak az első belépéskor, rétegenként
