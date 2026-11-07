@@ -1791,10 +1791,20 @@ map.on(
           next.hidden = true; return;
         }
         const distance = getDistanceInMeters(userLocation, lastPoint);
-        if (distance <= 500) {
-          nextTriggered = true; // csak az első belépéskor, rétegenként
-          next.hidden = false;
-        } else next.hidden = true;
+          if (distance <= 500) {
+            
+             if (!nextTriggered) {
+               nextTriggered = true; // Itt fut le az egyszeri esemény (pl. értesítés)
+             }
+             next.hidden = false; // A gomb látható marad, ha egyszer elérte
+          } else {
+             // Itt eldöntheti, hogy ha eltávolodik, eltűnjön-e a gomb
+             next.hidden = true; 
+          }
+       // if (distance <= 500) {
+       //   nextTriggered = true; // csak az első belépéskor, rétegenként
+       //   next.hidden = false;
+       // } else next.hidden = true;
       }
       window.ODISIntegration = {
         onLayerLoading() {
