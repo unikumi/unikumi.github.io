@@ -1107,5 +1107,10 @@
         "name": "376/216 - Hukvaldy - Ostrava,Mor.Ostrava,Náměstí Republiky /T705",
         "geojson": "2026-10-01/G-376-216.dat",
         "markers": "2026-10-01/M-376-216.dat"
+    },
+    {
+        "name": "985/226 - ...",
+        "geojson": "2026-10-01/G-ODIS-883985-226.dat",
+        "markers": "2026-10-01/M-ODIS-883985-226.dat"
     }
 ]
