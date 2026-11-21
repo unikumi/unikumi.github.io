@@ -1122,5 +1122,25 @@
         "name": "379/202 - Petřvald, nám. - Ostrava,Zábřeh,Kotva",
         "geojson": "2026-10-01/G-ODIS-883379-202.dat",
         "markers": "2026-10-01/M-ODIS-883379-202.dat"
+    },
+    {
+        "name": "999/TICHÁ - FM 19km2 23m",
+        "geojson": "2026-10-01/G-999-TFM.dat",
+        "markers": "2026-10-01/M-999-FRK.dat"
+    },
+    {
+        "name": "999/ÚAN - KOTVA 9km 10m",
+        "geojson": "2026-10-01/G-999-UAK.dat",
+        "markers": "2026-10-01/M-999-FRK.dat"
+    },
+    {
+        "name": "999/KOTVA - ÚAN 8km1 11m",
+        "geojson": "2026-10-01/G-999-KUA.dat",
+        "markers": "2026-10-01/M-999-FRK.dat"
+    },
+    {
+        "name": "941184/207 Rožnov p.R. - Kopřivnice, BROSE",
+        "geojson": "2026-10-01/G-BRO-207.dat",
+        "markers": "2026-10-01/M-BRO-207.dat"
     }
 ]
