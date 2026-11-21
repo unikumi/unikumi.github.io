@@ -1,0 +1,112 @@
+[
+    {
+        "name": "Ostrava,Z\u00e1b\u0159eh,Kotva",
+        "lng": 18.2306780096874,
+        "lat": 49.7915300037252
+    },
+    {
+        "name": "Ostrava,Z\u00e1b\u0159eh,Kotva",
+        "lng": 18.228401910806,
+        "lat": 49.7908150040845
+    },
+    {
+        "name": "Ostrava,Z\u00e1b\u0159eh,Kino Luna",
+        "lng": 18.2260311100152,
+        "lat": 49.7879542037237
+    },
+    {
+        "name": "Ostrava,V\u00fd\u0161kovice,Star\u00e9 V\u00fd\u0161kovice",
+        "lng": 18.2191790097739,
+        "lat": 49.7850540037298
+    },
+    {
+        "name": "Ostrava,V\u00fd\u0161kovice,Smr\u010dkova",
+        "lng": 18.2155374450207,
+        "lat": 49.7812555571466
+    },
+    {
+        "name": "Ostrava,V\u00fd\u0161kovice,osada",
+        "lng": 18.2114110095946,
+        "lat": 49.7758840044263
+    },
+    {
+        "name": "Ostrava,Star\u00e1 B\u011bl\u00e1,k\u0159i\u017e.",
+        "lng": 18.2062426924497,
+        "lat": 49.7637568067045
+    },
+    {
+        "name": "Ostrava,Proskovice,Horn\u00ed cesta",
+        "lng": 18.1996911108683,
+        "lat": 49.7540542041272
+    },
+    {
+        "name": "Ostrava,Proskovice,sokolovna",
+        "lng": 18.202212155266178,
+        "lat": 49.74951130338783
+    },
+    {
+        "name": "Krmel\u00edn,,Proskovick\u00e1",
+        "lng": 18.2234089105814,
+        "lat": 49.7336578038389
+    },
+    {
+        "name": "Star\u00e1 Ves n.Ond\u0159.,,k\u0159i\u017e.",
+        "lng": 18.1950153103998,
+        "lat": 49.7267592041983
+    },
+    {
+        "name": "Star\u00e1 Ves n.Ond\u0159.,,Na drah\u00e1ch",
+        "lng": 18.1936146383489,
+        "lat": 49.7269965190335
+    },
+    {
+        "name": "Star\u00e1 Ves n.Ond\u0159.,,po\u0161ta",
+        "lng": 18.1875425096923,
+        "lat": 49.7283889039792
+    },
+    {
+        "name": "Star\u00e1 Ves n.Ond\u0159.,,Pod H\u016frkou",
+        "lng": 18.1808475095553,
+        "lat": 49.728651704335
+    },
+    {
+        "name": "Star\u00e1 Ves n.Ond\u0159.,Ko\u0161atka,u mostu",
+        "lng": 18.1667867107166,
+        "lat": 49.7346211037584
+    },
+    {
+        "name": "Star\u00e1 Ves n.Ond\u0159.,Ko\u0161atka,M.Ko\u0161atka",
+        "lng": 18.1627386103176,
+        "lat": 49.7334539037386
+    },
+    {
+        "name": "Star\u00e1 Ves n.Ond\u0159.,Ko\u0161atka,rest.Odra",
+        "lng": 18.1571527265034,
+        "lat": 49.7328438192339
+    },
+    {
+        "name": "Star\u00e1 Ves n.Ond\u0159.,Ko\u0161atka,V.Ko\u0161atka",
+        "lng": 18.1495846726857,
+        "lat": 49.7326090854577
+    },
+    {
+        "name": "Pet\u0159vald,Pet\u0159vald\u00edk,Zimn\u00fd d\u016fl",
+        "lng": 18.1409190479311,
+        "lat": 49.7276760115089
+    },
+    {
+        "name": "Pet\u0159vald,Pet\u0159vald\u00edk,gar\u00e1\u017ee \u010cSAD",
+        "lng": 18.1351567098593,
+        "lat": 49.7216753040508
+    },
+    {
+        "name": "Pet\u0159vald,,kino",
+        "lng": 18.1508200099026,
+        "lat": 49.7073456037182
+    },
+    {
+        "name": "Pet\u0159vald,,n\u00e1m.",
+        "lng": 18.156347778442964,
+        "lat": 49.70981289420321
+    }
+]
