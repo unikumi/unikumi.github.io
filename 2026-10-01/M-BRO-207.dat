@@ -1,0 +1,87 @@
+[
+    {
+        "name": "Ro\u017enov p.Radh.,,aut.st.",
+        "lng": 18.13408469736578,
+        "lat": 49.45995875419172
+    },
+    {
+        "name": "Ro\u017enov p.Radh.,,Knihovna",
+        "lng": 18.14364301130008,
+        "lat": 49.46240291247237
+    },
+    {
+        "name": "Ro\u017enov p.Radh.,,rest.U eropl\u00e1nu",
+        "lng": 18.157579308944463,
+        "lat": 49.46632503607703
+    },
+    {
+        "name": "Ro\u017enov p.Radh.,Horn\u00ed Paseky,k\u0159\u00ed\u017eek",
+        "lng": 18.162551613766784,
+        "lat": 49.47335305774633
+    },
+    {
+        "name": "Ro\u017enov p.Radh.,,U Jano\u0161t\u00edk\u016f",
+        "lng": 18.169387025462004,
+        "lat": 49.48249197953405
+    },
+    {
+        "name": "Ro\u017enov p.Radh.,,Pod Pindul\u00ed",
+        "lng": 18.176055358781852,
+        "lat": 49.49427389092052
+    },
+    {
+        "name": "Fren\u0161t\u00e1t p.Radh.,,s\u00eddli\u0161t\u011b",
+        "lng": 18.2077071532184,
+        "lat": 49.5422184681894
+    },
+    {
+        "name": "Fren\u0161t\u00e1t p.Radh.,,u \u0161kol",
+        "lng": 18.213410401799,
+        "lat": 49.54564105217
+    },
+    {
+        "name": "Fren\u0161t\u00e1t p.Radh.,,Doln\u00ed",
+        "lng": 18.203420810382,
+        "lat": 49.5502711036647
+    },
+    {
+        "name": "Fren\u0161t\u00e1t p.Radh.,,rest.Na \u0161enku",
+        "lng": 18.1998075105992,
+        "lat": 49.551791704282
+    },
+    {
+        "name": "Lichnov,,rest.Na Okluku",
+        "lng": 18.1826453103933,
+        "lat": 49.5747656044336
+    },
+    {
+        "name": "Tich\u00e1,,rozc.Tich\u00e1",
+        "lng": 18.188018508102,
+        "lat": 49.5813161302615
+    },
+    {
+        "name": "Kop\u0159ivnice,Vl\u010dovice,u mostu",
+        "lng": 18.1907689103875,
+        "lat": 49.5871756037239
+    },
+    {
+        "name": "Kop\u0159ivnice,Vl\u010dovice,u kostela",
+        "lng": 18.1914925106998,
+        "lat": 49.5917664038587
+    },
+    {
+        "name": "Kop\u0159ivnice,Vl\u010dovice,rozc.",
+        "lng": 18.189297810635,
+        "lat": 49.5977672043475
+    },
+    {
+        "name": "Kop\u0159ivnice,Vl\u010dovice,Z\u00e1b\u0159e\u017eky",
+        "lng": 18.1797800104196,
+        "lat": 49.6022061036217
+    },
+    {
+        "name": "Kop\u0159ivnice, BROSE",
+        "lng": 18.172433,
+        "lat": 49.600402
+    }
+]
