@@ -1112,5 +1112,15 @@
         "name": "985/226 - ...",
         "geojson": "2026-10-01/G-ODIS-883985-226.dat",
         "markers": "2026-10-01/M-ODIS-883985-226.dat"
+    },
+    {
+        "name": "379/201 - Ostrava,Zábřeh,Kotva - Petřvald, nám.",
+        "geojson": "2026-10-01/G-ODIS-883379-201.dat",
+        "markers": "2026-10-01/M-ODIS-883379-201.dat"
+    },
+    {
+        "name": "379/202 - Petřvald, nám. - Ostrava,Zábřeh,Kotva",
+        "geojson": "2026-10-01/G-ODIS-883379-202.dat",
+        "markers": "2026-10-01/M-ODIS-883379-202.dat"
     }
 ]
